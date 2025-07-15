@@ -44,7 +44,7 @@ export function ProjectsSection() {
   ]
 
   return (
-    <section id="projects" className="py-24 bg-gray-50 dark:bg-gray-800">
+    <section id="projects" className="py-24 bg-warm-50 dark:bg-stone-900">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -53,10 +53,10 @@ export function ProjectsSection() {
           viewport={{ once: true }}
           className="text-center"
         >
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+          <h2 className="text-3xl font-display font-bold tracking-tight text-foreground sm:text-4xl text-shadow">
             Featured Projects
           </h2>
-          <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
+          <p className="mt-4 text-lg text-stone-600 dark:text-stone-300 font-body">
             A showcase of my recent work and side projects
           </p>
         </motion.div>
@@ -69,22 +69,22 @@ export function ProjectsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 * index }}
               viewport={{ once: true }}
-              className={`group relative bg-white dark:bg-gray-900 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow ${
+              className={`group relative bg-background rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow border border-stone-200/50 dark:border-stone-700/50 ${
                 project.featured ? "lg:col-span-1" : ""
               }`}
             >
               <div className="relative h-48 overflow-hidden">
-                <div className="w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                  <span className="text-white font-semibold text-lg">Project Image</span>
+                <div className="w-full h-full bg-gradient-to-br from-primary-500 to-accent-600 flex items-center justify-center">
+                  <span className="text-white font-semibold text-lg font-body">Project Image</span>
                 </div>
                 <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300" />
               </div>
               
               <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                <h3 className="text-xl font-display font-bold text-foreground mb-2">
                   {project.title}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
+                <p className="text-stone-600 dark:text-stone-300 mb-4 font-body">
                   {project.description}
                 </p>
                 
@@ -92,7 +92,7 @@ export function ProjectsSection() {
                   {project.techStack.map((tech) => (
                     <span
                       key={tech}
-                      className="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 rounded-full"
+                      className="px-3 py-1 text-xs font-medium font-body bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-200 rounded-full"
                     >
                       {tech}
                     </span>
@@ -104,7 +104,7 @@ export function ProjectsSection() {
                     href={project.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                    className="inline-flex items-center px-4 py-2 text-sm font-medium font-body text-stone-700 dark:text-stone-300 bg-stone-100 dark:bg-stone-700 rounded-md hover:bg-stone-200 dark:hover:bg-stone-600 transition-colors"
                   >
                     <Github className="w-4 h-4 mr-2" />
                     Code
@@ -113,7 +113,7 @@ export function ProjectsSection() {
                     href={project.demoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors"
+                    className="inline-flex items-center px-4 py-2 text-sm font-medium font-body text-white bg-primary-600 rounded-md hover:bg-primary-700 transition-colors"
                   >
                     <ExternalLink className="w-4 h-4 mr-2" />
                     Demo
@@ -135,7 +135,7 @@ export function ProjectsSection() {
             href="https://github.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center px-6 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+            className="inline-flex items-center px-6 py-3 text-sm font-medium font-body text-stone-700 dark:text-stone-300 bg-background border border-stone-300 dark:border-stone-600 rounded-md hover:bg-stone-50 dark:hover:bg-stone-700 transition-colors"
           >
             <Github className="w-4 h-4 mr-2" />
             View More on GitHub

@@ -49,7 +49,7 @@ export function ContactSection() {
   ]
 
   return (
-    <section id="contact" className="py-24 bg-white dark:bg-gray-900">
+    <section id="contact" className="py-24 bg-background">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -58,10 +58,10 @@ export function ContactSection() {
           viewport={{ once: true }}
           className="text-center"
         >
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+          <h2 className="text-3xl font-display font-bold tracking-tight text-foreground sm:text-4xl text-shadow">
             Get In Touch
           </h2>
-          <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
+          <p className="mt-4 text-lg text-stone-600 dark:text-stone-300 font-body">
             Have a project in mind? Let&apos;s work together to bring your ideas to life.
           </p>
         </motion.div>
@@ -74,10 +74,10 @@ export function ContactSection() {
             transition={{ duration: 0.5, delay: 0.1 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+            <h3 className="text-2xl font-display font-bold text-foreground mb-6">
               Let&apos;s talk about your project
             </h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-8">
+            <p className="text-stone-600 dark:text-stone-300 mb-8 font-body">
               I&apos;m always interested in hearing about new opportunities and exciting projects. 
               Whether you have a question or just want to say hello, I&apos;ll get back to you as soon as possible.
             </p>
@@ -94,22 +94,22 @@ export function ContactSection() {
                     viewport={{ once: true }}
                     className="flex items-center"
                   >
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-600">
                       <Icon className="h-5 w-5 text-white" />
                     </div>
                     <div className="ml-4">
-                      <p className="text-sm font-medium text-gray-900 dark:text-white">
+                      <p className="text-sm font-medium font-body text-foreground">
                         {info.title}
                       </p>
                       {info.href !== "#" ? (
                         <a
                           href={info.href}
-                          className="text-sm text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                          className="text-sm text-stone-600 dark:text-stone-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors font-body"
                         >
                           {info.value}
                         </a>
                       ) : (
-                        <p className="text-sm text-gray-600 dark:text-gray-300">
+                        <p className="text-sm text-stone-600 dark:text-stone-300 font-body">
                           {info.value}
                         </p>
                       )}
@@ -130,7 +130,7 @@ export function ContactSection() {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <label htmlFor="name" className="block text-sm font-medium font-body text-stone-700 dark:text-stone-300">
                     Name
                   </label>
                   <input
@@ -140,11 +140,11 @@ export function ContactSection() {
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:focus:border-blue-400 dark:focus:ring-blue-400"
+                    className="mt-1 block w-full rounded-md border-stone-300 dark:border-stone-600 bg-warm-50 dark:bg-stone-800 text-foreground shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:focus:border-primary-400 dark:focus:ring-primary-400 font-body"
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <label htmlFor="email" className="block text-sm font-medium font-body text-stone-700 dark:text-stone-300">
                     Email
                   </label>
                   <input
@@ -154,13 +154,13 @@ export function ContactSection() {
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:focus:border-blue-400 dark:focus:ring-blue-400"
+                    className="mt-1 block w-full rounded-md border-stone-300 dark:border-stone-600 bg-warm-50 dark:bg-stone-800 text-foreground shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:focus:border-primary-400 dark:focus:ring-primary-400 font-body"
                   />
                 </div>
               </div>
               
               <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                <label htmlFor="subject" className="block text-sm font-medium font-body text-stone-700 dark:text-stone-300">
                   Subject
                 </label>
                 <input
@@ -170,12 +170,12 @@ export function ContactSection() {
                   required
                   value={formData.subject}
                   onChange={handleChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:focus:border-blue-400 dark:focus:ring-blue-400"
+                  className="mt-1 block w-full rounded-md border-stone-300 dark:border-stone-600 bg-warm-50 dark:bg-stone-800 text-foreground shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:focus:border-primary-400 dark:focus:ring-primary-400 font-body"
                 />
               </div>
               
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                <label htmlFor="message" className="block text-sm font-medium font-body text-stone-700 dark:text-stone-300">
                   Message
                 </label>
                 <textarea
@@ -185,14 +185,14 @@ export function ContactSection() {
                   required
                   value={formData.message}
                   onChange={handleChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:focus:border-blue-400 dark:focus:ring-blue-400"
+                  className="mt-1 block w-full rounded-md border-stone-300 dark:border-stone-600 bg-warm-50 dark:bg-stone-800 text-foreground shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:focus:border-primary-400 dark:focus:ring-primary-400 font-body"
                 />
               </div>
               
               <div>
                 <button
                   type="submit"
-                  className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                  className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium font-body text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
                 >
                   Send Message
                 </button>

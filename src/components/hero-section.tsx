@@ -23,7 +23,7 @@ export function HeroSection() {
   ]
 
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+    <section id="hero" className="min-h-screen flex items-center justify-center bg-warm-gradient dark:bg-dark-warm-gradient bg-warm-texture">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center">
           <motion.div
@@ -31,9 +31,9 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl">
+            <h1 className="text-4xl font-display font-bold tracking-tight text-foreground sm:text-6xl text-shadow">
               Hi, I&apos;m{" "}
-              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-primary-600 to-accent-600 font-bold bg-clip-text">
                 Moustafa Salem
               </span>
             </h1>
@@ -44,7 +44,7 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300 sm:text-xl">
+            <p className="mt-6 text-lg leading-8 text-stone-600 dark:text-stone-300 sm:text-xl font-body">
               Full Stack Developer & Software Engineer
             </p>
           </motion.div>
@@ -54,7 +54,7 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <p className="mt-4 text-base text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
+            <p className="mt-4 text-base text-stone-500 dark:text-stone-400 max-w-2xl mx-auto font-body">
               I create exceptional digital experiences through clean code and innovative solutions.
               Passionate about modern web technologies and building products that make a difference.
             </p>
@@ -68,13 +68,13 @@ export function HeroSection() {
           >
             <a
               href="#projects"
-              className="rounded-md bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition-colors"
+              className="rounded-md bg-primary-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 transition-colors font-body"
             >
               View My Work
             </a>
             <a
               href="#contact"
-              className="text-sm font-semibold leading-6 text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              className="text-sm font-semibold leading-6 text-foreground hover:text-primary-600 dark:hover:text-primary-400 transition-colors font-body"
             >
               Get In Touch <span aria-hidden="true">→</span>
             </a>
@@ -92,7 +92,7 @@ export function HeroSection() {
                 <a
                   key={link.label}
                   href={link.href}
-                  className="text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  className="text-stone-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                   aria-label={link.label}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -111,7 +111,7 @@ export function HeroSection() {
           >
             <a
               href="#about"
-              className="inline-flex items-center text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              className="inline-flex items-center text-stone-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
               aria-label="Scroll to about section"
             >
               <ArrowDown className="h-5 w-5 animate-bounce" />

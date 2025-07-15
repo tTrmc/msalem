@@ -1,15 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #faebd7;
+  --foreground: #311501;
+  --primary: #b8944f;
+  --stone: #78716c;
+  --warm: #efb545;
+  --accent: #b08968;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark {
+  --background: #20100c5d;
+  --foreground: #faebd7;
+  --primary: #ddbf8b;
+  --stone: #d6d3d1;
+  --warm: #f4ca73;
+  --accent: #d2c0a8;
 }
 
 html {
@@ -19,7 +26,8 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Custom scrollbar */
@@ -28,28 +36,50 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #f5efe0;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
+  background: #b8944f;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a1a1a1;
+  background: #a37c42;
 }
 
 @media (prefers-color-scheme: dark) {
   ::-webkit-scrollbar-track {
-    background: #2d2d2d;
+    background: #44403c;
   }
   
   ::-webkit-scrollbar-thumb {
-    background: #555;
+    background: #78716c;
   }
   
   ::-webkit-scrollbar-thumb:hover {
-    background: #777;
+    background: #a8a29e;
   }
 }
+
+/* Typography utilities */
+.font-display {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.font-body {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Text shadow for headings */
+.text-shadow {
+  text-shadow: 0 2px 4px rgba(60, 53, 48, 0.1);
+}
+
+/* Warm background patterns
+.bg-warm-texture {
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgb(250, 235, 215) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgb(98, 82, 82) 0%, transparent 50%);
+}
+*/

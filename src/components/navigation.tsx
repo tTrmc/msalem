@@ -15,24 +15,24 @@ export function Navigation() {
   ]
 
   return (
-    <nav className="fixed top-0 z-50 w-full bg-white/80 backdrop-blur-sm dark:bg-gray-900/80">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <nav className="w-full bg-background">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
         <div className="flex h-16 items-center justify-between">
           <Link
             href="#hero"
-            className="text-xl font-bold text-gray-900 dark:text-white"
+            className="text-xl font-display font-bold text-foreground"
           >
             Portfolio
           </Link>
           
-          {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
+          {/* Desktop Navigation - Absolutely centered */}
+          <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2">
+            <div className="flex items-center space-x-4">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="rounded-md px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400"
+                  className="rounded-md px-3 py-2 text-sm font-medium font-body text-stone-700 transition-colors hover:text-primary-600 dark:text-stone-300 dark:hover:text-primary-400"
                 >
                   {item.label}
                 </Link>
@@ -46,7 +46,7 @@ export function Navigation() {
             {/* Mobile menu button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+              className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-stone-700 hover:bg-stone-100 hover:text-stone-900 dark:text-stone-300 dark:hover:bg-stone-700 dark:hover:text-white"
               aria-label="Toggle menu"
             >
               {isOpen ? (
@@ -62,13 +62,13 @@ export function Navigation() {
       {/* Mobile Navigation Menu */}
       {isOpen && (
         <div className="md:hidden">
-          <div className="space-y-1 px-2 pb-3 pt-2 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+          <div className="space-y-1 px-2 pb-3 pt-2 bg-background border-t border-stone-200 dark:border-stone-700">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={() => setIsOpen(false)}
-                className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+                className="block rounded-md px-3 py-2 text-base font-medium font-body text-stone-700 hover:bg-stone-100 hover:text-stone-900 dark:text-stone-300 dark:hover:bg-stone-700 dark:hover:text-white"
               >
                 {item.label}
               </Link>
