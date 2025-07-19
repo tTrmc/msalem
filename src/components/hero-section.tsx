@@ -47,7 +47,7 @@ export function HeroSection() {
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             <p className="mt-6 text-lg leading-8 text-stone-600 dark:text-stone-300 sm:text-xl font-body">
-              Full Stack Developer & Software Engineer
+              Computer Science Student & Aspiring Software Engineer
             </p>
           </motion.div>
           
@@ -57,8 +57,8 @@ export function HeroSection() {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <p className="mt-4 text-base text-stone-500 dark:text-stone-400 max-w-2xl mx-auto font-body">
-              I create exceptional digital experiences through clean code and innovative solutions.
-              Passionate about modern web technologies and building products that make a difference.
+              Passionate about learning new technologies and building meaningful projects.
+              Currently studying Computer Science while gaining hands-on experience in full-stack development.
             </p>
           </motion.div>
 
@@ -72,7 +72,7 @@ export function HeroSection() {
               href="#projects"
               className="rounded-md bg-primary-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 transition-colors font-body"
             >
-              View My Work
+              View My Projects
             </a>
             <a
               href="#contact"

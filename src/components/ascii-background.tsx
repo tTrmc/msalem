@@ -40,7 +40,7 @@ export function ASCIIBackground() {
                     const hue = (x + y + time * 0.1) % 360
                     const alpha = Math.max(0.1, (brightness + 1) / 4)
 
-                    ctx.fillStyle = `hsla(${hue}, 60%, 70%, ${alpha})`
+                    ctx.fillStyle = `hsla(${hue}, 80%, 60%, ${alpha})`
                     ctx.fillText(char, x, y)
                 }
             }
@@ -59,7 +59,7 @@ export function ASCIIBackground() {
     return (
         <canvas
             ref={canvasRef}
-            className="absolute inset-0 w-full h-full opacity-15 pointer-events-none"
+            className="absolute inset-0 w-full h-full opacity-75 pointer-events-none"
             style={{ zIndex: 0 }}
         />
     )
