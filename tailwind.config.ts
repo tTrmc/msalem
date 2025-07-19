@@ -10,7 +10,6 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Using CSS variables for theme switching
         background: "var(--background)",
         foreground: "var(--foreground)",
         primary: {
@@ -19,6 +18,7 @@ const config: Config = {
           200: "#ead7b8",
           300: "#ddbf8b",
           400: "#c9a668",
+          DEFAULT: "var(--primary)",
           500: "var(--primary)",
           600: "#a37c42",
           700: "#886138",
@@ -32,6 +32,7 @@ const config: Config = {
           200: "#e7e5e4",
           300: "#d6d3d1",
           400: "#a8a29e",
+          DEFAULT: "var(--stone)",
           500: "var(--stone)",
           600: "#57534e",
           700: "#44403c",
@@ -45,6 +46,7 @@ const config: Config = {
           200: "#fcedcc",
           300: "#f9dfa8",
           400: "#f4ca73",
+          DEFAULT: "var(--warm)",
           500: "var(--warm)",
           600: "#e09f30",
           700: "#bb8426",
@@ -56,29 +58,18 @@ const config: Config = {
           50: "#f9f7f4",
           100: "#f2ede6",
           200: "#e3d9cc",
-          300: "#d2c0a8",
-          400: "#bfa282",
+          300: "#d4c5b1",
+          400: "#b08968",
+          DEFAULT: "var(--accent)",
           500: "var(--accent)",
-          600: "#a37a5d",
-          700: "#88654e",
-          800: "#6e5242",
-          900: "#594338",
-          950: "#2f221c",
+          600: "#9d7a5d",
+          700: "#846a52",
+          800: "#6d5847",
+          900: "#5a4a3d",
+          950: "#2f261e",
         }
-      },
-      fontFamily: {
-        'serif': ['Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif'],
-        'sans': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'sans-serif'],
-        'mono': ['SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'monospace'],
-        'display': ['Playfair Display', 'Georgia', 'serif'],
-        'body': ['Inter', 'system-ui', 'sans-serif'],
-      },
-      backgroundImage: {
-        'warm-gradient': 'linear-gradient(135deg, #faf7f0 0%, #f5efe0 50%, #ead7b8 100%)',
-        'stone-gradient': 'linear-gradient(135deg, #fafaf9 0%, #e7e5e4 50%, #d6d3d1 100%)',
-        'dark-warm-gradient': 'linear-gradient(135deg, #2d2a24 0%, #44403c 50%, #57534e 100%)',
-      },
-    },
+      }
+    }
   },
   plugins: [],
 }

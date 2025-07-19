@@ -2,21 +2,44 @@
 @import "tailwindcss";
 
 :root {
+  /* Light mode colors */
   --background: #faebd7;
   --foreground: #311501;
   --primary: #b8944f;
   --stone: #78716c;
   --warm: #efb545;
   --accent: #b08968;
+
+  /* Common variables */
+  --border-radius: 0.5rem;
+  --transition-speed: 0.3s;
+  --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+  /* Add transition for theme color changes */
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
+/* Dark mode colors */
 .dark {
-  --background: #20100c5d;
-  --foreground: #faebd7;
-  --primary: #ddbf8b;
-  --stone: #d6d3d1;
-  --warm: #f4ca73;
-  --accent: #d2c0a8;
+  --background: #151313;
+  --foreground: #f5f5f4;
+  --primary: #d4aa6d;
+  --stone: #efdfd5;
+  --warm: #4f4328;
+  --accent: #1c1c2c;
+
+  /* Keep the same transition in dark mode */
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* Apply transitions to all elements */
+*, *::before, *::after {
+  transition: background-color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+/* Don't transition certain properties to avoid performance issues */
+button, a {
+  transition: transform 0.15s ease, opacity 0.15s ease, background-color 0.5s ease, color 0.5s ease;
 }
 
 html {
@@ -75,11 +98,3 @@ body {
 .text-shadow {
   text-shadow: 0 2px 4px rgba(60, 53, 48, 0.1);
 }
-
-/* Warm background patterns
-.bg-warm-texture {
-  background-image: 
-    radial-gradient(circle at 25% 25%, rgb(250, 235, 215) 0%, transparent 50%),
-    radial-gradient(circle at 75% 75%, rgb(98, 82, 82) 0%, transparent 50%);
-}
-*/
