@@ -2,6 +2,7 @@
 
 import { Github, Linkedin, Mail, ArrowDown } from "lucide-react"
 import { motion } from "framer-motion"
+import { ASCIIBackground } from "./ascii-background"
 
 export function HeroSection() {
   const socialLinks = [
@@ -23,8 +24,9 @@ export function HeroSection() {
   ]
 
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center bg-warm-gradient dark:bg-dark-warm-gradient bg-warm-texture">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20">
+      <section id="hero" className="min-h-screen flex items-center justify-center bg-warm-gradient dark:bg-dark-warm-gradient relative overflow-hidden">
+        <ASCIIBackground />
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
