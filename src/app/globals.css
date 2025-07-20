@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap');
 @import "tailwindcss";
 
 :root {
@@ -22,12 +21,12 @@
 
 /* Dark mode colors */
 .dark {
-  --background: #3a2b2b;
-  --foreground: #d7d7d3;
-  --primary: #af6464;
+  --background: #1f1f1f;
+  --foreground: #d1cfc0;
+  --primary: #f76f53;
   --stone: #e1cdbd;
-  --warm: #e1cbbf;
-  --accent: #a68273;
+  --warm: #1f1f1f;
+  --accent: #414141;
 
   /* Keep the same transition in dark mode */
   transition: background-color 0.5s ease, color 0.5s ease;
@@ -92,7 +91,7 @@ body {
 }
 
 .font-body {
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
 }
 
 /* Text shadow for headings */

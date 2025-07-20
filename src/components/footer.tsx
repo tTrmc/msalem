@@ -23,7 +23,7 @@ export function Footer() {
 
   return (
       <footer style={{
-        backgroundColor: "var(--background)"
+        backgroundColor: "var(--foreground)",
         // Border properties removed
       }}>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
@@ -35,7 +35,7 @@ export function Footer() {
                     <a
                         key={link.label}
                         href={link.href}
-                        style={{ color: "var(--stone)" }}
+                        style={{ color: "var(--background)" }}
                         onMouseOver={(e) => e.currentTarget.style.color = "var(--primary)"}
                         onMouseLeave={(e) => e.currentTarget.style.color = "var(--stone)"}
                         aria-label={link.label}
@@ -49,13 +49,13 @@ export function Footer() {
               })}
             </div>
 
-            <div className="flex items-center space-x-1 text-sm font-body" style={{ color: "var(--stone)" }}>
+            <div className="flex items-center space-x-1 text-sm font-body" style={{ color: "var(--background)" }}>
               <span>Built with</span>
               <Heart className="h-4 w-4" style={{ color: "var(--primary)" }} />
               <span>using Next.js & Tailwind CSS</span>
             </div>
 
-            <p className="text-sm font-body" style={{ color: "var(--stone)" }}>
+            <p className="text-sm font-body" style={{ color: "var(--background)" }}>
               © {new Date().getFullYear()} Moustafa Salem. All rights reserved.
             </p>
           </div>

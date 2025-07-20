@@ -29,18 +29,18 @@ export function HeroSection() {
             lightModeColors={['#000000', '#b7a07e']}
             darkModeColors={['#ffffff', '#b7a07e']}
         />
-        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20">
-          <div className="text-center">
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-28 lg:py-36">
+          <div className="text-center max-w-4xl mx-auto">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
             >
-              <h1 className="text-4xl font-display font-bold tracking-tight text-[var(--foreground)] sm:text-6xl text-shadow">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold tracking-tight text-[var(--foreground)] text-shadow">
                 Hi, I&apos;m{" "}
                 <span className="font-bold text-[var(--primary)]">
-                Moustafa Salem
-              </span>
+        Moustafa Salem
+      </span>
               </h1>
             </motion.div>
 
@@ -49,19 +49,8 @@ export function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
             >
-              <p className="mt-6 text-lg leading-8 text-[var(--stone)] sm:text-xl font-body">
-                Computer Science Student & Aspiring Software Engineer
-              </p>
-            </motion.div>
-
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <p className="mt-4 text-base text-[var(--stone)] max-w-2xl mx-auto font-body opacity-100">
-                Passionate about learning new technologies and building meaningful projects.
-                Currently studying Computer Science while gaining hands-on experience in full-stack development.
+              <p className="mt-8 text-xl md:text-2xl leading-8 text-[var(--stone)] font-body">
+                Computer Science Student
               </p>
             </motion.div>
 

@@ -20,7 +20,7 @@ export function Navigation() {
           <div className="flex h-16 items-center justify-between">
             <Link
                 href="#hero"
-                className="text-xl font-display font-bold"
+                className="text-xl font-body font-bold"
                 style={{ color: "var(--foreground)" }}
             >
               Portfolio

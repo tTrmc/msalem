@@ -4,12 +4,12 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import React from "react";
-import { Inter, Cormorant_Garamond } from "next/font/google";
+import {  Bricolage_Grotesque, Cormorant_Garamond } from "next/font/google";
 
-const inter = Inter({
+const  bricolageGrotesque  =  Bricolage_Grotesque({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-inter',
+  variable: '--font-grotesque',
 });
 
 const cormorantGaramond = Cormorant_Garamond({
@@ -30,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <html lang="en" className={`${inter.variable} ${cormorantGaramond.variable}`} suppressHydrationWarning>
+      <html lang="en" className={`${bricolageGrotesque.variable} ${cormorantGaramond.variable}`} suppressHydrationWarning>
       <body className="font-body antialiased transition-colors duration-300">
       <ThemeProvider
           attribute="class"

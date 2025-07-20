@@ -93,7 +93,7 @@ export function ASCIIBackground({
 
         const animate = (time: number) => {
             ctx.clearRect(0, 0, canvas.width, canvas.height)
-            ctx.font = '12px monospace'
+            ctx.font = '14px monospace'
 
             const mouseX = mouseRef.current.x
             const mouseY = mouseRef.current.y
