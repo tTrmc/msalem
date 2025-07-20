@@ -4,6 +4,20 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import React from "react";
+import { Inter, Cormorant_Garamond } from "next/font/google";
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
+
+const cormorantGaramond = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  display: 'swap',
+  variable: '--font-cormorant',
+});
 
 export const metadata: Metadata = {
   title: "Moustafa Salem",
@@ -11,24 +25,24 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
-}: Readonly<{
+                                     children,
+                                   }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+      <html lang="en" className={`${inter.variable} ${cormorantGaramond.variable}`} suppressHydrationWarning>
       <body className="font-body antialiased transition-colors duration-300">
-        <ThemeProvider
+      <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
-        >
-          {children}
-          <Analytics />
-          <SpeedInsights />
-        </ThemeProvider>
+      >
+        {children}
+        <Analytics />
+        <SpeedInsights />
+      </ThemeProvider>
       </body>
-    </html>
+      </html>
   );
 }

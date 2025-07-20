@@ -3,40 +3,65 @@
 import * as React from "react"
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
+import { motion, AnimatePresence } from "framer-motion"
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = React.useState(false)
+    const { theme, setTheme } = useTheme()
+    const [mounted, setMounted] = React.useState(false)
 
-  React.useEffect(() => {
-    setMounted(true)
-  }, [])
+    // For animation tracking
+    const [isAnimating, setIsAnimating] = React.useState(false)
 
-  if (!mounted) {
-    return null
-  }
+    const toggleTheme = () => {
+        if (isAnimating) return
+        setIsAnimating(true)
+        setTheme(theme === "light" ? "dark" : "light")
+        setTimeout(() => setIsAnimating(false), 500)
+    }
 
-  return (
-      <button
-          onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-          className="relative inline-flex h-10 w-10 items-center justify-center rounded-md border transition-all duration-300
-        bg-[var(--background)] text-[var(--foreground)] border-[var(--stone)]
+    React.useEffect(() => {
+        setMounted(true)
+    }, [])
+
+    if (!mounted) {
+        return null
+    }
+
+    return (
+        <motion.button
+            onClick={toggleTheme}
+            className="relative inline-flex h-10 w-10 items-center justify-center rounded-md border overflow-hidden
+        bg-[var(--background)] border-[var(--stone)]
         hover:bg-[var(--accent)] focus:outline-none focus:ring-2
         focus:ring-[var(--primary)] focus:ring-offset-2"
-          aria-label="Toggle theme"
-      >
-        <div className="relative h-5 w-5">
-          <Sun className={`absolute h-full w-full transition-all duration-300 ${
-              theme === "light"
-                  ? "rotate-0 opacity-100"
-                  : "rotate-90 opacity-0"
-          }`} />
-          <Moon className={`absolute h-full w-full transition-all duration-300 ${
-              theme === "dark"
-                  ? "rotate-0 opacity-100"
-                  : "-rotate-90 opacity-0"
-          }`} />
-        </div>
-      </button>
-  )
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            aria-label="Toggle theme"
+        >
+            <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                    key={theme}
+                    initial={{ y: -20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: 20, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="relative h-5 w-5 flex items-center justify-center"
+                >
+                    {theme === "light" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                </motion.div>
+            </AnimatePresence>
+
+            <motion.div
+                className="absolute inset-0 rounded-md"
+                animate={{
+                    scale: isAnimating ? 1.5 : 0,
+                    opacity: isAnimating ? 0.4 : 0
+                }}
+                transition={{ duration: 0.5 }}
+                style={{
+                    background: `radial-gradient(circle at center, var(--primary) 0%, transparent 70%)`,
+                }}
+            />
+        </motion.button>
+    )
 }

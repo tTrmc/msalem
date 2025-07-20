@@ -58,7 +58,7 @@ export function ContactSection() {
               viewport={{ once: true }}
               className="text-center"
           >
-            <h2 className="text-3xl font-display font-bold tracking-tight sm:text-4xl text-shadow" style={{ color: "var(--foreground)" }}>
+            <h2 className="text-3xl font-display font-bold tracking-tight sm:text-4xl text-shadow" style={{ color: "var(--stone)" }}>
               Get In Touch
             </h2>
             <p className="mt-4 text-lg font-body" style={{ color: "var(--stone)" }}>

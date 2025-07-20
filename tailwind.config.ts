@@ -68,6 +68,10 @@ const config: Config = {
           900: "#5a4a3d",
           950: "#2f261e",
         }
+      },
+      fontFamily: {
+        display: ['var(--font-cormorant)', 'serif'],
+        body: ['var(--font-inter)', 'sans-serif'],
       }
     }
   },

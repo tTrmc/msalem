@@ -73,7 +73,7 @@ export function ProjectsSection() {
                         project.featured ? "lg:col-span-1" : ""
                     }`}
                     style={{
-                      backgroundColor: "var(--background)",
+                      backgroundColor: "var(--accent)",
                       border: "1px solid var(--stone)",
                       boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
                     }}

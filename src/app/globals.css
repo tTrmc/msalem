@@ -1,14 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300..700&display=swap');
 @import "tailwindcss";
 
 :root {
   /* Light mode colors */
-  --background: #faebd7;
-  --foreground: #311501;
-  --primary: #b8944f;
-  --stone: #78716c;
-  --warm: #efb545;
-  --accent: #b08968;
+  --background: #f1d9d2;
+  --foreground: #000000;
+  --primary: #000000;
+  --stone: #311508;
+  --warm: #b7a07e;
+  --accent: #f9e6cd;
 
   /* Common variables */
   --border-radius: 0.5rem;
@@ -21,12 +22,12 @@
 
 /* Dark mode colors */
 .dark {
-  --background: #151313;
-  --foreground: #f5f5f4;
-  --primary: #d4aa6d;
-  --stone: #efdfd5;
-  --warm: #4f4328;
-  --accent: #1c1c2c;
+  --background: #3a2b2b;
+  --foreground: #d7d7d3;
+  --primary: #af6464;
+  --stone: #e1cdbd;
+  --warm: #e1cbbf;
+  --accent: #a68273;
 
   /* Keep the same transition in dark mode */
   transition: background-color 0.5s ease, color 0.5s ease;
@@ -63,7 +64,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #b8944f;
+  background: #a69d8d;
   border-radius: 4px;
 }
 
@@ -87,7 +88,7 @@ body {
 
 /* Typography utilities */
 .font-display {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
 }
 
 .font-body {

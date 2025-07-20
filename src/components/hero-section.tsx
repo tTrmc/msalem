@@ -25,7 +25,10 @@ export function HeroSection() {
 
   return (
       <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden">
-        <ASCIIBackground />
+        <ASCIIBackground
+            lightModeColors={['#000000', '#b7a07e']}
+            darkModeColors={['#ffffff', '#b7a07e']}
+        />
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
             <motion.div
@@ -35,12 +38,7 @@ export function HeroSection() {
             >
               <h1 className="text-4xl font-display font-bold tracking-tight text-[var(--foreground)] sm:text-6xl text-shadow">
                 Hi, I&apos;m{" "}
-                <span className="font-bold" style={{
-                  backgroundImage: `linear-gradient(to right, var(--primary), var(--accent))`,
-                  WebkitBackgroundClip: "text",
-                  backgroundClip: "text",
-                  color: "transparent"
-                }}>
+                <span className="font-bold text-[var(--primary)]">
                 Moustafa Salem
               </span>
               </h1>
@@ -61,7 +59,7 @@ export function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <p className="mt-4 text-base text-[var(--stone)] max-w-2xl mx-auto font-body opacity-80">
+              <p className="mt-4 text-base text-[var(--stone)] max-w-2xl mx-auto font-body opacity-100">
                 Passionate about learning new technologies and building meaningful projects.
                 Currently studying Computer Science while gaining hands-on experience in full-stack development.
               </p>
