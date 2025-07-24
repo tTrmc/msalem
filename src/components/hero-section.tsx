@@ -50,7 +50,7 @@ export function HeroSection() {
                 transition={{ duration: 0.5, delay: 0.1 }}
             >
               <p className="mt-8 text-xl md:text-2xl leading-8 text-[var(--stone)] font-body">
-                Computer Science Student
+                Computer Science Student @ Queen&apos;s University
               </p>
             </motion.div>
 

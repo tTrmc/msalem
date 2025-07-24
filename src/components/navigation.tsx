@@ -23,7 +23,7 @@ export function Navigation() {
                 className="text-xl font-body font-bold"
                 style={{ color: "var(--foreground)" }}
             >
-              Portfolio
+              Home
             </Link>
 
             {/* Desktop Navigation - Absolutely centered */}
@@ -33,10 +33,10 @@ export function Navigation() {
                     <Link
                         key={item.href}
                         href={item.href}
-                        className="rounded-md px-3 py-2 text-sm font-medium font-body transition-colors"
-                        style={{ color: "var(--stone)" }}
+                        className="rounded-md px-8 py-2 text-xl font-medium font-body transition-colors"
+                        style={{ color: "var(--foreground)" }}
                         onMouseOver={(e) => e.currentTarget.style.color = "var(--primary)"}
-                        onMouseLeave={(e) => e.currentTarget.style.color = "var(--stone)"}
+                        onMouseLeave={(e) => e.currentTarget.style.color = "var(--foreground)"}
                     >
                       {item.label}
                     </Link>

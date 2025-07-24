@@ -38,7 +38,7 @@ export function ContactSection() {
       icon: Phone,
       title: "Phone",
       value: "+1 (437) 606-5735",
-      href: "tel:+15551234567",
+      href: "tel:+14376065735",
     },
     {
       icon: MapPin,

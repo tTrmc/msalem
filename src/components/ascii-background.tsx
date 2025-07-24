@@ -1,6 +1,7 @@
 "use client"
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
+import { useTheme } from 'next-themes'
 
 interface ASCIIBackgroundProps {
     lightModeColors?: string[];
@@ -13,25 +14,10 @@ export function ASCIIBackground({
                                 }: ASCIIBackgroundProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const mouseRef = useRef({ x: 0, y: 0 })
-    const [isDarkMode, setIsDarkMode] = useState(false)
+    const { theme } = useTheme()
 
-    // Detect color scheme
-    useEffect(() => {
-        // Check initial mode
-        if (typeof window !== 'undefined') {
-            setIsDarkMode(window.matchMedia('(prefers-color-scheme: dark)').matches)
-
-            // Listen for changes
-            const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-            const handleChange = (e: MediaQueryListEvent) => setIsDarkMode(e.matches)
-
-            mediaQuery.addEventListener('change', handleChange)
-            return () => mediaQuery.removeEventListener('change', handleChange)
-        }
-    }, [])
-
-    // Use appropriate color palette based on mode
-    const colors = isDarkMode ? darkModeColors : lightModeColors
+    // Use appropriate color palette based on theme
+    const colors = theme === 'dark' ? darkModeColors : lightModeColors
 
     useEffect(() => {
         const canvas = canvasRef.current
