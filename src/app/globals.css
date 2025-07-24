@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap');
 @import "tailwindcss";
 
 :root {
@@ -14,9 +13,6 @@
   --border-radius: 0.5rem;
   --transition-speed: 0.3s;
   --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-
-  /* Add transition for theme color changes */
-  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 /* Dark mode colors */
@@ -27,19 +23,21 @@
   --stone: #e1cdbd;
   --warm: #1f1f1f;
   --accent: #414141;
+}
 
-  /* Keep the same transition in dark mode */
-  transition: background-color 0.5s ease, color 0.5s ease;
+/* Base transitions */
+:root {
+  --theme-transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 /* Apply transitions to all elements */
 *, *::before, *::after {
-  transition: background-color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+  transition: var(--theme-transition);
 }
 
-/* Don't transition certain properties to avoid performance issues */
+/* Interactive element transitions */
 button, a {
-  transition: transform 0.15s ease, opacity 0.15s ease, background-color 0.5s ease, color 0.5s ease;
+  transition: transform 0.15s ease, opacity 0.15s ease, var(--theme-transition);
 }
 
 html {
@@ -49,41 +47,29 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: var(--font-grotesque), system-ui, sans-serif;
+  transition: var(--theme-transition);
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar - Light mode */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f5efe0;
+  background: var(--background);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #a69d8d;
+  background: var(--stone);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a37c42;
+  background: var(--primary);
 }
 
-@media (prefers-color-scheme: dark) {
-  ::-webkit-scrollbar-track {
-    background: #44403c;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background: #78716c;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background: #a8a29e;
-  }
-}
+/* Dark mode scrollbar adjustments handled by CSS variables */
 
 /* Typography utilities */
 .font-display {

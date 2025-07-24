@@ -25,10 +25,7 @@ export function HeroSection() {
 
   return (
       <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden">
-        <ASCIIBackground
-            lightModeColors={['#000000', '#b7a07e']}
-            darkModeColors={['#ffffff', '#b7a07e']}
-        />
+        <ASCIIBackground/>
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-28 lg:py-36">
           <div className="text-center max-w-4xl mx-auto">
             <motion.div

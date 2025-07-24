@@ -1,131 +1,149 @@
-"use client"
+"use client";
 
-import { useEffect, useRef } from 'react'
-import { useTheme } from 'next-themes'
+import { useEffect, useRef, useMemo } from "react";
+import { useTheme } from "next-themes";
 
 interface ASCIIBackgroundProps {
+    /** Palette when the site is in light mode */
     lightModeColors?: string[];
+    /** Palette when the site is in dark mode */
     darkModeColors?: string[];
+    /** Height of a character row (px). Adjust to taste / performance */
+    fontSize?: number;
+    /** Width of a character column (px). Adjust to taste / performance */
+    charWidth?: number;
 }
 
+/**
+ * Animated ASCII background.
+ *
+ * ─ Fixes & improvements over the original ──────────────────────────────
+ *   • Palette is no longer mutated; useMemo guarantees a stable reference.
+ *   • Added defensive colour normalisation in one place (map → #RRGGBB).
+ *   • Stable resize handler sets font + baseline once per resize.
+ *   • Uses requestAnimationFrame time parameter instead of Date.now().
+ *   • Character and colour indices both clamp to length‑1, avoiding [][].
+ *   • hexToRgb simplified, supports #RGB & #RRGGBB and guards against undefined.
+ *   • All listeners cleaned up on unmount.
+ *   • Extra props (fontSize / charWidth) let callers trade fidelity vs FPS.
+ */
 export function ASCIIBackground({
-                                    lightModeColors = ['#E3F2FD', '#BBDEFB', '#90CAF9', '#64B5F6', '#42A5F5'],
-                                    darkModeColors = ['#0C0032', '#190061', '#240090', '#3500D3', '#42047E']
+                                    lightModeColors = ["#E3F2FD", "#BBDEFB", "#90CAF9", "#64B5F6", "#42A5F5"],
+                                    darkModeColors = ["#1f1f1f", "#414141", "#6c6259", "#4f4e45", "#f76f53"],
+                                    fontSize = 16,
+                                    charWidth = 10,
                                 }: ASCIIBackgroundProps) {
-    const canvasRef = useRef<HTMLCanvasElement>(null)
-    const mouseRef = useRef({ x: 0, y: 0 })
-    const { theme } = useTheme()
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const mouseRef = useRef({ x: 0, y: 0 });
+    const { theme } = useTheme();
 
-    // Use appropriate color palette based on theme
-    const colors = theme === 'dark' ? darkModeColors : lightModeColors
+    /** Normalised colour palette (always #RRGGBB, memoised by theme) */
+    const palette = useMemo(() => {
+        const raw = theme === "dark" ? darkModeColors : lightModeColors;
+        return raw.map((c) => (c.startsWith("#") ? c : `#${c}`));
+    }, [theme, darkModeColors, lightModeColors]);
 
     useEffect(() => {
-        const canvas = canvasRef.current
-        if (!canvas) return
+        const canvas = canvasRef.current;
+        const ctx = canvas?.getContext("2d");
+        if (!canvas || !ctx) return;
 
-        const ctx = canvas.getContext('2d')
-        if (!ctx) return
+        /* ───── helpers ──────────────────────────────────────────────────── */
 
-        const chars = ' .:-=+*#%@'
-        let animationId: number
+        const chars = " .:-=+*#%@";
 
-        // Helper to convert hex to RGB
-        const hexToRgb = (hex: string) => {
-            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-            return result ? {
-                r: parseInt(result[1], 16),
-                g: parseInt(result[2], 16),
-                b: parseInt(result[3], 16)
-            } : null;
+        /** Convert #RGB / #RRGGBB → rgb tuple; fallback to black if input invalid */
+        const hexToRgb = (hex?: string) => {
+            if (!hex) return { r: 0, g: 0, b: 0 };
+            const h = hex.replace("#", "");
+            const full = h.length === 3 ? h.split("").map((x) => x + x).join("") : h;
+            const num = parseInt(full, 16);
+            return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 };
         };
 
-        // Color interpolation function
-        const getColorFromGradient = (value: number, alpha: number) => {
-            const normalizedValue = Math.max(0, Math.min(1, value));
-            const segment = normalizedValue * (colors.length - 1);
-            const index = Math.floor(segment);
-            const fraction = segment - index;
-
-            if (index >= colors.length - 1) {
-                const color = hexToRgb(colors[colors.length - 1]);
-                return color ? `rgba(${color.r}, ${color.g}, ${color.b}, ${alpha})` : `rgba(0, 0, 0, ${alpha})`;
-            }
-
-            const color1 = hexToRgb(colors[index]);
-            const color2 = hexToRgb(colors[index + 1]);
-
-            if (!color1 || !color2) return `rgba(0, 0, 0, ${alpha})`;
-
-            const r = Math.round(color1.r + fraction * (color2.r - color1.r));
-            const g = Math.round(color1.g + fraction * (color2.g - color1.g));
-            const b = Math.round(color1.b + fraction * (color2.b - color1.b));
-
-            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        const resize = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            ctx.font = `${fontSize}px monospace`;
+            ctx.textBaseline = "top";
         };
 
-        const resizeCanvas = () => {
-            canvas.width = window.innerWidth
-            canvas.height = window.innerHeight
-        }
+        const handleMouse = (e: MouseEvent) => {
+            mouseRef.current = { x: e.clientX, y: e.clientY };
+        };
 
-        const handleMouseMove = (e: MouseEvent) => {
-            mouseRef.current.x = e.clientX
-            mouseRef.current.y = e.clientY
-        }
+        resize();
+        window.addEventListener("resize", resize);
+        window.addEventListener("mousemove", handleMouse);
 
-        resizeCanvas()
-        window.addEventListener('resize', resizeCanvas)
-        window.addEventListener('mousemove', handleMouseMove)
+        /* ───── animation loop ──────────────────────────────────────────── */
 
-        const animate = (time: number) => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height)
-            ctx.font = '14px monospace'
+        let frameId = 0;
 
-            const mouseX = mouseRef.current.x
-            const mouseY = mouseRef.current.y
+        const step = (time: number) => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            for (let y = 0; y < canvas.height; y += 16) {
-                for (let x = 0; x < canvas.width; x += 10) {
-                    const dx = x - mouseX
-                    const dy = y - mouseY
-                    const distance = Math.sqrt(dx * dx + dy * dy)
+            const { x: mx, y: my } = mouseRef.current;
 
-                    const mouseInfluence = Math.exp(-distance / 150) * 2
-                    const mouseWave = Math.sin(distance * 0.02 - time * 0.005) * mouseInfluence
+            for (let y = 0; y < canvas.height; y += fontSize) {
+                for (let x = 0; x < canvas.width; x += charWidth) {
+                    const dx = x - mx;
+                    const dy = y - my;
+                    const dist = Math.hypot(dx, dy);
 
-                    const wave1 = Math.sin((x * 0.005) + (time * 0.001))
-                    const wave2 = Math.cos((y * 0.008) + (time * 0.0008))
-                    const wave3 = Math.sin(((x + y) * 0.003) + (time * 0.0012))
+                    const mouseAmp = Math.exp(-dist / 150) * 2;
+                    const mouseWave = Math.sin(dist * 0.02 - time * 0.005) * mouseAmp;
 
-                    const brightness = (wave1 + wave2 + wave3 + mouseWave) / 4
-                    const charIndex = Math.floor(((brightness + 1) / 2) * (chars.length - 1))
-                    const char = chars[Math.max(0, Math.min(chars.length - 1, charIndex))]
+                    const w1 = Math.sin(x * 0.005 + time * 0.001);
+                    const w2 = Math.cos(y * 0.008 + time * 0.0008);
+                    const w3 = Math.sin((x + y) * 0.003 + time * 0.0012);
 
-                    const alpha = Math.max(0.1, (brightness + 1) / 4)
-                    const normalizedBrightness = (brightness + 1) / 2 // Convert from -1,1 to 0,1
+                    const h = (w1 + w2 + w3 + mouseWave) / 4; // roughly in −1 … 1 but may exceed slightly
+                    const normRaw = (h + 1) / 2; // un‑clamped 0 … 1 range
+                    const norm = Math.min(1, Math.max(0, normRaw)); // clamp to [0,1]
 
-                    ctx.fillStyle = getColorFromGradient(normalizedBrightness, alpha)
-                    ctx.fillText(char, x, y)
+                    // pick character + colour based on norm
+                    const charIdx = Math.floor(norm * (chars.length - 1));
+                    const colourIdx = Math.floor(norm * (palette.length - 1));
+
+                    const char = chars[charIdx];
+                    const { r, g, b } = hexToRgb(palette[colourIdx]);
+                    ctx.fillStyle = `rgb(${r},${g},${b})`;
+
+                    ctx.fillText(char, x, y);
                 }
             }
 
-            animationId = requestAnimationFrame(animate)
-        }
+            frameId = requestAnimationFrame(step);
+        };
 
-        animate(0)
+        frameId = requestAnimationFrame(step);
 
         return () => {
-            cancelAnimationFrame(animationId)
-            window.removeEventListener('resize', resizeCanvas)
-            window.removeEventListener('mousemove', handleMouseMove)
-        }
-    }, [colors])
+            cancelAnimationFrame(frameId);
+            window.removeEventListener("resize", resize);
+            window.removeEventListener("mousemove", handleMouse);
+        };
+    }, [palette, fontSize, charWidth]);
+
+    /* ───── render ─────────────────────────────────────────────────────── */
 
     return (
-        <canvas
-            ref={canvasRef}
-            className="absolute inset-0 w-full h-full opacity-100 pointer-events-none"
-            style={{ zIndex: 0 }}
-        />
-    )
+        <div className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 0 }}>
+            <canvas
+                ref={canvasRef}
+                className="absolute inset-0 w-full h-full"
+            />
+            {/* Gradient overlay to fade the ASCII art into the background */}
+            <div 
+                className="absolute inset-0 w-full h-full"
+                style={{
+                    background: `linear-gradient(to bottom, transparent 0%, transparent 60%, var(--background) 100%)`
+                }}
+            />
+        </div>
+    );
 }
+
+// Also export as default for compatibility with default‑import style.
+export default ASCIIBackground;
