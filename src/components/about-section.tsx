@@ -37,10 +37,10 @@ export function AboutSection() {
               viewport={{ once: true }}
               className="text-center"
           >
-            <h2 className="text-3xl font-display font-bold tracking-tight text-[var(--foreground)] sm:text-4xl text-shadow">
+            <h2 className="text-3xl font-display font-bold tracking-tight text-[var(--primary)] sm:text-4xl text-shadow">
               About Me
             </h2>
-            <p className="mt-4 text-lg text-[var(--stone)] font-body">
+            <p className="mt-4 text-lg text-[var(--foreground)] font-body">
               Passionate developer with a love for creating innovative solutions
             </p>
           </motion.div>
@@ -52,10 +52,10 @@ export function AboutSection() {
                 transition={{ duration: 0.5, delay: 0.1 }}
                 viewport={{ once: true }}
             >
-              <h3 className="text-2xl font-display font-bold text-[var(--foreground)] mb-6">
+              <h3 className="text-2xl font-display font-bold text-[var(--primary)] mb-6">
                 My Journey
               </h3>
-              <div className="space-y-4 text-[var(--stone)] font-body">
+              <div className="space-y-4 text-[var(--foreground)] font-body">
                 <p>
                   I&apos;m a passionate full-stack developer with over 5 years of experience
                   creating web applications and digital solutions. My journey began with
@@ -95,7 +95,7 @@ export function AboutSection() {
                         className="p-6 rounded-lg hover:shadow-lg transition-shadow"
                         style={{
                           backgroundColor: "var(--accent)",
-                          border: "1px solid var(--stone)",
+                          border: "1px solid var(--warm)",
                           opacity: 0.9
                         }}
                     >
@@ -103,7 +103,7 @@ export function AboutSection() {
                       <h4 className="text-lg font-semibold font-body mb-2" style={{ color: "var(--foreground)" }}>
                         {skill.title}
                       </h4>
-                      <p className="text-sm font-body" style={{ color: "var(--stone)" }}>
+                      <p className="text-sm font-body" style={{ color: "var(--foreground)" }}>
                         {skill.description}
                       </p>
                     </motion.div>

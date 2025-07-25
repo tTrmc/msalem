@@ -17,12 +17,12 @@
 
 /* Dark mode colors */
 .dark {
-  --background: #1f1f1f;
-  --foreground: #d1cfc0;
-  --primary: #f76f53;
-  --stone: #e1cdbd;
-  --warm: #1f1f1f;
-  --accent: #414141;
+  --background: #211c1c;
+  --foreground: #dfc5b6;
+  --primary: #f9cc6c;
+  --stone: #adda78;
+  --warm: #fd6883;
+  --accent: #2c2525;
 }
 
 /* Base transitions */

@@ -46,7 +46,7 @@ export function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
             >
-              <p className="mt-8 text-xl md:text-2xl leading-8 text-[var(--stone)] font-body">
+              <p className="mt-8 text-xl md:text-2xl leading-8 text-[var(--foreground)] font-body">
                 Computer Science Student @ Queen&apos;s University
               </p>
             </motion.div>
@@ -89,13 +89,13 @@ export function HeroSection() {
                         href={link.href}
                         className="transition-colors"
                         style={{
-                          color: "var(--stone)"
+                          color: "var(--warm)"
                         }}
                         aria-label={link.label}
                         target="_blank"
                         rel="noopener noreferrer"
                         onMouseOver={(e) => e.currentTarget.style.color = "var(--primary)"}
-                        onMouseLeave={(e) => e.currentTarget.style.color = "var(--stone)"}
+                        onMouseLeave={(e) => e.currentTarget.style.color = "var(--warm)"}
                     >
                       <Icon className="h-6 w-6" />
                     </a>
@@ -113,10 +113,10 @@ export function HeroSection() {
                   href="#about"
                   className="inline-flex items-center transition-colors"
                   style={{
-                    color: "var(--stone)"
+                    color: "var(--foreground)"
                   }}
                   onMouseOver={(e) => e.currentTarget.style.color = "var(--primary)"}
-                  onMouseLeave={(e) => e.currentTarget.style.color = "var(--stone)"}
+                  onMouseLeave={(e) => e.currentTarget.style.color = "var(--foreground)"}
                   aria-label="Scroll to about section"
               >
                 <ArrowDown className="h-5 w-5 animate-bounce" />

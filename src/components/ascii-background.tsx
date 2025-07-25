@@ -138,7 +138,7 @@ export function ASCIIBackground({
             <div 
                 className="absolute inset-0 w-full h-full"
                 style={{
-                    background: `linear-gradient(to bottom, transparent 0%, transparent 60%, var(--background) 100%)`
+                    background: `linear-gradient(to bottom, var(--background) 0%, transparent 20%, transparent 60%, var(--background) 100%)`
                 }}
             />
         </div>
