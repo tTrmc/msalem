@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import { Mail, MapPin, Phone } from "lucide-react"
 import React, { useState } from "react"
+import { handleApiRequest, validateContactForm } from "@/lib/api-utils"
 
 export function ContactSection() {
   const [formData, setFormData] = useState({
@@ -11,6 +12,8 @@ export function ContactSection() {
     subject: "",
     message: "",
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData(prev => ({
@@ -19,12 +22,42 @@ export function ContactSection() {
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Form submission logic would go here
-    console.log("Form submitted:", formData)
-    alert("Thank you for your message! I'll get back to you soon.")
-    setFormData({ name: "", email: "", subject: "", message: "" })
+    setIsSubmitting(true)
+    setSubmitStatus('idle')
+
+    // Client-side validation
+    const validationError = validateContactForm(formData)
+    if (validationError) {
+      alert(validationError)
+      setIsSubmitting(false)
+      return
+    }
+
+    try {
+      const result = await handleApiRequest('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (result.success) {
+        setSubmitStatus('success')
+        setFormData({ name: "", email: "", subject: "", message: "" })
+        alert("Thank you for your message! I'll get back to you soon.")
+      } else {
+        setSubmitStatus('error')
+        alert(result.error || "Something went wrong. Please try again.")
+      }
+    } catch (error) {
+      setSubmitStatus('error')
+      alert("Failed to send message. Please try again.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const contactInfo = [
@@ -143,7 +176,7 @@ export function ContactSection() {
                         required
                         value={formData.name}
                         onChange={handleChange}
-                        className="mt-1 block w-full rounded-md shadow-sm font-body"
+                        className="mt-1 block w-full rounded-md shadow-sm font-body focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         style={{
                           backgroundColor: "var(--warm)",
                           color: "var(--foreground)",
@@ -162,7 +195,7 @@ export function ContactSection() {
                         required
                         value={formData.email}
                         onChange={handleChange}
-                        className="mt-1 block w-full rounded-md shadow-sm font-body"
+                        className="mt-1 block w-full rounded-md shadow-sm font-body focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         style={{
                           backgroundColor: "var(--warm)",
                           color: "var(--foreground)",
@@ -183,7 +216,7 @@ export function ContactSection() {
                       required
                       value={formData.subject}
                       onChange={handleChange}
-                      className="mt-1 block w-full rounded-md shadow-sm font-body"
+                      className="mt-1 block w-full rounded-md shadow-sm font-body focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       style={{
                         backgroundColor: "var(--warm)",
                         color: "var(--foreground)",
@@ -203,7 +236,7 @@ export function ContactSection() {
                       required
                       value={formData.message}
                       onChange={handleChange}
-                      className="mt-1 block w-full rounded-md shadow-sm font-body"
+                      className="mt-1 block w-full rounded-md shadow-sm font-body focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       style={{
                         backgroundColor: "var(--warm)",
                         color: "var(--foreground)",
@@ -215,15 +248,16 @@ export function ContactSection() {
                 <div>
                   <button
                       type="submit"
-                      className="w-full flex justify-center py-3 px-4 rounded-md shadow-sm text-sm font-medium font-body transition-colors"
+                      disabled={isSubmitting}
+                      className="w-full flex justify-center py-3 px-4 rounded-md shadow-sm text-sm font-medium font-body transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                       style={{
                         backgroundColor: "var(--primary)",
                         color: "var(--background)"
                       }}
-                      onMouseOver={(e) => e.currentTarget.style.opacity = "0.9"}
-                      onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
+                      onMouseOver={(e) => !isSubmitting && (e.currentTarget.style.opacity = "0.9")}
+                      onMouseLeave={(e) => !isSubmitting && (e.currentTarget.style.opacity = "1")}
                   >
-                    Send Message
+                    {isSubmitting ? "Sending..." : "Send Message"}
                   </button>
                 </div>
               </form>

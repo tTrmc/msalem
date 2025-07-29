@@ -23,7 +23,7 @@ export function Navigation() {
                 className="text-xl font-body font-bold"
                 style={{ color: "var(--foreground)" }}
             >
-              Home
+              Salem
             </Link>
 
             {/* Desktop Navigation - Absolutely centered */}
