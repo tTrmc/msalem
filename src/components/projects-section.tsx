@@ -53,10 +53,10 @@ export function ProjectsSection() {
           viewport={{ once: true }}
           className="text-center"
         >
-          <h2 className="text-3xl font-display font-bold tracking-tight sm:text-4xl text-shadow" style={{ color: "var(--foreground)" }}>
+          <h2 className="text-3xl font-display font-bold tracking-tight sm:text-4xl text-shadow" style={{ color: "var(--primary)" }}>
             Featured Projects
           </h2>
-          <p className="mt-4 text-lg font-body" style={{ color: "var(--stone)" }}>
+          <p className="mt-4 text-lg font-body" style={{ color: "var(--foreground)" }}>
             A showcase of my recent work and side projects
           </p>
         </motion.div>
@@ -73,8 +73,8 @@ export function ProjectsSection() {
                 project.featured ? "lg:col-span-1" : ""
               }`}
               style={{
-                backgroundColor: "var(--accent)",
-                border: "1px solid var(--stone)",
+                backgroundColor: "var(--primary)",
+                border: "1px solid var(--warm)",
                 boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
               }}
             >
@@ -85,7 +85,7 @@ export function ProjectsSection() {
                     backgroundImage: `linear-gradient(to bottom right, var(--primary), var(--accent))`
                   }}
                 >
-                  <span className="text-white font-semibold text-lg font-body">
+                  <span className="font-semibold text-lg font-body" style={{ color: "var(--background)" }}>
                     {project.title}
                   </span>
                 </div>
@@ -93,10 +93,10 @@ export function ProjectsSection() {
               </div>
 
               <div className="p-6">
-                <h3 className="text-xl font-bold mb-2 font-display" style={{ color: "var(--foreground)" }}>
+                <h3 className="text-xl font-bold mb-2 font-display" style={{ color: "var(--background)" }}>
                   {project.title}
                 </h3>
-                <p className="text-sm mb-4 font-body" style={{ color: "var(--stone)" }}>
+                <p className="text-sm mb-4 font-body" style={{ color: "var(--background)" }}>
                   {project.description}
                 </p>
                 <div className="flex flex-wrap gap-2 mb-4">
@@ -105,8 +105,8 @@ export function ProjectsSection() {
                       key={tech}
                       className="text-xs px-2 py-1 rounded-full font-body"
                       style={{
-                        backgroundColor: "var(--primary)",
-                        color: "var(--background)"
+                        backgroundColor: "var(--warm)",
+                        color: "var(--foreground)"
                       }}
                     >
                       {tech}

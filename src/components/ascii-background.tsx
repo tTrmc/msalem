@@ -29,7 +29,7 @@ interface ASCIIBackgroundProps {
  */
 export function ASCIIBackground({
                                     lightModeColors = ["#E3F2FD", "#BBDEFB", "#90CAF9", "#64B5F6", "#42A5F5"],
-                                    darkModeColors = ["#1f1f1f", "#414141", "#6c6259", "#4f4e45", "#f76f53"],
+                                    darkModeColors = ["#0f0f1b", "#242633", "#565a75", "#c6b7be", "#fafbf6"],
                                     fontSize = 16,
                                     charWidth = 10,
                                 }: ASCIIBackgroundProps) {
@@ -84,12 +84,18 @@ export function ASCIIBackground({
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             const { x: mx, y: my } = mouseRef.current;
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
 
             for (let y = 0; y < canvas.height; y += fontSize) {
                 for (let x = 0; x < canvas.width; x += charWidth) {
                     const dx = x - mx;
                     const dy = y - my;
                     const dist = Math.hypot(dx, dy);
+
+                    // Calculate distance from center for text readability
+                    const centerDist = Math.hypot(x - centerX, y - centerY);
+                    const centerFade = Math.min(1, centerDist / 800); // Adjust 300 to control fade area
 
                     const mouseAmp = Math.exp(-dist / 150) * 2;
                     const mouseWave = Math.sin(dist * 0.02 - time * 0.005) * mouseAmp;
@@ -102,9 +108,12 @@ export function ASCIIBackground({
                     const normRaw = (h + 1) / 2; // un‑clamped 0 … 1 range
                     const norm = Math.min(1, Math.max(0, normRaw)); // clamp to [0,1]
 
-                    // pick character + colour based on norm
-                    const charIdx = Math.floor(norm * (chars.length - 1));
-                    const colourIdx = Math.floor(norm * (palette.length - 1));
+                    // Apply center fade to make text more readable
+                    const adjustedNorm = norm * centerFade;
+
+                    // pick character + colour based on adjusted norm
+                    const charIdx = Math.floor(adjustedNorm * (chars.length - 1));
+                    const colourIdx = Math.floor(adjustedNorm * (palette.length - 1));
 
                     const char = chars[charIdx];
                     const { r, g, b } = hexToRgb(palette[colourIdx]);

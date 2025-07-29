@@ -36,8 +36,8 @@ export function Footer() {
                         key={link.label}
                         href={link.href}
                         style={{ color: "var(--background)" }}
-                        onMouseOver={(e) => e.currentTarget.style.color = "var(--primary)"}
-                        onMouseLeave={(e) => e.currentTarget.style.color = "var(--stone)"}
+                        onMouseOver={(e) => e.currentTarget.style.color = "var(--warm)"}
+                        onMouseLeave={(e) => e.currentTarget.style.color = "var(--background)"}
                         aria-label={link.label}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -51,7 +51,7 @@ export function Footer() {
 
             <div className="flex items-center space-x-1 text-sm font-body" style={{ color: "var(--background)" }}>
               <span>Built with</span>
-              <Heart className="h-4 w-4" style={{ color: "var(--primary)" }} />
+              <Heart className="h-4 w-4" style={{ color: "var(--warm)" }} />
               <span>using Next.js & Tailwind CSS</span>
             </div>
 

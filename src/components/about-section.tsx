@@ -94,16 +94,16 @@ export function AboutSection() {
                         viewport={{ once: true }}
                         className="p-6 rounded-lg hover:shadow-lg transition-shadow"
                         style={{
-                          backgroundColor: "var(--accent)",
+                          backgroundColor: "var(--primary)",
                           border: "1px solid var(--warm)",
                           opacity: 0.9
                         }}
                     >
-                      <Icon className="h-8 w-8 mb-4" style={{ color: "var(--primary)" }} />
-                      <h4 className="text-lg font-semibold font-body mb-2" style={{ color: "var(--foreground)" }}>
+                      <Icon className="h-8 w-8 mb-4" style={{ color: "var(--background)" }} />
+                      <h4 className="text-lg font-semibold font-body mb-2" style={{ color: "var(--background)" }}>
                         {skill.title}
                       </h4>
-                      <p className="text-sm font-body" style={{ color: "var(--foreground)" }}>
+                      <p className="text-sm font-body" style={{ color: "var(--background)" }}>
                         {skill.description}
                       </p>
                     </motion.div>

@@ -58,10 +58,10 @@ export function ContactSection() {
               viewport={{ once: true }}
               className="text-center"
           >
-            <h2 className="text-3xl font-display font-bold tracking-tight sm:text-4xl text-shadow" style={{ color: "var(--stone)" }}>
+            <h2 className="text-3xl font-display font-bold tracking-tight sm:text-4xl text-shadow" style={{ color: "var(--primary)" }}>
               Get In Touch
             </h2>
-            <p className="mt-4 text-lg font-body" style={{ color: "var(--stone)" }}>
+            <p className="mt-4 text-lg font-body" style={{ color: "var(--foreground)" }}>
               Have a project in mind? Let&apos;s work together to bring your ideas to life.
             </p>
           </motion.div>
@@ -74,10 +74,10 @@ export function ContactSection() {
                 transition={{ duration: 0.5, delay: 0.1 }}
                 viewport={{ once: true }}
             >
-              <h3 className="text-2xl font-display font-bold mb-6" style={{ color: "var(--foreground)" }}>
+              <h3 className="text-2xl font-display font-bold mb-6" style={{ color: "var(--primary)" }}>
                 Let&apos;s talk about your project
               </h3>
-              <p className="mb-8 font-body" style={{ color: "var(--stone)" }}>
+              <p className="mb-8 font-body" style={{ color: "var(--foreground)" }}>
                 I&apos;m always interested in hearing about new opportunities and exciting projects.
                 Whether you have a question or just want to say hello, I&apos;ll get back to you as soon as possible.
               </p>
@@ -98,7 +98,7 @@ export function ContactSection() {
                           <Icon className="h-5 w-5" style={{ color: "var(--background)" }} />
                         </div>
                         <div className="ml-4">
-                          <p className="text-sm font-medium font-body" style={{ color: "var(--foreground)" }}>
+                          <p className="text-sm font-medium font-body" style={{ color: "var(--primary)" }}>
                             {info.title}
                           </p>
                           {info.href !== "#" ? (
@@ -106,13 +106,13 @@ export function ContactSection() {
                                   href={info.href}
                                   className="text-sm font-body transition-colors"
                                   style={{ color: "var(--stone)" }}
-                                  onMouseOver={(e) => e.currentTarget.style.color = "var(--primary)"}
-                                  onMouseLeave={(e) => e.currentTarget.style.color = "var(--stone)"}
+                                  onMouseOver={(e) => e.currentTarget.style.color = "var(--foreground)"}
+                                  onMouseLeave={(e) => e.currentTarget.style.color = "var(--foreground)"}
                               >
                                 {info.value}
                               </a>
                           ) : (
-                              <p className="text-sm font-body" style={{ color: "var(--stone)" }}>
+                              <p className="text-sm font-body" style={{ color: "var(--foreground)" }}>
                                 {info.value}
                               </p>
                           )}
@@ -145,7 +145,7 @@ export function ContactSection() {
                         onChange={handleChange}
                         className="mt-1 block w-full rounded-md shadow-sm font-body"
                         style={{
-                          backgroundColor: "var(--accent)",
+                          backgroundColor: "var(--warm)",
                           color: "var(--foreground)",
                           border: "1px solid var(--stone)"
                         }}
@@ -164,7 +164,7 @@ export function ContactSection() {
                         onChange={handleChange}
                         className="mt-1 block w-full rounded-md shadow-sm font-body"
                         style={{
-                          backgroundColor: "var(--accent)",
+                          backgroundColor: "var(--warm)",
                           color: "var(--foreground)",
                           border: "1px solid var(--stone)"
                         }}
@@ -185,7 +185,7 @@ export function ContactSection() {
                       onChange={handleChange}
                       className="mt-1 block w-full rounded-md shadow-sm font-body"
                       style={{
-                        backgroundColor: "var(--accent)",
+                        backgroundColor: "var(--warm)",
                         color: "var(--foreground)",
                         border: "1px solid var(--stone)"
                       }}
@@ -205,7 +205,7 @@ export function ContactSection() {
                       onChange={handleChange}
                       className="mt-1 block w-full rounded-md shadow-sm font-body"
                       style={{
-                        backgroundColor: "var(--accent)",
+                        backgroundColor: "var(--warm)",
                         color: "var(--foreground)",
                         border: "1px solid var(--stone)"
                       }}
