@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { rateLimit } from '@/lib/rate-limit'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 function getClientIP(request: NextRequest): string {
   const forwarded = request.headers.get('x-forwarded-for')
   const realIP = request.headers.get('x-real-ip')
@@ -21,6 +19,18 @@ function getClientIP(request: NextRequest): string {
 
 export async function POST(request: NextRequest) {
   try {
+    // Check if RESEND_API_KEY is configured
+    if (!process.env.RESEND_API_KEY) {
+      console.error('RESEND_API_KEY environment variable is not configured')
+      return NextResponse.json(
+        { error: 'Email service is not configured' },
+        { status: 500 }
+      )
+    }
+
+    // Initialize Resend client
+    const resend = new Resend(process.env.RESEND_API_KEY)
+
     // Rate limiting
     const clientIP = getClientIP(request)
     const rateLimitResult = rateLimit(`contact-${clientIP}`, 3, 15 * 60 * 1000) // 3 requests per 15 minutes
