@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useMemo } from "react";
+import { useEffect, useRef, useMemo, useState } from "react";
 import { useTheme } from "next-themes";
 
 interface ASCIIBackgroundProps {
@@ -36,6 +36,12 @@ export function ASCIIBackground({
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const mouseRef = useRef({ x: 0, y: 0 });
     const { theme } = useTheme();
+    const [mounted, setMounted] = useState(false);
+
+    // Prevent hydration mismatch by waiting for theme to be available
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     /** Normalised colour palette (always #RRGGBB, memoised by theme) */
     const palette = useMemo(() => {
@@ -44,6 +50,8 @@ export function ASCIIBackground({
     }, [theme, darkModeColors, lightModeColors]);
 
     useEffect(() => {
+        if (!mounted) return;
+        
         const canvas = canvasRef.current;
         const ctx = canvas?.getContext("2d");
         if (!canvas || !ctx) return;
@@ -133,9 +141,14 @@ export function ASCIIBackground({
             window.removeEventListener("resize", resize);
             window.removeEventListener("mousemove", handleMouse);
         };
-    }, [palette, fontSize, charWidth]);
+    }, [mounted, palette, fontSize, charWidth]);
 
     /* ───── render ─────────────────────────────────────────────────────── */
+
+    // Don't render until component is mounted and theme is available
+    if (!mounted) {
+        return null;
+    }
 
     return (
         <div className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 0 }}>

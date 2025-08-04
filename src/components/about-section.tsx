@@ -7,23 +7,23 @@ export function AboutSection() {
   const skills = [
     {
       icon: Code,
-      title: "Frontend Development",
-      description: "React, Next.js, TypeScript, Tailwind CSS",
+      title: "Lorem Ipsum",
+      description: "Lorem ipsum dolor sit amet consectetur",
     },
     {
       icon: Database,
-      title: "Backend Development",
-      description: "Node.js, Python, PostgreSQL, MongoDB",
+      title: "Dolor Sit",
+      description: "Dolor sit amet consectetur adipiscing",
     },
     {
       icon: Globe,
-      title: "Web Technologies",
-      description: "REST APIs, GraphQL, WebSockets, Docker",
+      title: "Amet Consectetur",
+      description: "Amet consectetur adipiscing elit sed do",
     },
     {
       icon: Smartphone,
-      title: "Mobile Development",
-      description: "React Native, Flutter, Progressive Web Apps",
+      title: "Elit Sed",
+      description: "Elit sed do eiusmod tempor incididunt",
     },
   ]
 
@@ -41,7 +41,7 @@ export function AboutSection() {
               About Me
             </h2>
             <p className="mt-4 text-lg text-[var(--foreground)] font-body">
-              Passionate developer with a love for creating innovative solutions
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit
             </p>
           </motion.div>
 
@@ -53,25 +53,24 @@ export function AboutSection() {
                 viewport={{ once: true }}
             >
               <h3 className="text-2xl font-display font-bold text-[var(--primary)] mb-6">
-                My Journey
+                Lorem Ipsum
               </h3>
               <div className="space-y-4 text-[var(--foreground)] font-body">
                 <p>
-                  I&apos;m a passionate full-stack developer with over 5 years of experience
-                  creating web applications and digital solutions. My journey began with
-                  a curiosity about how websites work, which evolved into a deep love for
-                  coding and problem-solving.
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                  veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                  commodo consequat.
                 </p>
                 <p>
-                  I specialize in modern JavaScript frameworks, particularly React and
-                  Next.js, and I&apos;m always exploring new technologies to stay current with
-                  industry trends. I believe in writing clean, maintainable code and
-                  creating user experiences that are both beautiful and functional.
+                  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                  proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 </p>
                 <p>
-                  When I&apos;m not coding, you can find me contributing to open-source projects,
-                  writing technical articles, or exploring the latest developments in
-                  artificial intelligence and machine learning.
+                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+                  doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
+                  veritatis et quasi architecto beatae vitae dicta sunt explicabo.
                 </p>
               </div>
             </motion.div>

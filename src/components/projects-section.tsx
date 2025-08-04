@@ -6,8 +6,8 @@ import { ExternalLink, Github } from "lucide-react"
 export function ProjectsSection() {
   const projects = [
     {
-      title: "E-Commerce Platform",
-      description: "A full-stack e-commerce solution with payment integration, inventory management, and admin dashboard.",
+      title: "Lorem Ipsum Project",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
       image: "/images/projects/ecommerce.jpg", // You'll need to add these images
       techStack: ["Next.js", "TypeScript", "Stripe", "PostgreSQL", "Tailwind CSS"],
       githubUrl: "https://github.com/tTrmc/ecommerce-platform",
@@ -15,8 +15,8 @@ export function ProjectsSection() {
       featured: true,
     },
     {
-      title: "Task Management App",
-      description: "A collaborative task management application with real-time updates and team collaboration features.",
+      title: "Dolor Sit Project",
+      description: "Dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.",
       image: "/images/projects/taskmanager.jpg", // You'll need to add these images
       techStack: ["React", "Node.js", "Socket.io", "MongoDB", "Material-UI"],
       githubUrl: "https://github.com/tTrmc/task-manager",
@@ -24,8 +24,8 @@ export function ProjectsSection() {
       featured: true,
     },
     {
-      title: "Weather Dashboard",
-      description: "A beautiful weather dashboard with location-based forecasts and interactive maps.",
+      title: "Consectetur Project",
+      description: "Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       image: "/images/projects/weather.jpg", // You'll need to add these images
       techStack: ["Vue.js", "OpenWeather API", "Chart.js", "CSS3"],
       githubUrl: "https://github.com/tTrmc/weather-dashboard",
@@ -33,8 +33,8 @@ export function ProjectsSection() {
       featured: false,
     },
     {
-      title: "Portfolio Website",
-      description: "A responsive portfolio website built with modern web technologies and optimized for performance.",
+      title: "Adipiscing Project",
+      description: "Adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim.",
       image: "/images/projects/portfolio.jpg", // You'll need to add these images
       techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
       githubUrl: "https://github.com/tTrmc/msalem",
@@ -57,7 +57,7 @@ export function ProjectsSection() {
             Featured Projects
           </h2>
           <p className="mt-4 text-lg font-body" style={{ color: "var(--foreground)" }}>
-            A showcase of my recent work and side projects
+            Lorem ipsum dolor sit amet consectetur adipiscing
           </p>
         </motion.div>
 
