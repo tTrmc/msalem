@@ -1,4 +1,4 @@
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   success: boolean
   data?: T
   error?: string
@@ -23,7 +23,7 @@ export async function handleApiRequest<T>(
         error: data.error || 'An error occurred'
       }
     }
-  } catch (error) {
+  } catch {
     return {
       success: false,
       error: 'Network error. Please check your connection and try again.'

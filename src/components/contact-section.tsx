@@ -13,7 +13,7 @@ export function ContactSection() {
     message: "",
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData(prev => ({
@@ -52,7 +52,7 @@ export function ContactSection() {
         setSubmitStatus('error')
         alert(result.error || "Something went wrong. Please try again.")
       }
-    } catch (error) {
+    } catch {
       setSubmitStatus('error')
       alert("Failed to send message. Please try again.")
     } finally {
