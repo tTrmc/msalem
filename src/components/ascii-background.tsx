@@ -35,7 +35,7 @@ export function ASCIIBackground({
                                 }: ASCIIBackgroundProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const mouseRef = useRef({ x: 0, y: 0 });
-    const { theme } = useTheme();
+    const { resolvedTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
 
     // Prevent hydration mismatch by waiting for theme to be available
@@ -43,14 +43,14 @@ export function ASCIIBackground({
         setMounted(true);
     }, []);
 
-    /** Normalised colour palette (always #RRGGBB, memoised by theme) */
+    /** Normalised colour palette (always #RRGGBB, memoised by resolvedTheme) */
     const palette = useMemo(() => {
-        const raw = theme === "dark" ? darkModeColors : lightModeColors;
+        const raw = resolvedTheme === "dark" ? darkModeColors : lightModeColors;
         return raw.map((c) => (c.startsWith("#") ? c : `#${c}`));
-    }, [theme, darkModeColors, lightModeColors]);
+    }, [resolvedTheme, darkModeColors, lightModeColors]);
 
     useEffect(() => {
-        if (!mounted) return;
+        if (!mounted || !resolvedTheme) return;
         
         const canvas = canvasRef.current;
         const ctx = canvas?.getContext("2d");
@@ -141,12 +141,12 @@ export function ASCIIBackground({
             window.removeEventListener("resize", resize);
             window.removeEventListener("mousemove", handleMouse);
         };
-    }, [mounted, palette, fontSize, charWidth]);
+    }, [mounted, resolvedTheme, palette, fontSize, charWidth]);
 
     /* ───── render ─────────────────────────────────────────────────────── */
 
     // Don't render until component is mounted and theme is available
-    if (!mounted) {
+    if (!mounted || !resolvedTheme) {
         return null;
     }
 

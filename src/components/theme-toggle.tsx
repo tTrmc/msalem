@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Moon, Sun } from "lucide-react"
+import { Moon, Sun, Monitor } from "lucide-react"
 import { useTheme } from "next-themes"
 import { motion, AnimatePresence } from "framer-motion"
 
@@ -15,7 +15,23 @@ export function ThemeToggle() {
     const toggleTheme = () => {
         if (isAnimating) return
         setIsAnimating(true)
-        setTheme(theme === "light" ? "dark" : "light")
+        
+        // Cycle through light -> dark -> system -> light
+        let nextTheme: string
+        switch(theme) {
+            case "light":
+                nextTheme = "dark"
+                break
+            case "dark":
+                nextTheme = "system"
+                break
+            case "system":
+            default:
+                nextTheme = "light"
+                break
+        }
+        
+        setTheme(nextTheme)
         setTimeout(() => setIsAnimating(false), 500)
     }
 
@@ -47,7 +63,13 @@ export function ThemeToggle() {
                     transition={{ duration: 0.3 }}
                     className="relative h-5 w-5 flex items-center justify-center"
                 >
-                    {theme === "light" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                    {theme === "light" ? (
+                        <Sun className="h-5 w-5" />
+                    ) : theme === "dark" ? (
+                        <Moon className="h-5 w-5" />
+                    ) : (
+                        <Monitor className="h-5 w-5" />
+                    )}
                 </motion.div>
             </AnimatePresence>
 
