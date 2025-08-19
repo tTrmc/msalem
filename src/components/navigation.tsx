@@ -3,7 +3,6 @@
 import Link from "next/link"
 import { useState } from "react"
 import { Menu, X } from "lucide-react"
-import { ThemeToggle } from "./theme-toggle"
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
@@ -45,8 +44,6 @@ export function Navigation() {
             </div>
 
             <div className="flex items-center space-x-4">
-              <ThemeToggle />
-
               {/* Mobile menu button */}
               <button
                   onClick={() => setIsOpen(!isOpen)}

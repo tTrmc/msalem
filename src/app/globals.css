@@ -1,28 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  /* Light mode colors */
-  --background: #f1d9d2;
-  --foreground: #000000;
-  --primary: #000000;
-  --stone: #311508;
-  --warm: #b7a07e;
-  --accent: #f9e6cd;
-
-  /* Common variables */
-  --border-radius: 0.5rem;
-  --transition-speed: 0.3s;
-  --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Dark mode colors */
-.dark {
+  /* Dark theme colors (only theme) */
   --background:  #0f0f1b;
   --foreground:  #fafbf6;
   --primary:    #c6b7be;
   --stone:  #c6b7be;
   --warm: #565a75;
   --accent: #2c2525;
+
+  /* Common variables */
+  --border-radius: 0.5rem;
+  --transition-speed: 0.3s;
+  --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Base transitions */
@@ -47,7 +37,7 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-grotesque), system-ui, sans-serif;
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
   transition: var(--theme-transition);
 }
 

@@ -30,12 +30,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <html lang="en" className={`${bricolageGrotesque.variable} ${cormorantGaramond.variable}`} suppressHydrationWarning>
+      <html lang="en" className={`dark ${bricolageGrotesque.variable} ${cormorantGaramond.variable}`} suppressHydrationWarning>
       <body className="font-body antialiased transition-colors duration-300">
       <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="dark"
+          enableSystem={false}
           disableTransitionOnChange
       >
         {children}

@@ -1,13 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useMemo, useState } from "react";
-import { useTheme } from "next-themes";
+import { useEffect, useRef, useMemo } from "react";
 
 interface ASCIIBackgroundProps {
-    /** Palette when the site is in light mode */
-    lightModeColors?: string[];
-    /** Palette when the site is in dark mode */
-    darkModeColors?: string[];
+    /** Color palette for the ASCII background */
+    colors?: string[];
     /** Height of a character row (px). Adjust to taste / performance */
     fontSize?: number;
     /** Width of a character column (px). Adjust to taste / performance */
@@ -28,29 +25,19 @@ interface ASCIIBackgroundProps {
  *   • Extra props (fontSize / charWidth) let callers trade fidelity vs FPS.
  */
 export function ASCIIBackground({
-                                    lightModeColors = ["#E3F2FD", "#BBDEFB", "#90CAF9", "#64B5F6", "#42A5F5"],
-                                    darkModeColors = ["#0f0f1b", "#242633", "#565a75", "#c6b7be", "#fafbf6"],
+                                    colors = ["#0f0f1b", "#242633", "#565a75", "#c6b7be", "#fafbf6"],
                                     fontSize = 16,
                                     charWidth = 10,
                                 }: ASCIIBackgroundProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const mouseRef = useRef({ x: 0, y: 0 });
-    const { resolvedTheme } = useTheme();
-    const [mounted, setMounted] = useState(false);
 
-    // Prevent hydration mismatch by waiting for theme to be available
-    useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    /** Normalised colour palette (always #RRGGBB, memoised by resolvedTheme) */
+    /** Normalised colour palette (always #RRGGBB) */
     const palette = useMemo(() => {
-        const raw = resolvedTheme === "dark" ? darkModeColors : lightModeColors;
-        return raw.map((c) => (c.startsWith("#") ? c : `#${c}`));
-    }, [resolvedTheme, darkModeColors, lightModeColors]);
+        return colors.map((c) => (c.startsWith("#") ? c : `#${c}`));
+    }, [colors]);
 
     useEffect(() => {
-        if (!mounted || !resolvedTheme) return;
         
         const canvas = canvasRef.current;
         const ctx = canvas?.getContext("2d");
@@ -141,14 +128,9 @@ export function ASCIIBackground({
             window.removeEventListener("resize", resize);
             window.removeEventListener("mousemove", handleMouse);
         };
-    }, [mounted, resolvedTheme, palette, fontSize, charWidth]);
+    }, [palette, fontSize, charWidth]);
 
     /* ───── render ─────────────────────────────────────────────────────── */
-
-    // Don't render until component is mounted and theme is available
-    if (!mounted || !resolvedTheme) {
-        return null;
-    }
 
     return (
         <div className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 0 }}>
