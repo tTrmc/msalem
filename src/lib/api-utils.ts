@@ -1,8 +1,4 @@
-export interface ApiResponse<T = unknown> {
-  success: boolean
-  data?: T
-  error?: string
-}
+import { ApiResponse, ContactFormData } from "@/types/common"
 
 export async function handleApiRequest<T>(
   url: string,
@@ -36,12 +32,7 @@ export function validateEmail(email: string): boolean {
   return emailRegex.test(email)
 }
 
-export function validateContactForm(data: {
-  name: string
-  email: string
-  subject: string
-  message: string
-}): string | null {
+export function validateContactForm(data: ContactFormData): string | null {
   if (!data.name.trim()) return 'Name is required'
   if (!data.email.trim()) return 'Email is required'
   if (!validateEmail(data.email)) return 'Please enter a valid email address'
