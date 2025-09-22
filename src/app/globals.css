@@ -63,7 +63,7 @@ body {
 
 /* Typography utilities */
 .font-display {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--font-supply), Georgia, serif;
 }
 
 .font-body {

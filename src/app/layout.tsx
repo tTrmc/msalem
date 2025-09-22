@@ -6,7 +6,8 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Toaster } from "react-hot-toast";
 import ErrorBoundary from "@/components/error-boundary";
 import React from "react";
-import {  Bricolage_Grotesque, Cormorant_Garamond } from "next/font/google";
+import { Bricolage_Grotesque } from "next/font/google";
+import localFont from "next/font/local";
 
 const  bricolageGrotesque  =  Bricolage_Grotesque({
   subsets: ['latin'],
@@ -14,11 +15,10 @@ const  bricolageGrotesque  =  Bricolage_Grotesque({
   variable: '--font-grotesque',
 });
 
-const cormorantGaramond = Cormorant_Garamond({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
+const ppSupplySans = localFont({
+  src: '../../public/fonts/PPSupplySans-Regular.otf',
   display: 'swap',
-  variable: '--font-cormorant',
+  variable: '--font-supply',
 });
 
 export const metadata: Metadata = {
@@ -70,7 +70,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <html lang="en" className={`dark ${bricolageGrotesque.variable} ${cormorantGaramond.variable}`} suppressHydrationWarning>
+      <html lang="en" className={`dark ${bricolageGrotesque.variable} ${ppSupplySans.variable}`} suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
