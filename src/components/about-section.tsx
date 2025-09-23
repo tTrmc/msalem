@@ -37,7 +37,7 @@ export function AboutSection() {
               viewport={{ once: true }}
               className="text-center"
           >
-            <h2 className="text-3xl font-display font-bold tracking-tight text-[var(--primary)] sm:text-4xl text-shadow">
+            <h2 className="text-3xl font-display tracking-tight text-[var(--primary)] sm:text-4xl text-shadow">
               About Me
             </h2>
             <p className="mt-4 text-lg text-[var(--foreground)] font-body">
@@ -52,7 +52,7 @@ export function AboutSection() {
                 transition={{ duration: 0.5, delay: 0.1 }}
                 viewport={{ once: true }}
             >
-              <h3 className="text-2xl font-display font-bold text-[var(--primary)] mb-6">
+              <h3 className="text-2xl font-display text-[var(--primary)] mb-6">
                 Lorem Ipsum
               </h3>
               <div className="space-y-4 text-[var(--foreground)] font-body">

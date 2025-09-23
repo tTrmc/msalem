@@ -53,7 +53,7 @@ export function ProjectsSection() {
           viewport={{ once: true }}
           className="text-center"
         >
-          <h2 className="text-3xl font-display font-bold tracking-tight sm:text-4xl text-shadow" style={{ color: "var(--primary)" }}>
+          <h2 className="text-3xl font-display tracking-tight sm:text-4xl text-shadow" style={{ color: "var(--primary)" }}>
             Featured Projects
           </h2>
           <p className="mt-4 text-lg font-body" style={{ color: "var(--foreground)" }}>

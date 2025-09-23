@@ -33,9 +33,9 @@ export function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
             >
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold tracking-tight text-[var(--foreground)] text-shadow">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-display tracking-tight text-[var(--foreground)] text-shadow">
                 Hi, I&apos;m{" "}
-                <span className="font-bold text-[var(--primary)]">
+                <span className=" text-[var(--primary)]">
         Moustafa Salem
       </span>
               </h1>

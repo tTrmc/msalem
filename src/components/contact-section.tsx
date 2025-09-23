@@ -92,7 +92,7 @@ export function ContactSection() {
               viewport={{ once: true }}
               className="text-center"
           >
-            <h2 className="text-3xl font-display font-bold tracking-tight sm:text-4xl text-shadow" style={{ color: "var(--primary)" }}>
+            <h2 className="text-3xl font-display tracking-tight sm:text-4xl text-shadow" style={{ color: "var(--primary)" }}>
               Get In Touch
             </h2>
             <p className="mt-4 text-lg font-body" style={{ color: "var(--foreground)" }}>
@@ -108,7 +108,7 @@ export function ContactSection() {
                 transition={{ duration: 0.5, delay: 0.1 }}
                 viewport={{ once: true }}
             >
-              <h3 className="text-2xl font-display font-bold mb-6" style={{ color: "var(--primary)" }}>
+              <h3 className="text-2xl font-display mb-6" style={{ color: "var(--primary)" }}>
                 Let&apos;s talk about your project
               </h3>
               <p className="mb-8 font-body" style={{ color: "var(--foreground)" }}>

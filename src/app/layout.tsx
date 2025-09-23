@@ -16,7 +16,7 @@ const  bricolageGrotesque  =  Bricolage_Grotesque({
 });
 
 const ppSupplySans = localFont({
-  src: '../../public/fonts/PPSupplySans-Regular.otf',
+  src: '../../public/fonts/PPSupplyMono-Regular.otf',
   display: 'swap',
   variable: '--font-supply',
 });
