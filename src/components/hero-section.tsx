@@ -34,10 +34,7 @@ export function HeroSection() {
                 transition={{ duration: 0.5 }}
             >
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-display tracking-tight text-[var(--foreground)] text-shadow">
-                Hi, I&apos;m{" "}
-                <span className=" text-[var(--primary)]">
-        Moustafa Salem
-      </span>
+                Moustafa Salem
               </h1>
             </motion.div>
 
@@ -46,7 +43,7 @@ export function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
             >
-              <p className="mt-8 text-xl md:text-2xl leading-8 text-[var(--foreground)] font-body">
+              <p className="mt-8 text-2xl md:text-3xl leading-8 text-[var(--foreground)] font-body">
                 Computer Science Student @ Queen&apos;s University
               </p>
             </motion.div>

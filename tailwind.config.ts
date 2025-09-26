@@ -70,7 +70,7 @@ const config: Config = {
         }
       },
       fontFamily: {
-        display: ['var(--font-cormorant)', 'serif'],
+        display: ['var(--font-supply)', 'serif'],
         body: ['var(--font-grotesque)', 'sans-serif'],
       }
     }

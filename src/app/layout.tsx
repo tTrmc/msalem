@@ -6,11 +6,12 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Toaster } from "react-hot-toast";
 import ErrorBoundary from "@/components/error-boundary";
 import React from "react";
-import { Bricolage_Grotesque } from "next/font/google";
+import { Lato } from "next/font/google";
 import localFont from "next/font/local";
 
-const  bricolageGrotesque  =  Bricolage_Grotesque({
+const lato = Lato({
   subsets: ['latin'],
+  weight: ['300', '400', '700', '900'],
   display: 'swap',
   variable: '--font-grotesque',
 });
@@ -70,7 +71,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <html lang="en" className={`dark ${bricolageGrotesque.variable} ${ppSupplySans.variable}`} suppressHydrationWarning>
+      <html lang="en" className={`dark ${lato.variable} ${ppSupplySans.variable}`} suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"

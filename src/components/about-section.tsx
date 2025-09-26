@@ -55,7 +55,7 @@ export function AboutSection() {
               <h3 className="text-2xl font-display text-[var(--primary)] mb-6">
                 Lorem Ipsum
               </h3>
-              <div className="space-y-4 text-[var(--foreground)] font-body">
+              <div className="space-y-4 text-xl text-[var(--foreground)] font-body">
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                   tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
