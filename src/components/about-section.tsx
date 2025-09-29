@@ -63,14 +63,15 @@ export function AboutSection() {
                   commodo consequat.
                 </p>
                 <p>
-                  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                  proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    I'm a multi-instrumentalist who plays guitar, bass, and keyboard,
+                    with a deep love for synthesizers and sound design. Music and technology
+                    are equally important to me – I spend my time creating, whether that&#39;s
+                    composing, coding, or both.
                 </p>
                 <p>
-                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-                  doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
-                  veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+                    Currently I'm building my own VST plugin using JUCE and C++, and learning
+                    shader programming for a game I'm developing in Godot. I enjoy the challenge
+                    of making games from scratch and composing their soundtracks myself.
                 </p>
               </div>
             </motion.div>

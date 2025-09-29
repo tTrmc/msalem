@@ -29,8 +29,8 @@ export interface Project {
   description: string
   image: string
   techStack: string[]
-  githubUrl: string
-  demoUrl: string
+  githubUrl?: string
+  demoUrl?: string
   featured: boolean
 }
 

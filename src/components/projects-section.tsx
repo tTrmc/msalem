@@ -2,43 +2,44 @@
 
 import { motion } from "framer-motion"
 import { ExternalLink, Github } from "lucide-react"
+import Image from "next/image"
+import { Project } from "@/types/common"
 
 export function ProjectsSection() {
-  const projects = [
+  const projects: Project[] = [
     {
-      title: "Lorem Ipsum Project",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
-      image: "/images/projects/ecommerce.jpg", // You'll need to add these images
-      techStack: ["Next.js", "TypeScript", "Stripe", "PostgreSQL", "Tailwind CSS"],
-      githubUrl: "https://github.com/tTrmc/ecommerce-platform",
-      demoUrl: "https://ecommerce.msalem.dev",
+      title: "dotz",
+      description: "A fully featured dotfiles manager for Linux, backed by Git.",
+      image: "/images/projects/dotz.png",
+      techStack: ["Python", "Typer", "PySide6", "Poetry", "pytest"],
+      githubUrl: "https://github.com/tTrmc/dotz",
       featured: true,
     },
     {
-      title: "Dolor Sit Project",
-      description: "Dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.",
+      title: "VRSN CTRL",
+      description: "Puzzle platformer for the 2025 GMTK Game Jam",
       image: "/images/projects/taskmanager.jpg", // You'll need to add these images
-      techStack: ["React", "Node.js", "Socket.io", "MongoDB", "Material-UI"],
-      githubUrl: "https://github.com/tTrmc/task-manager",
-      demoUrl: "https://tasks.msalem.dev",
+      techStack: ["Unity 6", "C#", "Unity Input System", "ScriptableObjects"],
+      githubUrl: "",
+      demoUrl: "https://doomaa.itch.io/version-control",
       featured: true,
     },
     {
-      title: "Consectetur Project",
+      title: "Octavia",
       description: "Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       image: "/images/projects/weather.jpg", // You'll need to add these images
       techStack: ["Vue.js", "OpenWeather API", "Chart.js", "CSS3"],
       githubUrl: "https://github.com/tTrmc/weather-dashboard",
-      demoUrl: "https://weather.msalem.dev",
+      demoUrl: "",
       featured: false,
     },
     {
-      title: "Adipiscing Project",
+      title: "Personal Website",
       description: "Adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim.",
       image: "/images/projects/portfolio.jpg", // You'll need to add these images
       techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
       githubUrl: "https://github.com/tTrmc/msalem",
-      demoUrl: "https://msalem.dev",
+      demoUrl: "",
       featured: false,
     },
   ]
@@ -79,16 +80,19 @@ export function ProjectsSection() {
               }}
             >
               <div className="relative h-48 overflow-hidden">
-                <div 
-                  className="w-full h-full flex items-center justify-center bg-cover bg-center" 
-                  style={{
-                    backgroundImage: `linear-gradient(to bottom right, var(--primary), var(--accent))`
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  fill
+                  className="object-cover"
+                  onError={(e) => {
+                    const target = e.target as HTMLElement;
+                    if (target && target.parentElement) {
+                      target.parentElement.style.backgroundImage =
+                        'linear-gradient(to bottom right, var(--primary), var(--accent))';
+                    }
                   }}
-                >
-                  <span className="font-semibold text-lg font-body" style={{ color: "var(--background)" }}>
-                    {project.title}
-                  </span>
-                </div>
+                />
                 <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300" />
               </div>
 
@@ -114,30 +118,34 @@ export function ProjectsSection() {
                   ))}
                 </div>
                 <div className="flex space-x-4">
-                  <a
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center space-x-1 text-sm font-medium transition-colors font-body"
-                    style={{ color: "var(--foreground)" }}
-                    onMouseOver={(e) => e.currentTarget.style.color = "var(--primary)"}
-                    onMouseLeave={(e) => e.currentTarget.style.color = "var(--foreground)"}
-                  >
-                    <Github className="h-4 w-4" />
-                    <span>Code</span>
-                  </a>
-                  <a
-                    href={project.demoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center space-x-1 text-sm font-medium transition-colors font-body"
-                    style={{ color: "var(--foreground)" }}
-                    onMouseOver={(e) => e.currentTarget.style.color = "var(--primary)"}
-                    onMouseLeave={(e) => e.currentTarget.style.color = "var(--foreground)"}
-                  >
-                    <ExternalLink className="h-4 w-4" />
-                    <span>Demo</span>
-                  </a>
+                  {project.githubUrl && (
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center space-x-1 text-sm font-medium transition-colors font-body"
+                      style={{ color: "var(--foreground)" }}
+                      onMouseOver={(e) => e.currentTarget.style.color = "var(--primary)"}
+                      onMouseLeave={(e) => e.currentTarget.style.color = "var(--foreground)"}
+                    >
+                      <Github className="h-4 w-4" />
+                      <span>Code</span>
+                    </a>
+                  )}
+                  {project.demoUrl && (
+                    <a
+                      href={project.demoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center space-x-1 text-sm font-medium transition-colors font-body"
+                      style={{ color: "var(--foreground)" }}
+                      onMouseOver={(e) => e.currentTarget.style.color = "var(--primary)"}
+                      onMouseLeave={(e) => e.currentTarget.style.color = "var(--foreground)"}
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                      <span>Demo</span>
+                    </a>
+                  )}
                 </div>
               </div>
             </motion.div>
