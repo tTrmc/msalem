@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { useState } from "react"
 import { Menu, X } from "lucide-react"
 
@@ -23,10 +24,21 @@ export function Navigation() {
           <div className="flex h-16 items-center justify-between">
             <Link
                 href="#hero"
-                className="text-xl font-body font-bold"
-                style={{ color: "var(--foreground)" }}
+                className="flex items-center space-x-3"
             >
-              Salem
+              <Image
+                src="/images/logo.png"
+                alt="Salem Logo"
+                width={40}
+                height={40}
+                className="h-10 w-auto"
+                style={{ imageRendering: "pixelated" }}
+                unoptimized
+                priority
+              />
+              <span className="text-xl font-body font-bold" style={{ color: "var(--foreground)" }}>
+                Salem
+              </span>
             </Link>
 
             {/* Desktop Navigation - Absolutely centered */}
