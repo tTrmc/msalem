@@ -63,14 +63,14 @@ export function AboutSection() {
                   commodo consequat.
                 </p>
                 <p>
-                    I'm a multi-instrumentalist who plays guitar, bass, and keyboard,
+                    I&apos;m a multi-instrumentalist who plays guitar, bass, and keyboard,
                     with a deep love for synthesizers and sound design. Music and technology
-                    are equally important to me – I spend my time creating, whether that&#39;s
+                    are equally important to me – I spend my time creating, whether that&apos;s
                     composing, coding, or both.
                 </p>
                 <p>
-                    Currently I'm building my own VST plugin using JUCE and C++, and learning
-                    shader programming for a game I'm developing in Godot. I enjoy the challenge
+                    Currently I&apos;m building my own VST plugin using JUCE and C++, and learning
+                    shader programming for a game I&apos;m developing in Godot. I enjoy the challenge
                     of making games from scratch and composing their soundtracks myself.
                 </p>
               </div>
