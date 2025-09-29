@@ -1,29 +1,29 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Code, Database, Globe, Smartphone } from "lucide-react"
+import { Code, Computer, Globe, Smartphone } from "lucide-react"
 
 export function AboutSection() {
   const skills = [
     {
       icon: Code,
-      title: "Lorem Ipsum",
-      description: "Lorem ipsum dolor sit amet consectetur",
+      title: "CLI Tools",
+      description: "Building efficient and user-friendly command-line applications with Python and Rust",
     },
     {
-      icon: Database,
-      title: "Dolor Sit",
-      description: "Dolor sit amet consectetur adipiscing",
+      icon: Computer,
+      title: "Creative Coding",
+      description: "Game development with Unity and Godot",
     },
     {
       icon: Globe,
-      title: "Amet Consectetur",
-      description: "Amet consectetur adipiscing elit sed do",
+      title: "Web Technologies",
+      description: "Creating responsive, accessible, and performant web experiences",
     },
     {
       icon: Smartphone,
-      title: "Elit Sed",
-      description: "Elit sed do eiusmod tempor incididunt",
+      title: "Android Development",
+      description: "Building native Android apps with Kotlin and Jetpack Compose",
     },
   ]
 
@@ -41,7 +41,7 @@ export function AboutSection() {
               About Me
             </h2>
             <p className="mt-4 text-lg text-[var(--foreground)] font-body">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit
+              Developer, musician, and creative technologist
             </p>
           </motion.div>
 
@@ -53,14 +53,20 @@ export function AboutSection() {
                 viewport={{ once: true }}
             >
               <h3 className="text-2xl font-display text-[var(--primary)] mb-6">
-                Lorem Ipsum
+                Hello and Welcome!
               </h3>
               <div className="space-y-4 text-xl text-[var(--foreground)] font-body">
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                  veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                  commodo consequat.
+                  I&apos;m a passionate developer, musician and gamer. I love to create applications and
+                    software that solve real-world issues I face, and I&apos;m always eager to learn new technologies
+                    and improve my skills. I&apos;m a Computer Science student at Queen&apos;s University,
+                    where I&apos;m currently studying Operating Systems, Algorithms, Software QA and Functional Programming.
+                </p>
+                <p>
+                  Beyond high-level application development, I have a deep fascination with systems-level programming
+                  in C and Rust. I enjoy diving into the low-level details of how software interacts with hardware,
+                  and I spend considerable time tinkering with Linux, customizing everything from window managers
+                  to kernel modules.
                 </p>
                 <p>
                     I&apos;m a multi-instrumentalist who plays guitar, bass, and keyboard,

@@ -96,7 +96,7 @@ export function ContactSection() {
               Get In Touch
             </h2>
             <p className="mt-4 text-lg font-body" style={{ color: "var(--foreground)" }}>
-              Have a project in mind? Let&apos;s work together to bring your ideas to life.
+              Have a project in mind? Let&apos;s work together.
             </p>
           </motion.div>
 
