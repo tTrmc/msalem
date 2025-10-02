@@ -5,6 +5,22 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react']
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'opengraph.githubassets.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'img.itch.zone',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
   // Uncomment for static export deployment
   // output: 'export',
   // trailingSlash: true,

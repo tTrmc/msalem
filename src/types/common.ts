@@ -57,3 +57,14 @@ export interface MotionVariants {
   animate: Record<string, unknown>
   transition?: Record<string, unknown>
 }
+
+export interface Experience {
+  title: string
+  organization: string
+  location: string
+  period: string
+  description: string[]
+  technologies?: string[]
+  type: 'work' | 'education'
+  current?: boolean
+}
