@@ -3,6 +3,7 @@
 import { Github, Linkedin, Mail, ArrowDown } from "lucide-react"
 import { motion } from "framer-motion"
 import { ASCIIBackground } from "./ascii-background"
+import { smoothSpring, iconHover, buttonHover } from "@/lib/animations"
 
 export function HeroSection() {
   const socialLinks = [
@@ -31,7 +32,7 @@ export function HeroSection() {
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
+                transition={smoothSpring}
             >
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-display tracking-tight text-[var(--foreground)] text-shadow">
                 Moustafa Salem
@@ -41,7 +42,7 @@ export function HeroSection() {
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
+                transition={{ ...smoothSpring, delay: 0.1 }}
             >
               <p className="mt-8 text-2xl md:text-3xl leading-8 text-[var(--foreground)] font-body">
                 Computer Science Student @ Queen&apos;s University
@@ -51,51 +52,61 @@ export function HeroSection() {
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
+                transition={{ ...smoothSpring, delay: 0.3 }}
                 className="mt-10 flex items-center justify-center gap-x-6"
             >
-              <a
+              <motion.a
                   href="#projects"
-                  className="rounded-md px-6 py-3 text-sm font-semibold shadow-sm transition-colors font-body"
+                  variants={buttonHover}
+                  initial="rest"
+                  whileHover="hover"
+                  whileTap="tap"
+                  className="rounded-md px-6 py-3 text-sm font-semibold shadow-sm font-body"
                   style={{
                     backgroundColor: "var(--primary)",
                     color: "var(--background)"
                   }}
               >
                 View My Projects
-              </a>
-              <a
+              </motion.a>
+              <motion.a
                   href="#contact"
-                  className="text-sm font-semibold leading-6 transition-colors font-body text-[var(--foreground)] hover:text-[var(--primary)]"
+                  whileHover={{ color: "var(--primary)", x: 4 }}
+                  transition={smoothSpring}
+                  className="text-sm font-semibold leading-6 font-body"
+                  style={{ color: "var(--foreground)" }}
               >
                 Get In Touch <span aria-hidden="true">→</span>
-              </a>
+              </motion.a>
             </motion.div>
 
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
+                transition={{ ...smoothSpring, delay: 0.4 }}
                 className="mt-10 flex justify-center space-x-6"
             >
               {socialLinks.map((link) => {
                 const Icon = link.icon
                 return (
-                    <a
+                    <motion.a
                         key={link.label}
                         href={link.href}
-                        className="transition-colors"
+                        variants={iconHover}
+                        initial="rest"
+                        whileHover="hover"
+                        whileTap="tap"
                         style={{
                           color: "var(--warm)"
                         }}
                         aria-label={link.label}
                         target="_blank"
                         rel="noopener noreferrer"
-                        onMouseOver={(e) => e.currentTarget.style.color = "var(--primary)"}
-                        onMouseLeave={(e) => e.currentTarget.style.color = "var(--warm)"}
                     >
-                      <Icon className="h-6 w-6" />
-                    </a>
+                      <motion.div whileHover={{ color: "var(--primary)" }} transition={smoothSpring}>
+                        <Icon className="h-6 w-6" />
+                      </motion.div>
+                    </motion.a>
                 )
               })}
             </motion.div>
@@ -103,21 +114,32 @@ export function HeroSection() {
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.8 }}
+                transition={{ ...smoothSpring, delay: 0.8 }}
                 className="mt-16"
             >
-              <a
+              <motion.a
                   href="#about"
-                  className="inline-flex items-center transition-colors"
+                  className="inline-flex items-center"
+                  whileHover={{ color: "var(--primary)" }}
+                  transition={smoothSpring}
                   style={{
                     color: "var(--foreground)"
                   }}
-                  onMouseOver={(e) => e.currentTarget.style.color = "var(--primary)"}
-                  onMouseLeave={(e) => e.currentTarget.style.color = "var(--foreground)"}
                   aria-label="Scroll to about section"
               >
-                <ArrowDown className="h-5 w-5 animate-bounce" />
-              </a>
+                <motion.div
+                  animate={{
+                    y: [0, -10, 0],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
+                  <ArrowDown className="h-5 w-5" />
+                </motion.div>
+              </motion.a>
             </motion.div>
           </div>
         </div>

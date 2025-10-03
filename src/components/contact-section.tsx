@@ -5,6 +5,7 @@ import { Mail, MapPin, Phone } from "lucide-react"
 import React, { useState } from "react"
 import { handleApiRequest, validateContactForm } from "@/lib/api-utils"
 import toast from "react-hot-toast"
+import { buttonHover, smoothSpring } from "@/lib/animations"
 
 export function ContactSection() {
   const [formData, setFormData] = useState({
@@ -88,7 +89,7 @@ export function ContactSection() {
           <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+              transition={smoothSpring}
               viewport={{ once: true }}
               className="text-center"
           >
@@ -105,7 +106,7 @@ export function ContactSection() {
             <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
+                transition={{ ...smoothSpring, delay: 0.1 }}
                 viewport={{ once: true }}
             >
               <h3 className="text-2xl font-display mb-6" style={{ color: "var(--primary)" }}>
@@ -124,7 +125,7 @@ export function ContactSection() {
                           key={info.title}
                           initial={{ opacity: 0, y: 20 }}
                           whileInView={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.5, delay: 0.1 * index }}
+                          transition={{ ...smoothSpring, delay: 0.1 * index }}
                           viewport={{ once: true }}
                           className="flex items-center"
                       >
@@ -136,15 +137,15 @@ export function ContactSection() {
                             {info.title}
                           </p>
                           {info.href !== "#" ? (
-                              <a
+                              <motion.a
                                   href={info.href}
-                                  className="text-sm font-body transition-colors"
+                                  className="text-sm font-body"
+                                  whileHover={{ color: "var(--primary)" }}
+                                  transition={smoothSpring}
                                   style={{ color: "var(--stone)" }}
-                                  onMouseOver={(e) => e.currentTarget.style.color = "var(--foreground)"}
-                                  onMouseLeave={(e) => e.currentTarget.style.color = "var(--foreground)"}
                               >
                                 {info.value}
-                              </a>
+                              </motion.a>
                           ) : (
                               <p className="text-sm font-body" style={{ color: "var(--foreground)" }}>
                                 {info.value}
@@ -161,7 +162,7 @@ export function ContactSection() {
             <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
+                transition={{ ...smoothSpring, delay: 0.2 }}
                 viewport={{ once: true }}
             >
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -255,10 +256,14 @@ export function ContactSection() {
                 </div>
 
                 <div>
-                  <button
+                  <motion.button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full flex justify-center py-3 px-4 rounded-md shadow-sm text-sm font-medium font-body transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                      variants={buttonHover}
+                      initial="rest"
+                      whileHover="hover"
+                      whileTap="tap"
+                      className="w-full flex justify-center py-3 px-4 rounded-md shadow-sm text-sm font-medium font-body disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                       style={{
                         backgroundColor: "var(--primary)",
                         color: "var(--background)"
@@ -267,16 +272,29 @@ export function ContactSection() {
                   >
                     {isSubmitting ? (
                       <span className="flex items-center">
-                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <motion.svg
+                          animate={{
+                            rotate: 360,
+                          }}
+                          transition={{
+                            duration: 1,
+                            repeat: Infinity,
+                            ease: "linear",
+                          }}
+                          className="-ml-1 mr-3 h-5 w-5"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
+                        </motion.svg>
                         Sending...
                       </span>
                     ) : (
                       "Send Message"
                     )}
-                  </button>
+                  </motion.button>
                 </div>
               </form>
             </motion.div>

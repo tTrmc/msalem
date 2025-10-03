@@ -1,6 +1,8 @@
 "use client"
 
 import { Github, Linkedin, Mail, Heart } from "lucide-react"
+import { motion } from "framer-motion"
+import { smoothSpring } from "@/lib/animations"
 
 export function Footer() {
   const socialLinks = [
@@ -32,19 +34,19 @@ export function Footer() {
               {socialLinks.map((link) => {
                 const Icon = link.icon
                 return (
-                    <a
+                    <motion.a
                         key={link.label}
                         href={link.href}
+                        whileHover={{ color: "var(--warm)", scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        transition={smoothSpring}
                         style={{ color: "var(--background)" }}
-                        onMouseOver={(e) => e.currentTarget.style.color = "var(--warm)"}
-                        onMouseLeave={(e) => e.currentTarget.style.color = "var(--background)"}
                         aria-label={link.label}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="transition-colors"
                     >
                       <Icon className="h-5 w-5" />
-                    </a>
+                    </motion.a>
                 )
               })}
             </div>

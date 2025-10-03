@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import { Briefcase, GraduationCap, MapPin, Calendar } from "lucide-react"
 import { Experience } from "@/types/common"
+import { cardHover, smoothSpring } from "@/lib/animations"
 
 export function ExperienceSection() {
   const experiences: Experience[] = [
@@ -43,7 +44,7 @@ export function ExperienceSection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={smoothSpring}
           viewport={{ once: true }}
           className="text-center"
         >
@@ -74,7 +75,7 @@ export function ExperienceSection() {
                   key={`${exp.organization}-${index}`}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.2 }}
+                  transition={{ ...smoothSpring, delay: index * 0.2 }}
                   viewport={{ once: true }}
                   className="relative"
                 >
@@ -102,8 +103,10 @@ export function ExperienceSection() {
 
                   {/* Timeline Dot - Desktop (centered) */}
                   <div className="hidden md:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                    <div
-                      className="w-12 h-12 rounded-full flex items-center justify-center transition-[transform,box-shadow] duration-500 ease-out hover:scale-110"
+                    <motion.div
+                      className="w-12 h-12 rounded-full flex items-center justify-center"
+                      whileHover={{ scale: 1.1 }}
+                      transition={smoothSpring}
                       style={{
                         backgroundColor: "var(--primary)",
                         border: "3px solid var(--background)",
@@ -111,7 +114,7 @@ export function ExperienceSection() {
                       }}
                     >
                       <Icon className="h-6 w-6" style={{ color: "var(--background)" }} />
-                    </div>
+                    </motion.div>
                   </div>
 
                   {/* Timeline Dot - Mobile (left side) */}
@@ -147,13 +150,15 @@ export function ExperienceSection() {
 // Experience Card Component
 function ExperienceCard({ experience, align }: { experience: Experience; align: 'left' | 'right' }) {
   return (
-    <div
-      className={`rounded-xl p-6 transition-[transform,box-shadow] duration-500 ease-out hover:-translate-y-1 hover:shadow-2xl ${
-        align === 'right' ? 'text-right' : ''
-      }`}
+    <motion.div
+      className={`rounded-xl p-6 ${align === 'right' ? 'text-right' : ''}`}
+      variants={cardHover}
+      initial="rest"
+      whileHover="hover"
       style={{
         backgroundColor: "var(--accent)",
         border: "1px solid var(--warm)",
+        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
       }}
     >
       {/* Header */}
@@ -214,6 +219,6 @@ function ExperienceCard({ experience, align }: { experience: Experience; align: 
           ))}
         </div>
       )}
-    </div>
+    </motion.div>
   )
 }

@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { ExternalLink, Github, Star } from "lucide-react"
 import Image from "next/image"
 import { Project } from "@/types/common"
+import { projectCardHover, smoothSpring } from "@/lib/animations"
 
 export function ProjectsSection() {
   const projects: Project[] = [
@@ -51,7 +52,7 @@ export function ProjectsSection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={smoothSpring}
           viewport={{ once: true, margin: "0px 0px -100px 0px" }}
           className="text-center mb-16"
         >
@@ -83,13 +84,16 @@ export function ProjectsSection() {
                 key={project.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                variants={projectCardHover}
+                whileHover="hover"
+                transition={{ ...smoothSpring, delay: index * 0.1 }}
                 viewport={{ once: true, margin: "0px 0px -100px 0px" }}
-                className={`group relative rounded-2xl overflow-hidden transition-[transform,box-shadow] duration-300 ease-out hover:shadow-2xl hover:-translate-y-1 ${gridClass} min-h-[300px] lg:min-h-[400px]`}
+                className={`group relative rounded-2xl overflow-hidden ${gridClass} min-h-[300px] lg:min-h-[400px]`}
                 style={{
                   backgroundColor: "var(--accent)",
                   willChange: "transform",
                   transform: "translateZ(0)",
+                  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
                 }}
               >
                 {/* Background Image or Gradient */}
@@ -139,50 +143,48 @@ export function ProjectsSection() {
                     {/* Action Icons */}
                     <div className="flex gap-2 ml-auto">
                       {project.githubUrl && (
-                        <a
+                        <motion.a
                           href={project.githubUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-2 rounded-full transition-colors duration-200"
+                          className="p-2 rounded-full"
+                          whileHover={{
+                            backgroundColor: "var(--primary)",
+                            color: "var(--background)",
+                            scale: 1.1
+                          }}
+                          whileTap={{ scale: 0.9 }}
+                          transition={smoothSpring}
                           style={{
                             backgroundColor: "rgba(255, 255, 255, 0.15)",
                             color: "var(--foreground)",
-                          }}
-                          onMouseOver={(e) => {
-                            e.currentTarget.style.backgroundColor = "var(--primary)"
-                            e.currentTarget.style.color = "var(--background)"
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.15)"
-                            e.currentTarget.style.color = "var(--foreground)"
                           }}
                           aria-label={`View ${project.title} on GitHub`}
                         >
                           <Github className="h-5 w-5" />
-                        </a>
+                        </motion.a>
                       )}
                       {project.demoUrl && (
-                        <a
+                        <motion.a
                           href={project.demoUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-2 rounded-full transition-colors duration-200"
+                          className="p-2 rounded-full"
+                          whileHover={{
+                            backgroundColor: "var(--primary)",
+                            color: "var(--background)",
+                            scale: 1.1
+                          }}
+                          whileTap={{ scale: 0.9 }}
+                          transition={smoothSpring}
                           style={{
                             backgroundColor: "rgba(255, 255, 255, 0.15)",
                             color: "var(--foreground)",
                           }}
-                          onMouseOver={(e) => {
-                            e.currentTarget.style.backgroundColor = "var(--primary)"
-                            e.currentTarget.style.color = "var(--background)"
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.15)"
-                            e.currentTarget.style.color = "var(--foreground)"
-                          }}
                           aria-label={`View ${project.title} live demo`}
                         >
                           <ExternalLink className="h-5 w-5" />
-                        </a>
+                        </motion.a>
                       )}
                     </div>
                   </div>

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import React from "react";
+import { fadeInUp, smoothSpring, viewportOnce } from "@/lib/animations"
 
 interface SectionProps {
   children: React.ReactNode
@@ -13,10 +14,11 @@ export function Section({ children, className = "", id }: SectionProps) {
   return (
     <motion.section
       id={id}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      viewport={{ once: true, margin: "-100px" }}
+      variants={fadeInUp}
+      initial="initial"
+      whileInView="animate"
+      transition={smoothSpring}
+      viewport={viewportOnce}
       className={className}
     >
       {children}

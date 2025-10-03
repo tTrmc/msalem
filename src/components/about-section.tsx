@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Code, Computer, Globe, Smartphone } from "lucide-react"
+import { cardHover, smoothSpring, staggerContainer, staggerItem } from "@/lib/animations"
 
 export function AboutSection() {
   const skills = [
@@ -33,7 +34,7 @@ export function AboutSection() {
           <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+              transition={smoothSpring}
               viewport={{ once: true }}
               className="text-center"
           >
@@ -49,7 +50,7 @@ export function AboutSection() {
             <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
+                transition={{ ...smoothSpring, delay: 0.1 }}
                 viewport={{ once: true }}
             >
               <h3 className="text-2xl font-display text-[var(--primary)] mb-6">
@@ -85,24 +86,30 @@ export function AboutSection() {
             <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
+                transition={{ ...smoothSpring, delay: 0.2 }}
                 viewport={{ once: true }}
                 className="grid grid-cols-1 sm:grid-cols-2 gap-6"
+                variants={staggerContainer}
             >
-              {skills.map((skill, index) => {
+              {skills.map((skill) => {
                 const Icon = skill.icon
                 return (
                     <motion.div
                         key={skill.title}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.1 * index }}
+                        variants={{
+                          ...staggerItem,
+                          ...cardHover
+                        }}
+                        initial="rest"
+                        whileInView="animate"
+                        whileHover="hover"
                         viewport={{ once: true }}
-                        className="p-6 rounded-lg hover:shadow-lg transition-shadow"
+                        className="p-6 rounded-lg"
                         style={{
                           backgroundColor: "var(--primary)",
                           border: "1px solid var(--warm)",
-                          opacity: 0.9
+                          opacity: 0.9,
+                          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
                         }}
                     >
                       <Icon className="h-8 w-8 mb-4" style={{ color: "var(--background)" }} />
