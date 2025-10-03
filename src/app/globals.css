@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  /* Dark theme colors (only theme) */
-  --background:  #0f0f1b;
-  --foreground:  #fafbf6;
-  --primary:    #c6b7be;
-  --stone:  #c6b7be;
-  --warm: #565a75;
-  --accent: #2c2525;
+  /* Dark theme colors (only theme) - Deep Blue/Indigo Professional Theme */
+  --background:  #0a0a0f;
+  --foreground:  #ffffff;
+  --primary: #eeeeee;    /* Deep royal blue - buttons & CTAs */
+  --stone:  #e4e4e7;
+  --warm: #3f3d81;          /* Deep indigo - headings & titles */
+  --accent: #0d0d13;        /* Navy blue - cards & sections */
 
   /* Common variables */
   --border-radius: 0.5rem;
