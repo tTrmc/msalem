@@ -27,7 +27,13 @@ export function Navigation() {
         <a href="#main-content" className="skip-nav">
           Skip to main content
         </a>
-        <nav suppressHydrationWarning style={{ backgroundColor: "var(--background)" }} className="w-full" role="navigation" aria-label="Main navigation">
+        <nav
+          suppressHydrationWarning
+          style={{ backgroundColor: "var(--background)" }}
+          className="w-full crt-scanlines"
+          role="navigation"
+          aria-label="Main navigation"
+        >
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
           <div className="flex h-16 items-center justify-between">
             <Link

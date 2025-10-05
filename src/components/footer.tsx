@@ -24,10 +24,13 @@ export function Footer() {
   ]
 
   return (
-      <footer style={{
-        backgroundColor: "var(--foreground)",
-        // Border properties removed
-      }}>
+      <footer
+        className="crt-scanlines"
+        style={{
+          backgroundColor: "var(--foreground)",
+          // Border properties removed
+        }}
+      >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
           <div className="flex flex-col items-center justify-between space-y-6 md:flex-row md:space-y-0">
             <div className="flex space-x-6">

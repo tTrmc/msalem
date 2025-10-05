@@ -58,7 +58,11 @@ export function AboutSection() {
   ]
 
   return (
-      <section id="about" className="py-24" style={{ backgroundColor: "var(--background)" }}>
+      <section
+        id="about"
+        className="py-24 crt-scanlines"
+        style={{ backgroundColor: "var(--background)" }}
+      >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div className="text-center" {...headerMotion}>
             <h2 className="text-3xl font-display tracking-tight text-[var(--primary)] sm:text-4xl text-shadow">

@@ -79,6 +79,50 @@ body {
   font-family: 'Lato', system-ui, sans-serif;
 }
 
+/* CRT scanline overlay */
+.crt-scanlines {
+  position: relative;
+  isolation: isolate;
+}
+
+.crt-scanlines::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(255, 255, 255, 0.05) 50%, rgba(0, 0, 0, 0.12)),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.12) 0px,
+      rgba(255, 255, 255, 0.12) 1px,
+      rgba(0, 0, 0, 0.08) 1px,
+      rgba(0, 0, 0, 0.08) 2px,
+      transparent 2px,
+      transparent 4px
+    );
+  mix-blend-mode: overlay;
+  opacity: 0.4;
+  animation: crt-flicker 6s ease-in-out infinite;
+  z-index: 30;
+}
+
+@keyframes crt-flicker {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  30% {
+    opacity: 0.48;
+  }
+  55% {
+    opacity: 0.42;
+  }
+  80% {
+    opacity: 0.5;
+  }
+}
+
 /* Text shadow for headings */
 .text-shadow {
   text-shadow: 0 2px 4px rgba(60, 53, 48, 0.1);
