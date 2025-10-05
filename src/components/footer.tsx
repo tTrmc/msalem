@@ -37,8 +37,9 @@ export function Footer() {
                     <motion.a
                         key={link.label}
                         href={link.href}
-                        whileHover={{ color: "var(--warm)", scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
+                        className="transition-transform duration-150 hover:text-[var(--warm)]"
+                        whileHover={{ scale: 1.08 }}
+                        whileTap={{ scale: 0.92 }}
                         transition={smoothSpring}
                         style={{ color: "var(--background)" }}
                         aria-label={link.label}

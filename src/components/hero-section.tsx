@@ -1,11 +1,44 @@
 "use client"
 
 import { Github, Linkedin, Mail, ArrowDown } from "lucide-react"
-import { motion } from "framer-motion"
+import { motion, useReducedMotion } from "framer-motion"
 import { ASCIIBackground } from "./ascii-background"
 import { smoothSpring, iconHover, buttonHover } from "@/lib/animations"
 
 export function HeroSection() {
+  const prefersReducedMotion = useReducedMotion()
+
+  const fadeIn = (delay = 0) =>
+    prefersReducedMotion
+      ? {}
+      : {
+          initial: { opacity: 0, y: 20 },
+          animate: { opacity: 1, y: 0 },
+          transition: { ...smoothSpring, delay },
+        }
+
+  const fadeInNoOffset = (delay = 0) =>
+    prefersReducedMotion
+      ? {}
+      : {
+          initial: { opacity: 0 },
+          animate: { opacity: 1 },
+          transition: { ...smoothSpring, delay },
+        }
+
+  const arrowBounce = prefersReducedMotion
+    ? {}
+    : {
+        animate: {
+          y: [0, -10, 0],
+        },
+        transition: {
+          duration: 2,
+          repeat: Infinity,
+          ease: 'easeInOut' as const,
+        },
+      }
+
   const socialLinks = [
     {
       href: "https://github.com/tTrmc",
@@ -29,31 +62,21 @@ export function HeroSection() {
         <ASCIIBackground/>
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-28 lg:py-36">
           <div className="text-center max-w-4xl mx-auto">
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={smoothSpring}
-            >
+            <motion.div {...fadeIn()}>
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-display tracking-tight text-[var(--foreground)] text-shadow">
                 Moustafa Salem
               </h1>
             </motion.div>
 
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ ...smoothSpring, delay: 0.1 }}
-            >
+            <motion.div {...fadeIn(0.1)}>
               <p className="mt-8 text-2xl md:text-3xl leading-8 text-[var(--foreground)] font-body">
                 Computer Science Student @ Queen&apos;s University
               </p>
             </motion.div>
 
             <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ ...smoothSpring, delay: 0.3 }}
-                className="mt-10 flex items-center justify-center gap-x-6"
+              className="mt-10 flex items-center justify-center gap-x-6"
+              {...fadeIn(0.3)}
             >
               <motion.a
                   href="#projects"
@@ -81,10 +104,8 @@ export function HeroSection() {
             </motion.div>
 
             <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ ...smoothSpring, delay: 0.4 }}
-                className="mt-10 flex justify-center space-x-6"
+              className="mt-10 flex justify-center space-x-6"
+              {...fadeIn(0.4)}
             >
               {socialLinks.map((link) => {
                 const Icon = link.icon
@@ -103,7 +124,11 @@ export function HeroSection() {
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                      <motion.div whileHover={{ color: "var(--primary)" }} transition={smoothSpring}>
+                      <motion.div
+                        whileHover={{ color: "var(--primary)" }}
+                        transition={smoothSpring}
+                        style={{ color: "inherit" }}
+                      >
                         <Icon className="h-6 w-6" />
                       </motion.div>
                     </motion.a>
@@ -112,10 +137,8 @@ export function HeroSection() {
             </motion.div>
 
             <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ ...smoothSpring, delay: 0.8 }}
-                className="mt-16"
+              className="mt-16"
+              {...fadeInNoOffset(0.5)}
             >
               <motion.a
                   href="#about"
@@ -127,16 +150,7 @@ export function HeroSection() {
                   }}
                   aria-label="Scroll to about section"
               >
-                <motion.div
-                  animate={{
-                    y: [0, -10, 0],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                >
+                <motion.div {...arrowBounce}>
                   <ArrowDown className="h-5 w-5" />
                 </motion.div>
               </motion.a>

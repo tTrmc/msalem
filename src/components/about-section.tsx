@@ -1,10 +1,39 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, useReducedMotion } from "framer-motion"
 import { Code, Computer, Globe, Smartphone } from "lucide-react"
 import { cardHover, smoothSpring, staggerContainer, staggerItem } from "@/lib/animations"
 
 export function AboutSection() {
+  const prefersReducedMotion = useReducedMotion()
+
+  const headerMotion = prefersReducedMotion
+    ? { viewport: { once: true } }
+    : {
+        initial: { opacity: 0, y: 20 },
+        whileInView: { opacity: 1, y: 0 },
+        transition: smoothSpring,
+        viewport: { once: true },
+      }
+
+  const leftColumnMotion = prefersReducedMotion
+    ? { viewport: { once: true } }
+    : {
+        initial: { opacity: 0, x: -20 },
+        whileInView: { opacity: 1, x: 0 },
+        transition: { ...smoothSpring, delay: 0.1 },
+        viewport: { once: true },
+      }
+
+  const rightColumnMotion = prefersReducedMotion
+    ? { viewport: { once: true } }
+    : {
+        initial: { opacity: 0, x: 20 },
+        whileInView: { opacity: 1, x: 0 },
+        transition: { ...smoothSpring, delay: 0.2 },
+        viewport: { once: true },
+      }
+
   const skills = [
     {
       icon: Code,
@@ -31,13 +60,7 @@ export function AboutSection() {
   return (
       <section id="about" className="py-24" style={{ backgroundColor: "var(--background)" }}>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={smoothSpring}
-              viewport={{ once: true }}
-              className="text-center"
-          >
+          <motion.div className="text-center" {...headerMotion}>
             <h2 className="text-3xl font-display tracking-tight text-[var(--primary)] sm:text-4xl text-shadow">
               About Me
             </h2>
@@ -47,12 +70,7 @@ export function AboutSection() {
           </motion.div>
 
           <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ ...smoothSpring, delay: 0.1 }}
-                viewport={{ once: true }}
-            >
+            <motion.div {...leftColumnMotion}>
               <h3 className="text-2xl font-display text-[var(--primary)] mb-6">
                 Hello and Welcome!
               </h3>
@@ -84,12 +102,9 @@ export function AboutSection() {
             </motion.div>
 
             <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ ...smoothSpring, delay: 0.2 }}
-                viewport={{ once: true }}
                 className="grid grid-cols-1 sm:grid-cols-2 gap-6"
                 variants={staggerContainer}
+                {...rightColumnMotion}
             >
               {skills.map((skill) => {
                 const Icon = skill.icon

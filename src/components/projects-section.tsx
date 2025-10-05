@@ -1,17 +1,20 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, useReducedMotion } from "framer-motion"
 import { ExternalLink, Github, Star } from "lucide-react"
 import Image from "next/image"
 import { Project } from "@/types/common"
 import { projectCardHover, smoothSpring } from "@/lib/animations"
 
 export function ProjectsSection() {
+  const prefersReducedMotion = useReducedMotion()
+  const blurPlaceholder = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII='
+
   const projects: Project[] = [
     {
       title: "Octavia",
       description: "Offline-first Android music player engineered for high-fidelity audio playback.",
-      image: "/images/projects/player.png",
+      image: "/images/projects/player.webp",
       techStack: ["Kotlin", "Jetpack Compose", "Media3 Exoplayer", "Room"],
       githubUrl: "https://github.com/tTrmc/Octavia",
       demoUrl: "",
@@ -50,11 +53,11 @@ export function ProjectsSection() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={smoothSpring}
-          viewport={{ once: true, margin: "0px 0px -100px 0px" }}
           className="text-center mb-16"
+          viewport={{ once: true, margin: "0px 0px -100px 0px" }}
+          {...(!prefersReducedMotion
+            ? { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, transition: smoothSpring }
+            : {})}
         >
           <h2 className="text-3xl font-display tracking-tight sm:text-4xl text-shadow" style={{ color: "var(--primary)" }}>
             Featured Projects
@@ -67,6 +70,13 @@ export function ProjectsSection() {
         {/* Bento Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 auto-rows-fr">
           {projects.map((project, index) => {
+            const revealMotion = prefersReducedMotion
+              ? {}
+              : {
+                  initial: { opacity: 0, y: 20 },
+                  whileInView: { opacity: 1, y: 0 },
+                  transition: { ...smoothSpring, delay: index * 0.1 },
+                }
             // Define grid spans for bento layout
             let gridClass = ""
             if (index === 0) {
@@ -82,11 +92,8 @@ export function ProjectsSection() {
             return (
               <motion.article
                 key={project.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
                 variants={projectCardHover}
                 whileHover="hover"
-                transition={{ ...smoothSpring, delay: index * 0.1 }}
                 viewport={{ once: true, margin: "0px 0px -100px 0px" }}
                 className={`group relative rounded-2xl overflow-hidden ${gridClass} min-h-[300px] lg:min-h-[400px]`}
                 style={{
@@ -95,6 +102,7 @@ export function ProjectsSection() {
                   transform: "translateZ(0)",
                   boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
                 }}
+                {...revealMotion}
               >
                 {/* Background Image or Gradient */}
                 <div className="absolute inset-0">
@@ -105,9 +113,10 @@ export function ProjectsSection() {
                         alt={`${project.title} project screenshot`}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-cover object-center transition-transform duration-400 ease-out group-hover:scale-105"
-                        priority={index < 2}
-                        loading={index < 2 ? "eager" : "lazy"}
+                        className="object-cover object-center transition-transform duration-300 ease-out group-hover:scale-105"
+                        placeholder="blur"
+                        blurDataURL={blurPlaceholder}
+                        loading="lazy"
                       />
                       {/* Dark overlay for text legibility */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/30 group-hover:from-black/80 group-hover:via-black/40 group-hover:to-black/20 transition-opacity duration-300" />
@@ -147,13 +156,9 @@ export function ProjectsSection() {
                           href={project.githubUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-2 rounded-full"
-                          whileHover={{
-                            backgroundColor: "var(--primary)",
-                            color: "var(--background)",
-                            scale: 1.1
-                          }}
-                          whileTap={{ scale: 0.9 }}
+                          className="p-2 rounded-full transition-transform duration-200"
+                          whileHover={{ scale: 1.08 }}
+                          whileTap={{ scale: 0.95 }}
                           transition={smoothSpring}
                           style={{
                             backgroundColor: "rgba(255, 255, 255, 0.15)",
@@ -169,13 +174,9 @@ export function ProjectsSection() {
                           href={project.demoUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-2 rounded-full"
-                          whileHover={{
-                            backgroundColor: "var(--primary)",
-                            color: "var(--background)",
-                            scale: 1.1
-                          }}
-                          whileTap={{ scale: 0.9 }}
+                          className="p-2 rounded-full transition-transform duration-200"
+                          whileHover={{ scale: 1.08 }}
+                          whileTap={{ scale: 0.95 }}
                           transition={smoothSpring}
                           style={{
                             backgroundColor: "rgba(255, 255, 255, 0.15)",

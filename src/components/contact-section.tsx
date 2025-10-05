@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, useReducedMotion } from "framer-motion"
 import { Mail, MapPin, Phone } from "lucide-react"
 import React, { useState } from "react"
 import { handleApiRequest, validateContactForm } from "@/lib/api-utils"
@@ -15,6 +15,8 @@ export function ContactSection() {
     message: "",
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const prefersReducedMotion = useReducedMotion()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData(prev => ({
@@ -87,11 +89,11 @@ export function ContactSection() {
       <section id="contact" className="py-24" style={{ backgroundColor: "var(--background)" }}>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={smoothSpring}
-              viewport={{ once: true }}
               className="text-center"
+              viewport={{ once: true }}
+              {...(!prefersReducedMotion
+                ? { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, transition: smoothSpring }
+                : {})}
           >
             <h2 className="text-3xl font-display tracking-tight sm:text-4xl text-shadow" style={{ color: "var(--primary)" }}>
               Get In Touch
@@ -104,10 +106,10 @@ export function ContactSection() {
           <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Information */}
             <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ ...smoothSpring, delay: 0.1 }}
                 viewport={{ once: true }}
+                {...(!prefersReducedMotion
+                  ? { initial: { opacity: 0, x: -20 }, whileInView: { opacity: 1, x: 0 }, transition: { ...smoothSpring, delay: 0.1 } }
+                  : {})}
             >
               <h3 className="text-2xl font-display mb-6" style={{ color: "var(--primary)" }}>
                 Let&apos;s talk about your project
@@ -123,11 +125,11 @@ export function ContactSection() {
                   return (
                       <motion.div
                           key={info.title}
-                          initial={{ opacity: 0, y: 20 }}
-                          whileInView={{ opacity: 1, y: 0 }}
-                          transition={{ ...smoothSpring, delay: 0.1 * index }}
-                          viewport={{ once: true }}
                           className="flex items-center"
+                          viewport={{ once: true }}
+                          {...(!prefersReducedMotion
+                            ? { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, transition: { ...smoothSpring, delay: 0.1 * index } }
+                            : {})}
                       >
                         <div className="flex h-10 w-10 items-center justify-center rounded-lg" style={{ backgroundColor: "var(--primary)" }}>
                           <Icon className="h-5 w-5" style={{ color: "var(--background)" }} />
@@ -160,10 +162,10 @@ export function ContactSection() {
 
             {/* Contact Form */}
             <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ ...smoothSpring, delay: 0.2 }}
                 viewport={{ once: true }}
+                {...(!prefersReducedMotion
+                  ? { initial: { opacity: 0, x: 20 }, whileInView: { opacity: 1, x: 0 }, transition: { ...smoothSpring, delay: 0.2 } }
+                  : {})}
             >
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

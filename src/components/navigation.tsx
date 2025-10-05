@@ -59,9 +59,10 @@ export function Navigation() {
                           className="rounded-md px-8 py-2 text-xl font-medium font-body block"
                       >
                         <motion.span
-                          whileHover={{ color: "var(--primary)" }}
+                          whileHover={{ y: -2, scale: 1.02 }}
                           transition={smoothSpring}
-                          style={{ color: "var(--foreground)", display: "block" }}
+                          className="block transition-colors duration-150 hover:text-[var(--primary)]"
+                          style={{ color: "var(--foreground)" }}
                         >
                           {item.label}
                         </motion.span>
@@ -75,11 +76,8 @@ export function Navigation() {
               {/* Mobile menu button */}
               <motion.button
                   onClick={() => setIsOpen(!isOpen)}
-                  className="md:hidden inline-flex items-center justify-center rounded-md p-2"
-                  whileHover={{
-                    backgroundColor: "var(--accent)",
-                    color: "var(--foreground)"
-                  }}
+                  className="md:hidden inline-flex items-center justify-center rounded-md p-2 transition-transform duration-150 hover:bg-[var(--accent)] hover:text-[var(--foreground)]"
+                  whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   transition={smoothSpring}
                   style={{ color: "var(--stone)" }}
@@ -125,18 +123,11 @@ export function Navigation() {
                               className="block rounded-md px-3 py-2 text-base font-medium font-body"
                           >
                             <motion.span
-                              whileHover={{
-                                backgroundColor: "var(--accent)",
-                                color: "var(--foreground)"
-                              }}
+                              whileHover={{ scale: 1.02 }}
                               whileTap={{ scale: 0.98 }}
                               transition={smoothSpring}
-                              style={{
-                                color: "var(--stone)",
-                                display: "block",
-                                borderRadius: "0.375rem",
-                                padding: "0.5rem 0.75rem"
-                              }}
+                              className="block rounded-md px-3 py-2 transition-colors duration-150 hover:bg-[var(--accent)] hover:text-[var(--foreground)]"
+                              style={{ color: "var(--stone)" }}
                             >
                               {item.label}
                             </motion.span>

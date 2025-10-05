@@ -1,11 +1,13 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, useReducedMotion } from "framer-motion"
 import { Briefcase, GraduationCap, MapPin, Calendar } from "lucide-react"
 import { Experience } from "@/types/common"
 import { cardHover, smoothSpring } from "@/lib/animations"
 
 export function ExperienceSection() {
+  const prefersReducedMotion = useReducedMotion()
+
   const experiences: Experience[] = [
     {
       title: "Computer Science Student",
@@ -42,11 +44,11 @@ export function ExperienceSection() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={smoothSpring}
-          viewport={{ once: true }}
           className="text-center"
+          viewport={{ once: true }}
+          {...(!prefersReducedMotion
+            ? { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, transition: smoothSpring }
+            : {})}
         >
           <h2 className="text-3xl font-display tracking-tight sm:text-4xl text-shadow" style={{ color: "var(--primary)" }}>
             Experience
@@ -73,11 +75,11 @@ export function ExperienceSection() {
               return (
                 <motion.div
                   key={`${exp.organization}-${index}`}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ ...smoothSpring, delay: index * 0.2 }}
-                  viewport={{ once: true }}
                   className="relative"
+                  viewport={{ once: true }}
+                  {...(!prefersReducedMotion
+                    ? { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, transition: { ...smoothSpring, delay: index * 0.2 } }
+                    : {})}
                 >
                   {/* Desktop Layout - Alternating */}
                   <div className={`hidden md:grid md:grid-cols-2 gap-8 items-center ${isEven ? '' : 'md:flex-row-reverse'}`}>
