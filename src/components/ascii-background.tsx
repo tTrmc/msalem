@@ -1,153 +1,211 @@
-"use client";
+"use client"
 
-import { useEffect, useRef, useMemo } from "react";
+import { useEffect, useRef, useMemo } from "react"
+import { useReducedMotion } from "framer-motion"
 
 interface ASCIIBackgroundProps {
-    /** Color palette for the ASCII background */
-    colors?: string[];
-    /** Height of a character row (px). Adjust to taste / performance */
-    fontSize?: number;
-    /** Width of a character column (px). Adjust to taste / performance */
-    charWidth?: number;
+  /** Color palette for the ASCII background */
+  colors?: string[]
+  /** Height of a character row (px). Adjust to taste / performance */
+  fontSize?: number
+  /** Width of a character column (px). Adjust to taste / performance */
+  charWidth?: number
 }
 
 /**
- * Animated ASCII background.
+ * Animated ASCII background with throttled rendering and visibility guards.
  *
- * ─ Fixes & improvements over the original ──────────────────────────────
- *   • Palette is no longer mutated; useMemo guarantees a stable reference.
- *   • Added defensive colour normalisation in one place (map → #RRGGBB).
- *   • Stable resize handler sets font + baseline once per resize.
- *   • Uses requestAnimationFrame time parameter instead of Date.now().
- *   • Character and colour indices both clamp to length‑1, avoiding [][].
- *   • hexToRgb simplified, supports #RGB & #RRGGBB and guards against undefined.
- *   • All listeners cleaned up on unmount.
- *   • Extra props (fontSize / charWidth) let callers trade fidelity vs FPS.
+ * Optimisations vs. baseline implementation:
+ *  • Respects reduced-motion preferences by disabling animation entirely.
+ *  • Pauses drawing when the hero section is off-screen (IntersectionObserver).
+ *  • Caps animation at ~30 FPS and increases draw step to lower per-frame cost.
+ *  • Palette, mouse tracking, and listeners remain memoised + cleaned up.
  */
 export function ASCIIBackground({
-                                    colors = ["#0f0f1b", "#242633", "#565a75", "#c6b7be", "#fafbf6"],
-                                    fontSize = 16,
-                                    charWidth = 10,
-                                }: ASCIIBackgroundProps) {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
-    const mouseRef = useRef({ x: 0, y: 0 });
+  colors = ["#0f0f1b", "#242633", "#565a75", "#c6b7be", "#fafbf6"],
+  fontSize = 24,
+  charWidth = 16,
+}: ASCIIBackgroundProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const mouseRef = useRef({ x: 0, y: 0 })
+  const isVisibleRef = useRef(false)
+  const prefersReducedMotion = useReducedMotion()
 
-    /** Normalised colour palette (always #RRGGBB) */
-    const palette = useMemo(() => {
-        return colors.map((c) => (c.startsWith("#") ? c : `#${c}`));
-    }, [colors]);
+  /** Normalised colour palette (always #RRGGBB) */
+  const palette = useMemo(() => colors.map((c) => (c.startsWith("#") ? c : `#${c}`)), [colors])
 
-    useEffect(() => {
-        
-        const canvas = canvasRef.current;
-        const ctx = canvas?.getContext("2d");
-        if (!canvas || !ctx) return;
+  // Track visibility to pause expensive drawing work when section is off-screen.
+  useEffect(() => {
+    if (prefersReducedMotion) return
+    if (typeof IntersectionObserver === "undefined") {
+      isVisibleRef.current = true
+      return
+    }
 
-        /* ───── helpers ──────────────────────────────────────────────────── */
+    const target = containerRef.current
+    if (!target) return
 
-        const chars = " .:-=+*#%@";
+    const rect = target.getBoundingClientRect()
+    isVisibleRef.current = rect.bottom >= 0 && rect.top <= window.innerHeight
 
-        /** Convert #RGB / #RRGGBB → rgb tuple; fallback to black if input invalid */
-        const hexToRgb = (hex?: string) => {
-            if (!hex) return { r: 0, g: 0, b: 0 };
-            const h = hex.replace("#", "");
-            const full = h.length === 3 ? h.split("").map((x) => x + x).join("") : h;
-            const num = parseInt(full, 16);
-            return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 };
-        };
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0]
+        isVisibleRef.current = entry?.isIntersecting ?? false
+      },
+      { threshold: 0.1 }
+    )
 
-        const resize = () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            ctx.font = `${fontSize}px monospace`;
-            ctx.textBaseline = "top";
-        };
+    observer.observe(target)
+    return () => observer.disconnect()
+  }, [prefersReducedMotion])
 
-        const handleMouse = (e: MouseEvent) => {
-            mouseRef.current = { x: e.clientX, y: e.clientY };
-        };
+  // Main animation loop
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      const canvas = canvasRef.current
+      if (canvas) {
+        const ctx = canvas.getContext("2d")
+        if (ctx) {
+          ctx.clearRect(0, 0, canvas.width, canvas.height)
+        }
+      }
+      return
+    }
 
-        resize();
-        window.addEventListener("resize", resize);
-        window.addEventListener("mousemove", handleMouse);
+    const canvas = canvasRef.current
+    const ctx = canvas?.getContext("2d")
+    if (!canvas || !ctx) return
 
-        /* ───── animation loop ──────────────────────────────────────────── */
+    const chars = " .:-=+*#%@"
+    const FRAME_INTERVAL = 1000 / 30 // ~30 FPS cap
+    const rowStep = Math.max(fontSize * 1.5, fontSize)
+    const colStep = Math.max(charWidth * 1.5, charWidth)
 
-        let frameId = 0;
+    const hexToRgb = (hex?: string) => {
+      if (!hex) return { r: 0, g: 0, b: 0 }
+      const h = hex.replace("#", "")
+      const full = h.length === 3 ? h.split("").map((x) => x + x).join("") : h
+      const num = parseInt(full, 16)
+      return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 }
+    }
 
-        const step = (time: number) => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const resize = () => {
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
+      ctx.font = `${fontSize}px monospace`
+      ctx.textBaseline = "top"
+    }
 
-            const { x: mx, y: my } = mouseRef.current;
-            const centerX = canvas.width / 2;
-            const centerY = canvas.height / 2;
+    const handleMouse = (e: MouseEvent) => {
+      mouseRef.current = { x: e.clientX, y: e.clientY }
+    }
 
-            for (let y = 0; y < canvas.height; y += fontSize) {
-                for (let x = 0; x < canvas.width; x += charWidth) {
-                    const dx = x - mx;
-                    const dy = y - my;
-                    const dist = Math.hypot(dx, dy);
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        const target = containerRef.current
+        if (target) {
+          const rect = target.getBoundingClientRect()
+          isVisibleRef.current = rect.bottom >= 0 && rect.top <= window.innerHeight
+        }
+      } else {
+        isVisibleRef.current = false
+      }
+    }
 
-                    // Calculate distance from center for text readability
-                    const centerDist = Math.hypot(x - centerX, y - centerY);
-                    const centerFade = Math.min(1, centerDist / 800); // Adjust 300 to control fade area
+    resize()
+    window.addEventListener("resize", resize)
+    window.addEventListener("mousemove", handleMouse)
+    document.addEventListener("visibilitychange", handleVisibilityChange)
 
-                    const mouseAmp = Math.exp(-dist / 150) * 2;
-                    const mouseWave = Math.sin(dist * 0.02 - time * 0.005) * mouseAmp;
+    let frameId = 0
+    let lastFrameTime = 0
 
-                    const w1 = Math.sin(x * 0.005 + time * 0.001);
-                    const w2 = Math.cos(y * 0.008 + time * 0.0008);
-                    const w3 = Math.sin((x + y) * 0.003 + time * 0.0012);
+    const step = (time: number) => {
+      if (!isVisibleRef.current) {
+        lastFrameTime = time
+        frameId = requestAnimationFrame(step)
+        return
+      }
 
-                    const h = (w1 + w2 + w3 + mouseWave) / 4; // roughly in −1 … 1 but may exceed slightly
-                    const normRaw = (h + 1) / 2; // un‑clamped 0 … 1 range
-                    const norm = Math.min(1, Math.max(0, normRaw)); // clamp to [0,1]
+      if (time - lastFrameTime < FRAME_INTERVAL) {
+        frameId = requestAnimationFrame(step)
+        return
+      }
 
-                    // Apply center fade to make text more readable
-                    const adjustedNorm = norm * centerFade;
+      lastFrameTime = time
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-                    // pick character + colour based on adjusted norm
-                    const charIdx = Math.floor(adjustedNorm * (chars.length - 1));
-                    const colourIdx = Math.floor(adjustedNorm * (palette.length - 1));
+      const { x: mx, y: my } = mouseRef.current
+      const centerX = canvas.width / 2
+      const centerY = canvas.height / 2
 
-                    const char = chars[charIdx];
-                    const { r, g, b } = hexToRgb(palette[colourIdx]);
-                    ctx.fillStyle = `rgb(${r},${g},${b})`;
+      for (let y = 0; y < canvas.height; y += rowStep) {
+        for (let x = 0; x < canvas.width; x += colStep) {
+          const dx = x - mx
+          const dy = y - my
+          const dist = Math.hypot(dx, dy)
 
-                    ctx.fillText(char, x, y);
-                }
-            }
+          const centerDist = Math.hypot(x - centerX, y - centerY)
+          const centerFade = Math.min(1, centerDist / 800)
 
-            frameId = requestAnimationFrame(step);
-        };
+          const mouseAmp = Math.exp(-dist / 150) * 2
+          const mouseWave = Math.sin(dist * 0.02 - time * 0.005) * mouseAmp
 
-        frameId = requestAnimationFrame(step);
+          const w1 = Math.sin(x * 0.005 + time * 0.001)
+          const w2 = Math.cos(y * 0.008 + time * 0.0008)
+          const w3 = Math.sin((x + y) * 0.003 + time * 0.0012)
 
-        return () => {
-            cancelAnimationFrame(frameId);
-            window.removeEventListener("resize", resize);
-            window.removeEventListener("mousemove", handleMouse);
-        };
-    }, [palette, fontSize, charWidth]);
+          const h = (w1 + w2 + w3 + mouseWave) / 4
+          const norm = Math.min(1, Math.max(0, (h + 1) / 2))
+          const adjustedNorm = norm * centerFade
 
-    /* ───── render ─────────────────────────────────────────────────────── */
+          const charIdx = Math.floor(adjustedNorm * (chars.length - 1))
+          const colourIdx = Math.floor(adjustedNorm * (palette.length - 1))
 
-    return (
-        <div className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 0 }}>
-            <canvas
-                ref={canvasRef}
-                className="absolute inset-0 w-full h-full"
-            />
-            {/* Gradient overlay to fade the ASCII art into the background */}
-            <div 
-                className="absolute inset-0 w-full h-full"
-                style={{
-                    background: `linear-gradient(to bottom, var(--background) 0%, transparent 20%, transparent 60%, var(--background) 100%)`
-                }}
-            />
-        </div>
-    );
+          const char = chars[charIdx]
+          const { r, g, b } = hexToRgb(palette[colourIdx])
+          ctx.fillStyle = `rgb(${r},${g},${b})`
+          ctx.fillText(char, x, y)
+        }
+      }
+
+      frameId = requestAnimationFrame(step)
+    }
+
+    frameId = requestAnimationFrame(step)
+
+    return () => {
+      cancelAnimationFrame(frameId)
+      window.removeEventListener("resize", resize)
+      window.removeEventListener("mousemove", handleMouse)
+      document.removeEventListener("visibilitychange", handleVisibilityChange)
+    }
+  }, [palette, fontSize, charWidth, prefersReducedMotion])
+
+  const shouldRenderCanvas = !prefersReducedMotion
+
+  return (
+    <div
+      ref={containerRef}
+      className="absolute inset-0 w-full h-full pointer-events-none"
+      style={{ zIndex: 0 }}
+    >
+      {shouldRenderCanvas && (
+        <canvas
+          ref={canvasRef}
+          className="absolute inset-0 w-full h-full"
+        />
+      )}
+      <div
+        className="absolute inset-0 w-full h-full"
+        style={{
+          background: `linear-gradient(to bottom, var(--background) 0%, transparent 20%, transparent 60%, var(--background) 100%)`,
+        }}
+      />
+    </div>
+  )
 }
 
-// Also export as default for compatibility with default‑import style.
-export default ASCIIBackground;
+export default ASCIIBackground

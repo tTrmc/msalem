@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { rateLimit } from '@/lib/rate-limit'
 import { ContactEmailTemplate } from '@/components/email-template'
+import { createElement } from 'react'
 import { validateContactForm } from '@/lib/api-utils'
 import type { ContactFormData } from '@/types/common'
 
@@ -61,13 +62,14 @@ export async function POST(request: NextRequest) {
     }
 
     const resend = new Resend(process.env.RESEND_API_KEY)
+    const emailContent = createElement(ContactEmailTemplate, { name, email, subject, message })
 
     const { data, error } = await resend.emails.send({
       from: 'contact@moustafasalem.com',
       to: ['salemmoustafa442@gmail.com'],
       subject: `Contact Form: ${subject}`,
       replyTo: email,
-      react: ContactEmailTemplate({ name, email, subject, message }),
+      react: emailContent,
     })
 
     if (error) {
