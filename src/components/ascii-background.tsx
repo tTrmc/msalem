@@ -58,9 +58,9 @@ const hexToRgbString = (hex: string) => {
  *  • Pauses drawing when the hero section is off-screen (IntersectionObserver).
  *  • Caps animation at ~30 FPS and increases draw step to lower per-frame cost.
  *  • Palette, grid metadata, and listeners remain memoised + cleaned up.
-*/
+ */
 export function ASCIIBackground({
-  colors = ["#0f0f1b", "#242633", "#565a75", "#c6b7be", "#fafbf6"],
+  colors = ["#1f1b14", "#3b3327", "#504635", "#8b826d", "#cfc495", "#e4dcc4"],
   fontSize = 18,
   charWidth = 12,
 }: ASCIIBackgroundProps) {
@@ -120,7 +120,8 @@ export function ASCIIBackground({
     const chars = " .:-=+*#%@"
     const charMaxIndex = Math.max(0, chars.length - 1)
     const colourMaxIndex = Math.max(0, fillStyles.length - 1)
-    const fallbackFill = fillStyles[colourMaxIndex] ?? "#ffffff"
+    const fallbackFill = fillStyles[colourMaxIndex] ?? "#e4dcc4"
+    const backgroundFill = fillStyles[0] ?? "#1f1b14"
     const FRAME_INTERVAL = 1000 / 30 // ~30 FPS cap
 
     const matchDensity = (width: number, height: number) => {
@@ -216,6 +217,8 @@ export function ASCIIBackground({
 
       lastFrameTime = time
       ctx.clearRect(0, 0, canvas.width, canvas.height)
+      ctx.fillStyle = backgroundFill
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
 
       const grid = gridRef.current
       if (!grid.length || !fillStyles.length) {

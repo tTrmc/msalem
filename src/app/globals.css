@@ -1,18 +1,27 @@
 @import "tailwindcss";
 
 :root {
-  /* Dark theme colors (only theme) - Deep Blue/Indigo Professional Theme */
-  --background:  #0a0a0f;
-  --foreground:  #ffffff;
-  --primary: #eeeeee;    /* Deep royal blue - buttons & CTAs */
-  --stone:  #e4e4e7;
-  --warm: #3f3d81;          /* Deep indigo - headings & titles */
-  --accent: #0d0d13;        /* Navy blue - cards & sections */
+  /* NieR:Automata-inspired palette with deeper contrast */
+  --background: #d8d0b3;      /* Sanded parchment */
+  --foreground: #2f261f;      /* Deep umbra */
+  --primary: #f0e7c2;         /* Hack highlight */
+  --stone: #b6a789;           /* Defensive taupe */
+  --warm: #b58a77;            /* Offensive sienna */
+  --accent: #4f4638;          /* System umber */
 
   /* Common variables */
   --border-radius: 0.5rem;
   --transition-speed: 0.3s;
   --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dark {
+  --background: #1f1b14;      /* Terminal dusk */
+  --foreground: #e4dcc4;      /* Pale parchment */
+  --primary: #cfc495;         /* Hack glow */
+  --stone: #8b826d;           /* Weathered alloy */
+  --warm: #8f5f4a;            /* Offensive rust */
+  --accent: #3b3327;          /* System umber */
 }
 
 /* Base transitions */
