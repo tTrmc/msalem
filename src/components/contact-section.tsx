@@ -187,6 +187,7 @@ export function ContactSection() {
                         }}
                         aria-describedby="name-help"
                     />
+                    <p id="name-help" className="sr-only">Name is required and must be at least 2 characters.</p>
                   </div>
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium font-body" style={{ color: "var(--stone)" }}>
@@ -208,6 +209,7 @@ export function ContactSection() {
                         }}
                         aria-describedby="email-help"
                     />
+                    <p id="email-help" className="sr-only">Use a valid email address so I can respond.</p>
                   </div>
                 </div>
 
@@ -231,6 +233,7 @@ export function ContactSection() {
                       }}
                       aria-describedby="subject-help"
                   />
+                  <p id="subject-help" className="sr-only">Include a brief subject (minimum 5 characters).</p>
                 </div>
 
                 <div>
@@ -253,6 +256,7 @@ export function ContactSection() {
                       }}
                       aria-describedby="message-help"
                   />
+                  <p id="message-help" className="sr-only">Share at least 10 characters so I understand your request.</p>
                 </div>
 
                 <div>
@@ -295,6 +299,7 @@ export function ContactSection() {
                       "Send Message"
                     )}
                   </motion.button>
+                  <p id="submit-help" className="sr-only">Submit the form once all required fields are complete.</p>
                 </div>
               </form>
             </motion.div>

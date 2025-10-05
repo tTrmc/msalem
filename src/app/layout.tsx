@@ -93,7 +93,7 @@ export default function RootLayout({
               },
               sameAs: [
                 "https://github.com/tTrmc",
-                "https://linkedin.com/in/moustafasalem"
+                "https://www.linkedin.com/in/moustafasalem/"
               ],
               knowsAbout: [
                 "JavaScript",
