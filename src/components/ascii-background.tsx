@@ -12,6 +12,44 @@ interface ASCIIBackgroundProps {
   charWidth?: number
 }
 
+const BASE_FONT_SIZE = 24
+const BASE_CHAR_WIDTH = 16
+const BASE_ROW_STEP = BASE_FONT_SIZE * 1.5
+const BASE_COL_STEP = BASE_CHAR_WIDTH * 1.5
+const BASE_CELL_AREA = BASE_ROW_STEP * BASE_COL_STEP
+// Soft cap on characters rendered per frame to protect frame budget on large screens.
+const MAX_ASCII_CELLS = 6000
+const WAVE_FREQ_X = 0.005
+const WAVE_FREQ_Y = 0.008
+const WAVE_FREQ_XY = 0.003
+const WAVE_SPEED_X = 0.001
+const WAVE_SPEED_Y = 0.0008
+const WAVE_SPEED_XY = 0.0012
+const CENTER_FADE_RADIUS = 800
+
+type GridCell = {
+  x: number
+  y: number
+  centerFade: number
+  phaseX: number
+  phaseY: number
+  phaseXY: number
+}
+
+const normaliseHex = (value: string) => (value.startsWith("#") ? value : `#${value}`)
+
+const hexToRgb = (hex: string) => {
+  const h = hex.replace("#", "")
+  const full = h.length === 3 ? h.split("").map((x) => x + x).join("") : h
+  const num = parseInt(full, 16)
+  return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 }
+}
+
+const hexToRgbString = (hex: string) => {
+  const { r, g, b } = hexToRgb(hex)
+  return `rgb(${r},${g},${b})`
+}
+
 /**
  * Animated ASCII background with throttled rendering and visibility guards.
  *
@@ -19,21 +57,22 @@ interface ASCIIBackgroundProps {
  *  • Respects reduced-motion preferences by disabling animation entirely.
  *  • Pauses drawing when the hero section is off-screen (IntersectionObserver).
  *  • Caps animation at ~30 FPS and increases draw step to lower per-frame cost.
- *  • Palette, mouse tracking, and listeners remain memoised + cleaned up.
- */
+ *  • Palette, grid metadata, and listeners remain memoised + cleaned up.
+*/
 export function ASCIIBackground({
   colors = ["#0f0f1b", "#242633", "#565a75", "#c6b7be", "#fafbf6"],
-  fontSize = 24,
-  charWidth = 16,
+  fontSize = 18,
+  charWidth = 12,
 }: ASCIIBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const mouseRef = useRef({ x: 0, y: 0 })
+  const gridRef = useRef<GridCell[]>([])
   const isVisibleRef = useRef(false)
   const prefersReducedMotion = useReducedMotion()
 
   /** Normalised colour palette (always #RRGGBB) */
-  const palette = useMemo(() => colors.map((c) => (c.startsWith("#") ? c : `#${c}`)), [colors])
+  const palette = useMemo(() => colors.map(normaliseHex), [colors])
+  const fillStyles = useMemo(() => palette.map(hexToRgbString), [palette])
 
   // Track visibility to pause expensive drawing work when section is off-screen.
   useEffect(() => {
@@ -79,16 +118,60 @@ export function ASCIIBackground({
     if (!canvas || !ctx) return
 
     const chars = " .:-=+*#%@"
+    const charMaxIndex = Math.max(0, chars.length - 1)
+    const colourMaxIndex = Math.max(0, fillStyles.length - 1)
+    const fallbackFill = fillStyles[colourMaxIndex] ?? "#ffffff"
     const FRAME_INTERVAL = 1000 / 30 // ~30 FPS cap
-    const rowStep = Math.max(fontSize * 1.5, fontSize)
-    const colStep = Math.max(charWidth * 1.5, charWidth)
 
-    const hexToRgb = (hex?: string) => {
-      if (!hex) return { r: 0, g: 0, b: 0 }
-      const h = hex.replace("#", "")
-      const full = h.length === 3 ? h.split("").map((x) => x + x).join("") : h
-      const num = parseInt(full, 16)
-      return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 }
+    const matchDensity = (width: number, height: number) => {
+      let row = fontSize * 1.2
+      let col = charWidth * 1.2
+
+      const area = row * col
+      if (area > BASE_CELL_AREA) {
+        const shrink = Math.sqrt(area / BASE_CELL_AREA)
+        row /= shrink
+        col /= shrink
+      }
+
+      const columns = width / col
+      const rows = height / row
+      const totalCells = columns * rows
+
+      if (totalCells > MAX_ASCII_CELLS) {
+        const expand = Math.sqrt(totalCells / MAX_ASCII_CELLS)
+        row *= expand
+        col *= expand
+      }
+
+      return { row, col }
+    }
+
+    const buildGrid = () => {
+      const width = canvas.width
+      const height = canvas.height
+      const { row, col } = matchDensity(width, height)
+      const cells: GridCell[] = []
+      const centerX = width / 2
+      const centerY = height / 2
+
+      for (let y = 0; y <= height; y += row) {
+        for (let x = 0; x <= width; x += col) {
+          const centerDist = Math.hypot(x - centerX, y - centerY)
+          const centerFade = Math.min(1, centerDist / CENTER_FADE_RADIUS)
+
+          cells.push({
+            x,
+            y,
+            centerFade,
+            phaseX: x * WAVE_FREQ_X,
+            phaseY: y * WAVE_FREQ_Y,
+            phaseXY: (x + y) * WAVE_FREQ_XY,
+          })
+        }
+      }
+
+      gridRef.current = cells
     }
 
     const resize = () => {
@@ -96,10 +179,8 @@ export function ASCIIBackground({
       canvas.height = window.innerHeight
       ctx.font = `${fontSize}px monospace`
       ctx.textBaseline = "top"
-    }
 
-    const handleMouse = (e: MouseEvent) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY }
+      buildGrid()
     }
 
     const handleVisibilityChange = () => {
@@ -116,7 +197,6 @@ export function ASCIIBackground({
 
     resize()
     window.addEventListener("resize", resize)
-    window.addEventListener("mousemove", handleMouse)
     document.addEventListener("visibilitychange", handleVisibilityChange)
 
     let frameId = 0
@@ -137,38 +217,40 @@ export function ASCIIBackground({
       lastFrameTime = time
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-      const { x: mx, y: my } = mouseRef.current
-      const centerX = canvas.width / 2
-      const centerY = canvas.height / 2
+      const grid = gridRef.current
+      if (!grid.length || !fillStyles.length) {
+        frameId = requestAnimationFrame(step)
+        return
+      }
 
-      for (let y = 0; y < canvas.height; y += rowStep) {
-        for (let x = 0; x < canvas.width; x += colStep) {
-          const dx = x - mx
-          const dy = y - my
-          const dist = Math.hypot(dx, dy)
+      const timeX = time * WAVE_SPEED_X
+      const timeY = time * WAVE_SPEED_Y
+      const timeXY = time * WAVE_SPEED_XY
 
-          const centerDist = Math.hypot(x - centerX, y - centerY)
-          const centerFade = Math.min(1, centerDist / 800)
+      let lastFillStyle: string | null = null
 
-          const mouseAmp = Math.exp(-dist / 150) * 2
-          const mouseWave = Math.sin(dist * 0.02 - time * 0.005) * mouseAmp
+      for (const cell of grid) {
+        const w1 = Math.sin(cell.phaseX + timeX)
+        const w2 = Math.cos(cell.phaseY + timeY)
+        const w3 = Math.sin(cell.phaseXY + timeXY)
 
-          const w1 = Math.sin(x * 0.005 + time * 0.001)
-          const w2 = Math.cos(y * 0.008 + time * 0.0008)
-          const w3 = Math.sin((x + y) * 0.003 + time * 0.0012)
+        const intensity = (w1 + w2 + w3) / 3
+        const norm = Math.min(1, Math.max(0, (intensity + 1) / 2))
+        const adjusted = norm * cell.centerFade
 
-          const h = (w1 + w2 + w3 + mouseWave) / 4
-          const norm = Math.min(1, Math.max(0, (h + 1) / 2))
-          const adjustedNorm = norm * centerFade
+        if (adjusted <= 0.02) continue
 
-          const charIdx = Math.floor(adjustedNorm * (chars.length - 1))
-          const colourIdx = Math.floor(adjustedNorm * (palette.length - 1))
+        const charIdx = Math.min(charMaxIndex, Math.floor(adjusted * charMaxIndex))
+        const colourIdx = Math.min(colourMaxIndex, Math.floor(adjusted * colourMaxIndex))
 
-          const char = chars[charIdx]
-          const { r, g, b } = hexToRgb(palette[colourIdx])
-          ctx.fillStyle = `rgb(${r},${g},${b})`
-          ctx.fillText(char, x, y)
+        const fill = fillStyles[colourIdx] ?? fallbackFill
+        if (fill !== lastFillStyle) {
+          ctx.fillStyle = fill
+          lastFillStyle = fill
         }
+
+        const char = chars.charAt(charIdx)
+        ctx.fillText(char, cell.x, cell.y)
       }
 
       frameId = requestAnimationFrame(step)
@@ -179,10 +261,9 @@ export function ASCIIBackground({
     return () => {
       cancelAnimationFrame(frameId)
       window.removeEventListener("resize", resize)
-      window.removeEventListener("mousemove", handleMouse)
       document.removeEventListener("visibilitychange", handleVisibilityChange)
     }
-  }, [palette, fontSize, charWidth, prefersReducedMotion])
+  }, [fillStyles, fontSize, charWidth, prefersReducedMotion])
 
   const shouldRenderCanvas = !prefersReducedMotion
 
@@ -198,12 +279,6 @@ export function ASCIIBackground({
           className="absolute inset-0 w-full h-full"
         />
       )}
-      <div
-        className="absolute inset-0 w-full h-full"
-        style={{
-          background: `linear-gradient(to bottom, var(--background) 0%, transparent 20%, transparent 60%, var(--background) 100%)`,
-        }}
-      />
     </div>
   )
 }
