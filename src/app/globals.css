@@ -8,6 +8,12 @@
   --stone: #b6a789;           /* Defensive taupe */
   --warm: #b58a77;            /* Offensive sienna */
   --accent: #4f4638;          /* System umber */
+  --panel-surface: rgba(243, 235, 212, 0.9);
+  --panel-surface-muted: rgba(235, 225, 200, 0.85);
+  --panel-border: rgba(79, 70, 56, 0.35);
+  --panel-header: rgba(79, 70, 56, 0.18);
+  --panel-line: rgba(47, 38, 31, 0.25);
+  --panel-shadow: 0 28px 48px rgba(20, 16, 11, 0.32);
 
   /* Common variables */
   --border-radius: 0.5rem;
@@ -22,6 +28,12 @@
   --stone: #8b826d;           /* Weathered alloy */
   --warm: #8f5f4a;            /* Offensive rust */
   --accent: #3b3327;          /* System umber */
+  --panel-surface: rgba(36, 30, 24, 0.92);
+  --panel-surface-muted: rgba(31, 26, 21, 0.86);
+  --panel-border: rgba(228, 220, 196, 0.16);
+  --panel-header: rgba(228, 220, 196, 0.1);
+  --panel-line: rgba(228, 220, 196, 0.18);
+  --panel-shadow: 0 32px 56px rgba(0, 0, 0, 0.45);
 }
 
 /* Base transitions */
@@ -121,6 +133,177 @@ body {
   80% {
     opacity: 0.5;
   }
+}
+
+/* NieR-inspired window panels */
+.nier-panel {
+  position: relative;
+  background: var(--panel-surface);
+  border: 1px solid var(--panel-border);
+  border-radius: 0.75rem;
+  box-shadow: var(--panel-shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  color: var(--foreground);
+  backdrop-filter: blur(4px);
+}
+
+.nier-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, var(--panel-header), transparent 35%),
+    linear-gradient(to right, transparent 65%, var(--panel-header));
+  background-repeat: no-repeat;
+  background-size: 100% 54px, 100% 6px;
+  background-position: center top, center calc(100% - 18px);
+  opacity: 0.45;
+  z-index: 1;
+}
+
+.nier-panel::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 22px;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to top, rgba(0, 0, 0, 0.25), transparent 60%),
+    repeating-linear-gradient(
+      to right,
+      transparent 0,
+      transparent 18px,
+      var(--panel-line) 18px,
+      var(--panel-line) 19px
+    ),
+    repeating-linear-gradient(
+      to top,
+      transparent 0,
+      transparent 5px,
+      rgba(0, 0, 0, 0.18) 5px,
+      rgba(0, 0, 0, 0.18) 6px
+    );
+  opacity: 0.55;
+  mix-blend-mode: multiply;
+  z-index: 2;
+}
+
+.nier-panel__header {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--panel-border);
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.12), transparent 55%);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.75rem;
+  color: var(--stone);
+}
+
+.nier-panel__header::after {
+  content: "";
+  position: absolute;
+  inset: auto 1.5rem -0.65rem 1.5rem;
+  height: 4px;
+  background-image: linear-gradient(to right, transparent, var(--panel-line) 35%, transparent 70%);
+  opacity: 0.5;
+}
+
+.nier-panel__title {
+  font-family: var(--font-supply), Georgia, serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  color: var(--foreground);
+}
+
+.nier-panel__subtitle {
+  margin-left: 0.75rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
+  color: var(--stone);
+}
+
+.nier-panel__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--stone);
+}
+
+.nier-panel__body {
+  position: relative;
+  z-index: 5;
+  padding: 2rem 2.25rem 2.75rem;
+}
+
+.nier-panel__body::before {
+  content: "";
+  position: absolute;
+  inset: 1.5rem 1.5rem calc(100% - 1.5rem) auto;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--panel-line) 45%, transparent 90%);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.nier-panel__footer {
+  position: relative;
+  z-index: 5;
+  padding: 1.25rem 2.25rem 1.75rem;
+  border-top: 1px solid var(--panel-border);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: var(--stone);
+  text-transform: uppercase;
+}
+
+.nier-panel--muted {
+  background: var(--panel-surface-muted);
+}
+
+.nier-panel--compact .nier-panel__body {
+  padding: 1.5rem 1.75rem 2rem;
+}
+
+.nier-panel--minimal-header .nier-panel__header {
+  padding-block: 0.65rem;
+  font-size: 0.7rem;
+}
+
+.nier-panel--no-axis .nier-panel__body::before {
+  display: none;
+}
+
+.input-field {
+  width: 100%;
+  border-radius: 0.6rem;
+  background: var(--panel-surface-muted);
+  border: 1px solid var(--panel-border);
+  padding: 0.75rem 0.9rem;
+  color: var(--foreground);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+  font-family: var(--font-grotesque), sans-serif;
+}
+
+.input-field::placeholder {
+  color: color-mix(in srgb, var(--stone) 65%, transparent);
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 28%, transparent);
+  background: color-mix(in srgb, var(--panel-surface) 70%, transparent);
 }
 
 /* Text shadow for headings */

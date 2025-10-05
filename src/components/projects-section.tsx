@@ -5,10 +5,13 @@ import { ExternalLink, Github, Star } from "lucide-react"
 import Image from "next/image"
 import { Project } from "@/types/common"
 import { projectCardHover, smoothSpring } from "@/lib/animations"
+import { NierPanel } from "@/components/ui/nier-panel"
+
+const blurPlaceholder =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII='
 
 export function ProjectsSection() {
   const prefersReducedMotion = useReducedMotion()
-  const blurPlaceholder = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII='
 
   const projects: Project[] = [
     {
@@ -55,208 +58,163 @@ export function ProjectsSection() {
       style={{ backgroundColor: "var(--background)" }}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <motion.div
-          className="text-center mb-16"
-          viewport={{ once: true, margin: "0px 0px -100px 0px" }}
-          {...(!prefersReducedMotion
-            ? { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, transition: smoothSpring }
-            : {})}
+        <NierPanel
+          heading="Archive :: Projects"
+          subtitle="LOG 04 // BUILD REGISTER"
+          className="nier-panel--no-axis"
         >
-          <h2 className="text-3xl font-display tracking-tight sm:text-4xl text-shadow" style={{ color: "var(--primary)" }}>
-            Featured Projects
-          </h2>
-          <p className="mt-4 text-lg font-body" style={{ color: "var(--foreground)" }}>
-            A selection of my recent work and side projects
-          </p>
-        </motion.div>
+          <motion.div
+            className="text-center"
+            viewport={{ once: true, margin: "0px 0px -100px 0px" }}
+            {...(!prefersReducedMotion
+              ? { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, transition: smoothSpring }
+              : {})}
+          >
+            <h2 className="text-3xl font-display tracking-tight sm:text-4xl text-shadow" style={{ color: "var(--primary)" }}>
+              Featured Projects
+            </h2>
+            <p className="mt-4 text-lg font-body" style={{ color: "var(--foreground)" }}>
+              A selection of my recent work and side projects
+            </p>
+          </motion.div>
 
-        {/* Bento Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 auto-rows-fr">
-          {projects.map((project, index) => {
-            const revealMotion = prefersReducedMotion
-              ? {}
-              : {
-                  initial: { opacity: 0, y: 20 },
-                  whileInView: { opacity: 1, y: 0 },
-                  transition: { ...smoothSpring, delay: index * 0.1 },
-                }
-            // Define grid spans for bento layout
-            let gridClass = ""
-            if (index === 0) {
-              gridClass = "md:col-span-2 md:row-span-2" // Large featured
-            } else if (index === 1) {
-              gridClass = "md:col-span-2 lg:col-span-2 md:row-span-1" // Wide
-            } else if (index === 2) {
-              gridClass = "md:col-span-1 md:row-span-1" // Regular
-            } else {
-              gridClass = "md:col-span-1 md:row-span-1" // Regular
-            }
+          <div className="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-2">
+            {projects.map((project, index) => {
+              const revealMotion = prefersReducedMotion
+                ? {}
+                : {
+                    initial: { opacity: 0, y: 20 },
+                    whileInView: { opacity: 1, y: 0 },
+                    transition: { ...smoothSpring, delay: index * 0.08 },
+                    viewport: { once: true, margin: "0px 0px -80px 0px" },
+                  }
 
-            return (
-              <motion.article
-                key={project.title}
-                variants={projectCardHover}
-                whileHover="hover"
-                viewport={{ once: true, margin: "0px 0px -100px 0px" }}
-                className={`group relative rounded-2xl overflow-hidden ${gridClass} min-h-[300px] lg:min-h-[400px]`}
-                style={{
-                  backgroundColor: "var(--accent)",
-                  willChange: "transform",
-                  transform: "translateZ(0)",
-                  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
-                }}
-                {...revealMotion}
-              >
-                {/* Background Image or Gradient */}
-                <div className="absolute inset-0">
-                  {project.image ? (
-                    <>
-                      <Image
-                        src={project.image}
-                        alt={`${project.title} project screenshot`}
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-cover object-center transition-transform duration-300 ease-out group-hover:scale-105"
-                        placeholder="blur"
-                        blurDataURL={blurPlaceholder}
-                        loading="lazy"
-                      />
-                      {/* Dark overlay for text legibility */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/30 group-hover:from-black/80 group-hover:via-black/40 group-hover:to-black/20 transition-opacity duration-300" />
-                    </>
-                  ) : (
-                    /* Gradient background for projects without images */
-                    <div
-                      className="absolute inset-0"
-                      style={{
-                        background: `linear-gradient(135deg, var(--primary) 0%, var(--warm) 50%, var(--accent) 100%)`,
-                      }}
-                    />
-                  )}
-                </div>
+              const headerSubtitle = project.techStack.length
+                ? `STACK // ${project.techStack.slice(0, 3).join(" • ")}`
+                : undefined
 
-                {/* Content Overlay */}
-                <div className="relative h-full flex flex-col justify-between p-6 lg:p-8">
-                  {/* Top Section - Featured Badge */}
-                  <div className="flex items-start justify-between">
-                    {project.featured && (
-                      <div
-                        className="flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold font-body"
-                        style={{
-                          backgroundColor: "var(--primary)",
-                          color: "var(--background)",
-                        }}
-                      >
-                        <Star className="h-3 w-3 fill-current" />
-                        Featured
+              return (
+                <motion.div
+                  key={project.title}
+                  variants={projectCardHover}
+                  initial="rest"
+                  whileHover="hover"
+                  className="h-full"
+                  {...revealMotion}
+                >
+                  <NierPanel
+                    heading={project.title.toUpperCase()}
+                    subtitle={headerSubtitle}
+                    actions={
+                      project.featured ? (
+                        <span className="inline-flex items-center gap-2 text-xs tracking-[0.3em] text-[var(--primary)]">
+                          <Star className="h-4 w-4 fill-current" />
+                          PRIORITY
+                        </span>
+                      ) : (
+                        <span className="text-xs tracking-[0.3em] text-[var(--stone)]">ARCHIVE</span>
+                      )
+                    }
+                    variant="muted"
+                    compact
+                    className="group relative h-full overflow-hidden"
+                  >
+                    <ProjectMedia project={project} />
+
+                    <div className="relative z-10 flex h-full flex-col justify-between gap-6">
+                      <div>
+                        <p className="text-sm font-body leading-relaxed text-[var(--foreground)]">
+                          {project.description}
+                        </p>
                       </div>
-                    )}
 
-                    {/* Action Icons */}
-                    <div className="flex gap-2 ml-auto">
-                      {project.githubUrl && (
-                        <motion.a
-                          href={project.githubUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-2 rounded-full transition-transform duration-200"
-                          whileHover={{ scale: 1.08 }}
-                          whileTap={{ scale: 0.95 }}
-                          transition={smoothSpring}
-                          style={{
-                            backgroundColor: "rgba(255, 255, 255, 0.15)",
-                            color: "var(--foreground)",
-                          }}
-                          aria-label={`View ${project.title} on GitHub`}
-                        >
-                          <Github className="h-5 w-5" />
-                        </motion.a>
-                      )}
-                      {project.demoUrl && (
-                        <motion.a
-                          href={project.demoUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-2 rounded-full transition-transform duration-200"
-                          whileHover={{ scale: 1.08 }}
-                          whileTap={{ scale: 0.95 }}
-                          transition={smoothSpring}
-                          style={{
-                            backgroundColor: "rgba(255, 255, 255, 0.15)",
-                            color: "var(--foreground)",
-                          }}
-                          aria-label={`View ${project.title} live demo`}
-                        >
-                          <ExternalLink className="h-5 w-5" />
-                        </motion.a>
-                      )}
+                      <div className="flex flex-wrap gap-2 text-xs uppercase tracking-[0.24em] text-[var(--stone)]">
+                        {project.techStack.map((tech) => (
+                          <span
+                            key={tech}
+                            className="px-3 py-1 border border-[var(--panel-border)] bg-[var(--panel-surface)]/70 font-body"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+
+                      <div className="flex items-center gap-4 pt-2">
+                        {project.githubUrl && (
+                          <motion.a
+                            href={project.githubUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 text-sm font-body tracking-[0.18em] text-[var(--primary)]"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            transition={smoothSpring}
+                            aria-label={`View ${project.title} on GitHub`}
+                          >
+                            <Github className="h-4 w-4" />
+                            GITHUB
+                          </motion.a>
+                        )}
+                        {project.demoUrl && (
+                          <motion.a
+                            href={project.demoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 text-sm font-body tracking-[0.18em] text-[var(--stone)] hover:text-[var(--primary)]"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            transition={smoothSpring}
+                            aria-label={`Open ${project.title} demo`}
+                          >
+                            <ExternalLink className="h-4 w-4" />
+                            DEMO
+                          </motion.a>
+                        )}
+                      </div>
                     </div>
-                  </div>
-
-                  {/* Bottom Section - Title, Description, Tech Stack */}
-                  <div className="space-y-4">
-                    {/* Title */}
-                    <h3
-                      className={`font-display font-bold text-white ${
-                        index === 0 ? 'text-4xl lg:text-5xl' : 'text-2xl lg:text-3xl'
-                      }`}
-                    >
-                      {project.title}
-                    </h3>
-
-                    {/* Description */}
-                    <p
-                      className={`font-body text-gray-200 leading-relaxed ${
-                        index === 0 ? 'text-base lg:text-lg' : 'text-sm lg:text-base'
-                      }`}
-                    >
-                      {project.description}
-                    </p>
-
-                    {/* Tech Stack */}
-                    <div className="flex flex-wrap gap-2">
-                      {project.techStack.slice(0, index === 0 ? 5 : 3).map((tech) => (
-                        <span
-                          key={tech}
-                          className="text-xs px-3 py-1 rounded-full font-body font-medium"
-                          style={{
-                            backgroundColor: "rgba(255, 255, 255, 0.2)",
-                            color: "white",
-                            border: "1px solid rgba(255, 255, 255, 0.3)",
-                          }}
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                      {project.techStack.length > (index === 0 ? 5 : 3) && (
-                        <span
-                          className="text-xs px-3 py-1 rounded-full font-body font-medium"
-                          style={{
-                            backgroundColor: "rgba(255, 255, 255, 0.2)",
-                            color: "white",
-                            border: "1px solid rgba(255, 255, 255, 0.3)",
-                          }}
-                        >
-                          +{project.techStack.length - (index === 0 ? 5 : 3)}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Accent Border on Hover */}
-                <div
-                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                  style={{
-                    border: "2px solid var(--primary)",
-                  }}
-                />
-              </motion.article>
-            )
-          })}
-        </div>
+                  </NierPanel>
+                </motion.div>
+              )
+            })}
+          </div>
+        </NierPanel>
       </div>
     </section>
+  )
+}
+
+function ProjectMedia({ project }: { project: Project }) {
+  if (!project.image) {
+    return (
+      <div className="relative mb-8 h-48 overflow-hidden rounded-md border border-[var(--panel-border)] bg-[var(--panel-surface-muted)]">
+        <div className="absolute inset-0 opacity-60"
+          style={{
+            backgroundImage:
+              "linear-gradient(120deg, rgba(207,196,149,0.3) 0%, rgba(132,122,89,0.1) 45%, rgba(64,54,41,0.25) 100%)",
+          }}
+        />
+        <div className="absolute inset-0 mix-blend-multiply"
+          style={{
+            backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 6px, rgba(0,0,0,0.08) 6px, rgba(0,0,0,0.08) 8px)",
+          }}
+        />
+      </div>
+    )
+  }
+
+  return (
+    <div className="relative mb-8 h-48 overflow-hidden rounded-md border border-[var(--panel-border)] bg-black/40">
+      <Image
+        src={project.image}
+        alt={`${project.title} project screenshot`}
+        fill
+        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        className="object-cover object-center opacity-80 transition-transform duration-300 group-hover:scale-105"
+        placeholder="blur"
+        blurDataURL={blurPlaceholder}
+        loading="lazy"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
+    </div>
   )
 }

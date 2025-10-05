@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion"
 import { Code, Computer, Globe, Smartphone } from "lucide-react"
 import { cardHover, smoothSpring, staggerContainer, staggerItem } from "@/lib/animations"
+import { NierPanel } from "@/components/ui/nier-panel"
 
 export function AboutSection() {
   const prefersReducedMotion = useReducedMotion()
@@ -64,85 +65,88 @@ export function AboutSection() {
         style={{ backgroundColor: "var(--background)" }}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <motion.div className="text-center" {...headerMotion}>
-            <h2 className="text-3xl font-display tracking-tight text-[var(--primary)] sm:text-4xl text-shadow">
-              About Me
-            </h2>
-            <p className="mt-4 text-lg text-[var(--foreground)] font-body">
-              Developer, musician, and creative technologist
-            </p>
-          </motion.div>
+          <NierPanel
+            heading="Archive :: Profile"
+            subtitle="LOG 02 // OPERATOR DATA"
+          >
+            <motion.div className="text-center" {...headerMotion}>
+              <h2 className="text-3xl font-display tracking-tight text-[var(--primary)] sm:text-4xl text-shadow">
+                About Me
+              </h2>
+              <p className="mt-4 text-lg text-[var(--foreground)] font-body">
+                Developer, musician, and creative technologist
+              </p>
+            </motion.div>
 
-          <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div {...leftColumnMotion}>
-              <h3 className="text-2xl font-display text-[var(--primary)] mb-6">
-                Hello and Welcome!
-              </h3>
-              <div className="space-y-4 text-xl text-[var(--foreground)] font-body">
-                <p>
-                  I&apos;m a passionate developer, musician and gamer. I love to create applications and
+            <div className="mt-16 grid grid-cols-1 gap-12 lg:grid-cols-[1.2fr_1fr]">
+              <motion.div {...leftColumnMotion}>
+                <h3 className="text-2xl font-display text-[var(--primary)] mb-6 uppercase tracking-[0.2em]">
+                  Operator Log
+                </h3>
+                <div className="space-y-4 text-lg text-[var(--foreground)] font-body leading-relaxed">
+                  <p>
+                    I&apos;m a passionate developer, musician and gamer. I love to create applications and
                     software that solve real-world issues I face, and I&apos;m always eager to learn new technologies
                     and improve my skills. I&apos;m a Computer Science student at Queen&apos;s University,
                     where I&apos;m currently studying Operating Systems, Algorithms, Software QA and Functional Programming.
-                </p>
-                <p>
-                  Beyond high-level application development, I have a deep fascination with systems-level programming
-                  in C and Rust. I enjoy diving into the low-level details of how software interacts with hardware,
-                  and I spend considerable time tinkering with Linux, customizing everything from window managers
-                  to kernel modules.
-                </p>
-                <p>
+                  </p>
+                  <p>
+                    Beyond high-level application development, I have a deep fascination with systems-level programming
+                    in C and Rust. I enjoy diving into the low-level details of how software interacts with hardware,
+                    and I spend considerable time tinkering with Linux, customizing everything from window managers
+                    to kernel modules.
+                  </p>
+                  <p>
                     I&apos;m a multi-instrumentalist who plays guitar, bass, and keyboard,
                     with a deep love for synthesizers and sound design. Music and technology
                     are equally important to me – I spend my time creating, whether that&apos;s
                     composing, coding, or both.
-                </p>
-                <p>
+                  </p>
+                  <p>
                     Currently I&apos;m building my own VST plugin using JUCE and C++, and learning
                     shader programming for a game I&apos;m developing in Godot. I enjoy the challenge
                     of making games from scratch and composing their soundtracks myself.
-                </p>
-              </div>
-            </motion.div>
+                  </p>
+                </div>
+              </motion.div>
 
-            <motion.div
-                className="grid grid-cols-1 sm:grid-cols-2 gap-6"
+              <motion.div
+                className="grid grid-cols-1 gap-6 sm:grid-cols-2"
                 variants={staggerContainer}
                 {...rightColumnMotion}
-            >
-              {skills.map((skill) => {
-                const Icon = skill.icon
-                return (
+              >
+                {skills.map((skill) => {
+                  const Icon = skill.icon
+                  return (
                     <motion.div
-                        key={skill.title}
-                        variants={{
-                          ...staggerItem,
-                          ...cardHover
-                        }}
-                        initial="rest"
-                        whileInView="animate"
-                        whileHover="hover"
-                        viewport={{ once: true }}
-                        className="p-6 rounded-lg"
-                        style={{
-                          backgroundColor: "var(--primary)",
-                          border: "1px solid var(--warm)",
-                          opacity: 0.9,
-                          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
-                        }}
+                      key={skill.title}
+                      variants={{
+                        ...staggerItem,
+                        ...cardHover,
+                      }}
+                      initial="rest"
+                      whileInView="animate"
+                      whileHover="hover"
+                      viewport={{ once: true }}
+                      className="h-full"
                     >
-                      <Icon className="h-8 w-8 mb-4" style={{ color: "var(--background)" }} />
-                      <h4 className="text-lg font-semibold font-body mb-2" style={{ color: "var(--background)" }}>
-                        {skill.title}
-                      </h4>
-                      <p className="text-sm font-body" style={{ color: "var(--background)" }}>
-                        {skill.description}
-                      </p>
+                      <NierPanel
+                        heading={skill.title.toUpperCase()}
+                        actions={<Icon className="h-5 w-5 text-[var(--primary)]" />}
+                        variant="muted"
+                        compact
+                        className="h-full"
+                      >
+                        <p className="text-sm font-body text-[var(--foreground)] leading-relaxed">
+                          {skill.description}
+                        </p>
+                      </NierPanel>
                     </motion.div>
-                )
-              })}
-            </motion.div>
-          </div>
+                  )
+                })}
+              </motion.div>
+            </div>
+          </NierPanel>
         </div>
       </section>
   )

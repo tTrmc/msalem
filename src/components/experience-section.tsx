@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "framer-motion"
 import { Briefcase, GraduationCap, MapPin, Calendar } from "lucide-react"
 import { Experience } from "@/types/common"
 import { cardHover, smoothSpring } from "@/lib/animations"
+import { NierPanel } from "@/components/ui/nier-panel"
 
 export function ExperienceSection() {
   const prefersReducedMotion = useReducedMotion()
@@ -46,185 +47,144 @@ export function ExperienceSection() {
       style={{ backgroundColor: "var(--background)" }}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <motion.div
-          className="text-center"
-          viewport={{ once: true }}
-          {...(!prefersReducedMotion
-            ? { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, transition: smoothSpring }
-            : {})}
+        <NierPanel
+          heading="Archive :: Deployments"
+          subtitle="LOG 03 // EXPERIENCE FEED"
+          className="nier-panel--no-axis"
         >
-          <h2 className="text-3xl font-display tracking-tight sm:text-4xl text-shadow" style={{ color: "var(--primary)" }}>
-            Experience
-          </h2>
-          <p className="mt-4 text-lg font-body" style={{ color: "var(--foreground)" }}>
-            My journey in software development and education
-          </p>
-        </motion.div>
+          <motion.div
+            className="text-center"
+            viewport={{ once: true }}
+            {...(!prefersReducedMotion
+              ? { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, transition: smoothSpring }
+              : {})}
+          >
+            <h2 className="text-3xl font-display tracking-tight sm:text-4xl text-shadow" style={{ color: "var(--primary)" }}>
+              Experience
+            </h2>
+            <p className="mt-4 text-lg font-body" style={{ color: "var(--foreground)" }}>
+              My journey in software development and education
+            </p>
+          </motion.div>
 
-        {/* Timeline */}
-        <div className="mt-16 relative">
-          {/* Vertical Line - Hidden on mobile */}
-          <div
-            className="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-0.5"
-            style={{ backgroundColor: "var(--warm)" }}
-          />
+          <div className="mt-16 relative">
+            <div className="hidden md:block absolute left-1/2 h-full w-px -translate-x-1/2 bg-[var(--panel-line)]" aria-hidden />
 
-          {/* Experience Items */}
-          <div className="space-y-12">
-            {experiences.map((exp, index) => {
-              const Icon = exp.type === 'work' ? Briefcase : GraduationCap
-              const isEven = index % 2 === 0
+            <div className="space-y-12">
+              {experiences.map((exp, index) => {
+                const Icon = exp.type === "work" ? Briefcase : GraduationCap
+                const isEven = index % 2 === 0
 
-              return (
-                <motion.div
-                  key={`${exp.organization}-${index}`}
-                  className="relative"
-                  viewport={{ once: true }}
-                  {...(!prefersReducedMotion
-                    ? { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, transition: { ...smoothSpring, delay: index * 0.2 } }
-                    : {})}
-                >
-                  {/* Desktop Layout - Alternating */}
-                  <div className={`hidden md:grid md:grid-cols-2 gap-8 items-center ${isEven ? '' : 'md:flex-row-reverse'}`}>
-                    {/* Left Side Content (or empty) */}
-                    <div className={isEven ? 'text-right pr-8' : ''}>
-                      {isEven && (
-                        <ExperienceCard experience={exp} align="right" />
-                      )}
+                return (
+                  <motion.div
+                    key={`${exp.organization}-${index}`}
+                    className="relative"
+                    viewport={{ once: true }}
+                    {...(!prefersReducedMotion
+                      ? {
+                          initial: { opacity: 0, y: 20 },
+                          whileInView: { opacity: 1, y: 0 },
+                          transition: { ...smoothSpring, delay: index * 0.1 },
+                        }
+                      : {})}
+                  >
+                    <div className={`hidden md:grid md:grid-cols-2 gap-10 ${isEven ? "" : "md:flex-row-reverse"}`}>
+                      <div className={isEven ? "pr-8" : ""}>
+                        {isEven && <ExperienceCard experience={exp} align="right" />}
+                      </div>
+                      <div className={!isEven ? "pl-8" : ""}>
+                        {!isEven && <ExperienceCard experience={exp} align="left" />}
+                      </div>
                     </div>
 
-                    {/* Right Side Content (or empty) */}
-                    <div className={!isEven ? 'pl-8' : ''}>
-                      {!isEven && (
-                        <ExperienceCard experience={exp} align="left" />
-                      )}
+                    <div className="md:hidden pl-12">
+                      <ExperienceCard experience={exp} align="left" />
                     </div>
-                  </div>
 
-                  {/* Mobile Layout - Stacked */}
-                  <div className="md:hidden pl-12">
-                    <ExperienceCard experience={exp} align="left" />
-                  </div>
-
-                  {/* Timeline Dot - Desktop (centered) */}
-                  <div className="hidden md:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                    <motion.div
-                      className="w-12 h-12 rounded-full flex items-center justify-center"
-                      whileHover={{ scale: 1.1 }}
-                      transition={smoothSpring}
-                      style={{
-                        backgroundColor: "var(--primary)",
-                        border: "3px solid var(--background)",
-                        boxShadow: "0 0 0 4px var(--warm)",
-                      }}
-                    >
-                      <Icon className="h-6 w-6" style={{ color: "var(--background)" }} />
-                    </motion.div>
-                  </div>
-
-                  {/* Timeline Dot - Mobile (left side) */}
-                  <div className="md:hidden absolute left-0 top-6">
-                    <div
-                      className="w-10 h-10 rounded-full flex items-center justify-center"
-                      style={{
-                        backgroundColor: "var(--primary)",
-                        border: "2px solid var(--background)",
-                      }}
-                    >
-                      <Icon className="h-5 w-5" style={{ color: "var(--background)" }} />
+                    <div className="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                      <motion.div
+                        className="flex h-12 w-12 items-center justify-center rounded-full border border-[var(--panel-border)] bg-[var(--panel-surface-muted)] shadow-lg"
+                        whileHover={{ scale: 1.06 }}
+                        transition={smoothSpring}
+                      >
+                        <Icon className="h-5 w-5" style={{ color: "var(--primary)" }} />
+                      </motion.div>
                     </div>
-                  </div>
 
-                  {/* Connecting Line for Mobile */}
-                  {index < experiences.length - 1 && (
-                    <div
-                      className="md:hidden absolute left-5 top-16 w-0.5 h-12"
-                      style={{ backgroundColor: "var(--warm)" }}
-                    />
-                  )}
-                </motion.div>
-              )
-            })}
+                    <div className="md:hidden absolute left-0 top-6">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--panel-border)] bg-[var(--panel-surface-muted)]">
+                        <Icon className="h-5 w-5" style={{ color: "var(--primary)" }} />
+                      </div>
+                    </div>
+
+                    {index < experiences.length - 1 && (
+                      <div className="md:hidden absolute left-5 top-16 h-12 w-px bg-[var(--panel-line)]" aria-hidden />
+                    )}
+                  </motion.div>
+                )
+              })}
+            </div>
           </div>
-        </div>
+        </NierPanel>
       </div>
     </section>
   )
 }
 
-// Experience Card Component
-function ExperienceCard({ experience, align }: { experience: Experience; align: 'left' | 'right' }) {
+function ExperienceCard({ experience, align }: { experience: Experience; align: "left" | "right" }) {
   return (
-    <motion.div
-      className={`rounded-xl p-6 ${align === 'right' ? 'text-right' : ''}`}
-      variants={cardHover}
-      initial="rest"
-      whileHover="hover"
-      style={{
-        backgroundColor: "var(--accent)",
-        border: "1px solid var(--warm)",
-        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
-      }}
-    >
-      {/* Header */}
-      <div className="mb-4">
-        <h3 className="text-xl font-bold font-display mb-2" style={{ color: "var(--primary)" }}>
-          {experience.title}
-          {experience.current && (
-            <span
-              className="ml-2 text-xs px-2 py-1 rounded-full font-body"
-              style={{ backgroundColor: "var(--primary)", color: "var(--background)" }}
-            >
-              Current
-            </span>
-          )}
-        </h3>
-        <p className="text-lg font-semibold font-body mb-2" style={{ color: "var(--foreground)" }}>
-          {experience.organization}
-        </p>
-        <div className="flex items-center gap-4 text-sm font-body" style={{ color: "var(--warm)" }}>
-          <div className={`flex items-center gap-1 ${align === 'right' ? 'flex-row-reverse' : ''}`}>
-            <MapPin className="h-4 w-4" />
-            <span>{experience.location}</span>
-          </div>
-          <div className={`flex items-center gap-1 ${align === 'right' ? 'flex-row-reverse' : ''}`}>
-            <Calendar className="h-4 w-4" />
-            <span>{experience.period}</span>
+    <motion.div variants={cardHover} initial="rest" whileHover="hover" className="h-full">
+      <NierPanel
+        heading={experience.organization.toUpperCase()}
+        subtitle={experience.period}
+        actions={
+          <span className="text-xs tracking-[0.25em] text-[var(--stone)]">
+            {experience.current ? "STATUS :: ACTIVE" : "STATUS :: ARCHIVED"}
+          </span>
+        }
+        variant="muted"
+        compact
+        className={`h-full ${align === "right" ? "text-right" : "text-left"}`}
+      >
+        <div className={`mb-4 ${align === "right" ? "md:text-right" : ""}`}>
+          <h3 className="text-lg font-display uppercase tracking-[0.25em] text-[var(--primary)]">
+            {experience.title}
+          </h3>
+          <div className="mt-3 flex flex-wrap items-center gap-4 text-sm font-body" style={{ color: "var(--warm)" }}>
+            <div className={`flex items-center gap-1 ${align === "right" ? "flex-row-reverse" : ""}`}>
+              <MapPin className="h-4 w-4" />
+              <span>{experience.location}</span>
+            </div>
+            <div className={`flex items-center gap-1 ${align === "right" ? "flex-row-reverse" : ""}`}>
+              <Calendar className="h-4 w-4" />
+              <span>{experience.period}</span>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Description */}
-      <ul className={`space-y-2 mb-4 ${align === 'right' ? 'text-right' : ''}`}>
-        {experience.description.map((item, idx) => (
-          <li key={idx} className="text-sm font-body leading-relaxed" style={{ color: "var(--foreground)" }}>
-            <span className={align === 'right' ? 'inline-block' : ''}>
-              {align === 'left' && '• '}
-              {item}
-              {align === 'right' && ' •'}
-            </span>
-          </li>
-        ))}
-      </ul>
-
-      {/* Technologies */}
-      {experience.technologies && experience.technologies.length > 0 && (
-        <div className={`flex flex-wrap gap-2 ${align === 'right' ? 'justify-end' : ''}`}>
-          {experience.technologies.map((tech) => (
-            <span
-              key={tech}
-              className="text-xs px-3 py-1 rounded-full font-body font-medium"
-              style={{
-                backgroundColor: "var(--warm)",
-                color: "var(--foreground)",
-              }}
-            >
-              {tech}
-            </span>
+        <ul className={`space-y-2 mb-6 text-sm font-body leading-relaxed ${align === "right" ? "text-right" : ""}`}>
+          {experience.description.map((item, idx) => (
+            <li key={idx} className="flex items-start gap-3">
+              {align === "left" && <span aria-hidden className="mt-2 block h-px w-6 bg-[var(--panel-line)]" />}
+              <span>{item}</span>
+            </li>
           ))}
-        </div>
-      )}
+        </ul>
+
+        {experience.technologies?.length ? (
+          <div className={`flex flex-wrap gap-2 text-xs uppercase tracking-[0.24em] ${align === "right" ? "justify-end" : ""}`}>
+            {experience.technologies.map((tech) => (
+              <span
+                key={tech}
+                className="px-3 py-1 border border-[var(--panel-border)] bg-[var(--panel-surface)]/70 font-body"
+                style={{ color: "var(--stone)" }}
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        ) : null}
+      </NierPanel>
     </motion.div>
   )
 }

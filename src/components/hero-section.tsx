@@ -3,6 +3,7 @@
 import { Github, Linkedin, Mail, ArrowDown } from "lucide-react"
 import { motion, useReducedMotion } from "framer-motion"
 import { ASCIIBackground } from "./ascii-background"
+import { NierPanel } from "@/components/ui/nier-panel"
 import { smoothSpring, iconHover, buttonHover } from "@/lib/animations"
 
 export function HeroSection() {
@@ -60,7 +61,11 @@ export function HeroSection() {
   return (
       <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden crt-scanlines">
         <ASCIIBackground/>
-        <div className="relative z-20 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-28 lg:py-36">
+        <NierPanel
+          heading="YoRHa :: Profile"
+          subtitle="SYSTEM STATUS // ONLINE"
+          className="relative z-20 mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8"
+        >
           <div className="text-center max-w-4xl mx-auto">
             <motion.div {...fadeIn()}>
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-display tracking-tight text-[var(--foreground)] text-shadow">
@@ -156,7 +161,7 @@ export function HeroSection() {
               </motion.a>
             </motion.div>
           </div>
-        </div>
+        </NierPanel>
       </section>
   )
 }
