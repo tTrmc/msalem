@@ -93,6 +93,13 @@ export function ProjectsSection() {
                 ? `STACK // ${project.techStack.slice(0, 3).join(" • ")}`
                 : undefined
 
+              const primaryLink = project.demoUrl || project.githubUrl
+              const primaryLinkLabel = project.demoUrl
+                ? `Open ${project.title} demo in a new tab`
+                : project.githubUrl
+                  ? `View ${project.title} repository on GitHub`
+                  : undefined
+
               return (
                 <motion.div
                   key={project.title}
@@ -119,7 +126,11 @@ export function ProjectsSection() {
                     compact
                     className="group relative h-full overflow-hidden"
                   >
-                    <ProjectMedia project={project} />
+                    <ProjectMedia
+                      project={project}
+                      primaryLink={primaryLink}
+                      primaryLinkLabel={primaryLinkLabel}
+                    />
 
                     <div className="relative z-10 flex h-full flex-col justify-between gap-6">
                       <div>
@@ -139,20 +150,25 @@ export function ProjectsSection() {
                         ))}
                       </div>
 
-                      <div className="flex items-center gap-4 pt-2">
+                      <div className="flex flex-wrap gap-3 pt-4">
                         {project.githubUrl && (
                           <motion.a
                             href={project.githubUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 text-sm font-body tracking-[0.18em] text-[var(--primary)]"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
+                            className="inline-flex items-center gap-2 rounded-sm border px-4 py-2 text-xs font-body uppercase tracking-[0.24em]"
+                            style={{
+                              borderColor: "var(--panel-border)",
+                              backgroundColor: "color-mix(in srgb, var(--panel-surface) 82%, transparent)",
+                              color: "var(--foreground)",
+                            }}
+                            whileHover={{ y: -1, backgroundColor: "color-mix(in srgb, var(--panel-header) 65%, transparent)" }}
+                            whileTap={{ scale: 0.97 }}
                             transition={smoothSpring}
                             aria-label={`View ${project.title} on GitHub`}
                           >
                             <Github className="h-4 w-4" />
-                            GITHUB
+                            View Repo
                           </motion.a>
                         )}
                         {project.demoUrl && (
@@ -160,14 +176,23 @@ export function ProjectsSection() {
                             href={project.demoUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 text-sm font-body tracking-[0.18em] text-[var(--stone)] hover:text-[var(--primary)]"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
+                            className="inline-flex items-center gap-2 rounded-sm border px-4 py-2 text-xs font-body uppercase tracking-[0.24em]"
+                            style={{
+                              borderColor: "var(--panel-border)",
+                              backgroundColor: "color-mix(in srgb, var(--panel-surface-muted) 85%, transparent)",
+                              color: "var(--stone)",
+                            }}
+                            whileHover={{
+                              y: -1,
+                              backgroundColor: "color-mix(in srgb, var(--panel-header) 60%, transparent)",
+                              color: "var(--foreground)",
+                            }}
+                            whileTap={{ scale: 0.97 }}
                             transition={smoothSpring}
                             aria-label={`Open ${project.title} demo`}
                           >
                             <ExternalLink className="h-4 w-4" />
-                            DEMO
+                            Visit Demo
                           </motion.a>
                         )}
                       </div>
@@ -183,29 +208,38 @@ export function ProjectsSection() {
   )
 }
 
-function ProjectMedia({ project }: { project: Project }) {
-  if (!project.image) {
-    return (
-      <div className="relative mb-8 h-48 overflow-hidden rounded-md border border-[var(--panel-border)] bg-[var(--panel-surface-muted)]">
-        <div className="absolute inset-0 opacity-60"
-          style={{
-            backgroundImage:
-              "linear-gradient(120deg, rgba(207,196,149,0.3) 0%, rgba(132,122,89,0.1) 45%, rgba(64,54,41,0.25) 100%)",
-          }}
-        />
-        <div className="absolute inset-0 mix-blend-multiply"
-          style={{
-            backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 6px, rgba(0,0,0,0.08) 6px, rgba(0,0,0,0.08) 8px)",
-          }}
-        />
-      </div>
-    )
-  }
+function ProjectMedia({
+  project,
+  primaryLink,
+  primaryLinkLabel,
+}: {
+  project: Project
+  primaryLink?: string
+  primaryLinkLabel?: string
+}) {
+  const placeholderContent = (
+    <>
+      <div
+        className="absolute inset-0 opacity-60"
+        style={{
+          backgroundImage:
+            "linear-gradient(120deg, rgba(207,196,149,0.3) 0%, rgba(132,122,89,0.1) 45%, rgba(64,54,41,0.25) 100%)",
+        }}
+      />
+      <div
+        className="absolute inset-0 mix-blend-multiply"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(0deg, transparent, transparent 6px, rgba(0,0,0,0.08) 6px, rgba(0,0,0,0.08) 8px)",
+        }}
+      />
+    </>
+  )
 
-  return (
-    <div className="relative mb-8 h-48 overflow-hidden rounded-md border border-[var(--panel-border)] bg-black/40">
+  const imageContent = (
+    <>
       <Image
-        src={project.image}
+        src={project.image ?? ""}
         alt={`${project.title} project screenshot`}
         fill
         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -215,6 +249,30 @@ function ProjectMedia({ project }: { project: Project }) {
         loading="lazy"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
+    </>
+  )
+
+  const baseClasses = project.image
+    ? "relative mb-8 block h-48 overflow-hidden rounded-md border border-[var(--panel-border)] bg-black/40"
+    : "relative mb-8 block h-48 overflow-hidden rounded-md border border-[var(--panel-border)] bg-[var(--panel-surface-muted)]"
+
+  if (primaryLink) {
+    return (
+      <a
+        href={primaryLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={primaryLinkLabel ?? `Open ${project.title} in a new tab`}
+        className={baseClasses}
+      >
+        {project.image ? imageContent : placeholderContent}
+      </a>
+    )
+  }
+
+  return (
+    <div className={baseClasses}>
+      {project.image ? imageContent : placeholderContent}
     </div>
   )
 }

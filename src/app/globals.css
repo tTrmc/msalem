@@ -159,12 +159,14 @@ body::before {
 
 .navigation-shell {
   position: relative;
+  z-index: 10;
   border: 1px solid var(--panel-border);
   border-radius: var(--border-radius);
-  background: color-mix(in srgb, var(--panel-surface) 88%, transparent);
-  box-shadow: var(--panel-shadow);
-  backdrop-filter: blur(8px);
-  isolation: isolate;
+  background: color-mix(in srgb, var(--panel-surface) 92%, transparent);
+  box-shadow:
+    0 10px 22px -16px rgba(27, 20, 15, 0.55),
+    0 1px 0 rgba(255, 250, 240, 0.04);
+  backdrop-filter: blur(5px);
   overflow: hidden;
   transition: var(--theme-transition);
 }
@@ -174,9 +176,9 @@ body::before {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(0, 0, 0, 0.08) 65%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.04) 65%, transparent);
   mix-blend-mode: soft-light;
-  opacity: 0.35;
+  opacity: 0.32;
   transition: opacity 0.3s ease;
 }
 

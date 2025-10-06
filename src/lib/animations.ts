@@ -200,12 +200,10 @@ export const slideInFromTop: Variants = {
 export const cardHover: Variants = {
   rest: {
     y: 0,
-    scale: 1,
     transition: smoothSpring,
   },
   hover: {
     y: -8,
-    scale: 1.01,
     transition: smoothSpring,
   },
 }
@@ -216,7 +214,7 @@ export const projectCardHover: Variants = {
     transition: smoothSpring,
   },
   hover: {
-    y: -4,
+    y: -6,
     transition: smoothSpring,
   },
 }
