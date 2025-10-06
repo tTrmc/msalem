@@ -61,6 +61,20 @@ export function HeroSection() {
   return (
       <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden crt-scanlines">
         <ASCIIBackground/>
+        <div className="pointer-events-none absolute inset-0" aria-hidden>
+          <div
+            className="absolute inset-x-0 top-0 h-48"
+            style={{
+              background: "linear-gradient(to bottom, var(--background) 0%, rgba(220,200,187,0) 100%)",
+            }}
+          />
+          <div
+            className="absolute inset-x-0 bottom-0 h-48"
+            style={{
+              background: "linear-gradient(to top, var(--background) 0%, rgba(220,200,187,0) 100%)",
+            }}
+          />
+        </div>
         <NierPanel
           heading="YoRHa :: Profile"
           subtitle="SYSTEM STATUS // ONLINE"
