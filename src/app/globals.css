@@ -157,6 +157,34 @@ body::before {
 }
 
 
+.navigation-shell {
+  position: relative;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--border-radius);
+  background: color-mix(in srgb, var(--panel-surface) 88%, transparent);
+  box-shadow: var(--panel-shadow);
+  backdrop-filter: blur(8px);
+  isolation: isolate;
+  overflow: hidden;
+  transition: var(--theme-transition);
+}
+
+.navigation-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(0, 0, 0, 0.08) 65%);
+  mix-blend-mode: soft-light;
+  opacity: 0.35;
+  transition: opacity 0.3s ease;
+}
+
+.navigation-shell:hover::before {
+  opacity: 0.45;
+}
+
+
 .nier-panel__header {
   position: relative;
   z-index: 5;

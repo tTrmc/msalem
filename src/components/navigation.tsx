@@ -37,10 +37,10 @@ export function Navigation() {
         <motion.button
           onClick={handleThemeToggle}
           type="button"
-          className="inline-flex items-center justify-center rounded-sm border p-2 transition-transform duration-150"
+          className="inline-flex items-center justify-center rounded-sm border p-2 transition-transform duration-150 hover:bg-[color:var(--panel-header)]"
           style={{
-            borderColor: "color-mix(in srgb, var(--accent) 55%, transparent)",
-            backgroundColor: "color-mix(in srgb, var(--background) 85%, transparent)",
+            borderColor: "var(--panel-border)",
+            backgroundColor: "color-mix(in srgb, var(--panel-surface) 82%, transparent)",
             color: "var(--foreground)",
           }}
           whileHover={{ scale: 1.06 }}
@@ -60,12 +60,12 @@ export function Navigation() {
         onClick={handleThemeToggle}
         type="button"
         className={[
-          "inline-flex items-center gap-2 rounded-sm border font-body uppercase tracking-[0.2em] text-xs transition-colors",
+          "inline-flex items-center gap-2 rounded-sm border font-body uppercase tracking-[0.24em] text-xs transition-colors hover:bg-[color:var(--panel-header)]",
           fullWidth ? "w-full justify-center px-4 py-2" : "px-3 py-2",
         ].join(' ')}
         style={{
-          borderColor: "color-mix(in srgb, var(--accent) 55%, transparent)",
-          backgroundColor: "color-mix(in srgb, var(--background) 88%, transparent)",
+          borderColor: "var(--panel-border)",
+          backgroundColor: "color-mix(in srgb, var(--panel-surface) 85%, transparent)",
           color: "var(--foreground)",
         }}
         whileHover={{ y: -1, scale: 1.02 }}
@@ -88,19 +88,12 @@ export function Navigation() {
         </a>
         <nav
           suppressHydrationWarning
-          style={{ backgroundColor: "var(--background)" }}
           className="w-full"
           role="navigation"
           aria-label="Main navigation"
         >
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div
-              className="flex h-14 items-center justify-between rounded-sm border px-4 backdrop-blur-sm"
-              style={{
-                borderColor: "color-mix(in srgb, var(--accent) 55%, transparent)",
-                backgroundColor: "color-mix(in srgb, var(--background) 82%, transparent)",
-              }}
-            >
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3">
+            <div className="navigation-shell flex items-center justify-between px-3 py-2 sm:px-5">
               <Link href="#hero" className="flex items-center space-x-3">
                 <Image
                   src="/images/logo.png"
@@ -123,10 +116,10 @@ export function Navigation() {
                     <motion.div key={item.href}>
                       <Link
                         href={item.href}
-                        className="px-3 py-2 text-sm font-semibold font-body tracking-[0.2em] text-[var(--foreground)] hover:text-[var(--primary)]"
+                        className="px-3 py-2 text-xs font-semibold font-body uppercase tracking-[0.24em] text-[var(--stone)] transition-colors hover:text-[var(--foreground)]"
                       >
                         <motion.span
-                          whileHover={{ y: -1, scale: 1.01 }}
+                          whileHover={{ y: -1, scale: 1.02 }}
                           transition={smoothSpring}
                           className="block"
                         >
@@ -147,11 +140,11 @@ export function Navigation() {
                 </div>
                 <motion.button
                   onClick={() => setIsOpen(!isOpen)}
-                  className="md:hidden inline-flex items-center justify-center rounded-sm p-2 transition-transform duration-150 hover:bg-[var(--accent)] hover:text-[var(--foreground)]"
+                  className="md:hidden inline-flex items-center justify-center rounded-sm border border-[color:var(--panel-border)] p-2 transition-transform duration-150 hover:bg-[color:var(--panel-header)] hover:text-[color:var(--foreground)]"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   transition={smoothSpring}
-                  style={{ color: "var(--stone)" }}
+                  style={{ color: "var(--stone)", backgroundColor: "color-mix(in srgb, var(--panel-surface) 88%, transparent)" }}
                   aria-label="Toggle menu"
                 >
                   {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -173,11 +166,7 @@ export function Navigation() {
                   transition={smoothSpring}
                 >
                   <motion.div
-                    className="space-y-1 rounded-sm border px-3 py-3"
-                    style={{
-                      borderColor: "color-mix(in srgb, var(--accent) 55%, transparent)",
-                      backgroundColor: "color-mix(in srgb, var(--background) 90%, transparent)",
-                    }}
+                    className="navigation-shell space-y-1 px-3 py-3"
                     variants={staggerContainer}
                     initial="initial"
                     animate="animate"
@@ -187,13 +176,13 @@ export function Navigation() {
                         <Link
                           href={item.href}
                           onClick={() => setIsOpen(false)}
-                          className="block rounded-sm px-3 py-2 text-base font-semibold font-body tracking-[0.2em] text-[var(--stone)] hover:text-[var(--primary)]"
+                          className="block rounded-sm px-3 py-2 text-sm font-semibold font-body uppercase tracking-[0.24em] text-[var(--stone)] transition-colors hover:text-[var(--foreground)]"
                         >
                           {item.label}
                         </Link>
                       </motion.div>
                     ))}
-                    <motion.div variants={staggerItem} className="pt-3 border-t border-[color-mix(in srgb,var(--accent) 45%,transparent)]">
+                    <motion.div variants={staggerItem} className="pt-3 border-t border-[color:var(--panel-border)]">
                       <ThemeToggleButton fullWidth />
                     </motion.div>
                   </motion.div>
