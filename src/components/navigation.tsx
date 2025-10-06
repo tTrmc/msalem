@@ -3,7 +3,8 @@
 import Link from "next/link"
 import Image from "next/image"
 import { useState, useEffect } from "react"
-import { Menu, X } from "lucide-react"
+import { Menu, X, Sun, Moon } from "lucide-react"
+import { useTheme } from "next-themes"
 import { motion, AnimatePresence } from "framer-motion"
 import { smoothSpring, fadeInDown, staggerContainer, staggerItem } from "@/lib/animations"
 
@@ -22,6 +23,64 @@ export function Navigation() {
     { href: "#contact", label: "Contact" },
   ]
 
+  const { theme, setTheme } = useTheme()
+  const isLightTheme = mounted && theme === "light"
+  const themeButtonLabel = isLightTheme ? "Dark Theme" : "Light Theme"
+  const themeButtonAria = isLightTheme ? "Switch to dark theme" : "Switch to light theme"
+  const handleThemeToggle = () => setTheme(isLightTheme ? "dark" : "light")
+
+  const ThemeToggleButton = ({ fullWidth = false, variant = "default" }: { fullWidth?: boolean; variant?: "default" | "icon" }) => {
+    if (!mounted) return null
+
+    if (variant === "icon") {
+      return (
+        <motion.button
+          onClick={handleThemeToggle}
+          type="button"
+          className="inline-flex items-center justify-center rounded-sm border p-2 transition-transform duration-150"
+          style={{
+            borderColor: "color-mix(in srgb, var(--accent) 55%, transparent)",
+            backgroundColor: "color-mix(in srgb, var(--background) 85%, transparent)",
+            color: "var(--foreground)",
+          }}
+          whileHover={{ scale: 1.06 }}
+          whileTap={{ scale: 0.94 }}
+          transition={smoothSpring}
+          aria-pressed={isLightTheme}
+          aria-label={themeButtonAria}
+          title={themeButtonAria}
+        >
+          {isLightTheme ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+        </motion.button>
+      )
+    }
+
+    return (
+      <motion.button
+        onClick={handleThemeToggle}
+        type="button"
+        className={[
+          "inline-flex items-center gap-2 rounded-sm border font-body uppercase tracking-[0.2em] text-xs transition-colors",
+          fullWidth ? "w-full justify-center px-4 py-2" : "px-3 py-2",
+        ].join(' ')}
+        style={{
+          borderColor: "color-mix(in srgb, var(--accent) 55%, transparent)",
+          backgroundColor: "color-mix(in srgb, var(--background) 88%, transparent)",
+          color: "var(--foreground)",
+        }}
+        whileHover={{ y: -1, scale: 1.02 }}
+        whileTap={{ scale: 0.96 }}
+        transition={smoothSpring}
+        aria-pressed={isLightTheme}
+        aria-label={themeButtonAria}
+        title={themeButtonAria}
+      >
+        {isLightTheme ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+        <span>{themeButtonLabel}</span>
+      </motion.button>
+    )
+  }
+
   return (
       <>
         <a href="#main-content" className="skip-nav">
@@ -30,7 +89,7 @@ export function Navigation() {
         <nav
           suppressHydrationWarning
           style={{ backgroundColor: "var(--background)" }}
-          className="w-full crt-scanlines"
+          className="w-full"
           role="navigation"
           aria-label="Main navigation"
         >
@@ -79,7 +138,13 @@ export function Navigation() {
                 </div>
               </div>
 
-              <div className="flex items-center">
+              <div className="flex items-center gap-3">
+                <div className="hidden md:block">
+                  <ThemeToggleButton />
+                </div>
+                <div className="md:hidden">
+                  <ThemeToggleButton variant="icon" />
+                </div>
                 <motion.button
                   onClick={() => setIsOpen(!isOpen)}
                   className="md:hidden inline-flex items-center justify-center rounded-sm p-2 transition-transform duration-150 hover:bg-[var(--accent)] hover:text-[var(--foreground)]"
@@ -128,6 +193,9 @@ export function Navigation() {
                         </Link>
                       </motion.div>
                     ))}
+                    <motion.div variants={staggerItem} className="pt-3 border-t border-[color-mix(in srgb,var(--accent) 45%,transparent)]">
+                      <ThemeToggleButton fullWidth />
+                    </motion.div>
                   </motion.div>
                 </motion.div>
             )}

@@ -26,7 +26,7 @@ export function Footer() {
 
   return (
       <footer
-        className="crt-scanlines"
+        className=""
         style={{
           backgroundColor: "var(--background)",
         }}

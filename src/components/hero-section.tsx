@@ -59,7 +59,7 @@ export function HeroSection() {
   ]
 
   return (
-      <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden crt-scanlines">
+      <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden">
         <ASCIIBackground/>
         <div className="pointer-events-none absolute inset-0" aria-hidden>
           <div
@@ -76,9 +76,10 @@ export function HeroSection() {
           />
         </div>
         <NierPanel
-          heading="YoRHa :: Profile"
+          heading="Operator :: Profile"
           subtitle="SYSTEM STATUS // ONLINE"
-          className="relative z-20 mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8"
+          className="relative z-20 mx-auto w-full max-w-5xl"
+          bodyClassName="px-4 sm:px-6 lg:px-8"
         >
           <div className="text-center max-w-4xl mx-auto">
             <motion.div {...fadeIn()}>

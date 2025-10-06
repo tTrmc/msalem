@@ -142,7 +142,7 @@ export default function RootLayout({
               duration: 5000,
               iconTheme: {
                 primary: 'var(--background)',
-                secondary: '#ef4444',
+                secondary: 'var(--warm)',
               },
             },
           }}

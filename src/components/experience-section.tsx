@@ -43,7 +43,7 @@ export function ExperienceSection() {
   return (
     <section
       id="experience"
-      className="py-24 crt-scanlines"
+      className="py-24"
       style={{ backgroundColor: "var(--background)" }}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

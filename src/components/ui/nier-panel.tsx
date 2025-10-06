@@ -44,6 +44,7 @@ export function NierPanel({
 
   return (
     <section className={rootClassName} {...rest}>
+      <div className="nier-panel__crt" aria-hidden="true" />
       {shouldRenderHeader && (
         <header className="nier-panel__header">
           <div className="flex items-center gap-4">

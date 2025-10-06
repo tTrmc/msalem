@@ -1,7 +1,8 @@
 "use client"
 
-import { useEffect, useRef, useMemo } from "react"
+import { useEffect, useRef, useMemo, useState } from "react"
 import { useReducedMotion } from "framer-motion"
+import { useTheme } from "next-themes"
 
 interface ASCIIBackgroundProps {
   /** Color palette for the ASCII background */
@@ -60,7 +61,7 @@ const hexToRgbString = (hex: string) => {
  *  • Palette, grid metadata, and listeners remain memoised + cleaned up.
  */
 export function ASCIIBackground({
-  colors = ["#211616", "#3a2523", "#724339", "#c27f6c", "#f4d5c1", "#f1dfd2"],
+  colors,
   fontSize = 18,
   charWidth = 12,
 }: ASCIIBackgroundProps) {
@@ -69,9 +70,46 @@ export function ASCIIBackground({
   const gridRef = useRef<GridCell[]>([])
   const isVisibleRef = useRef(false)
   const prefersReducedMotion = useReducedMotion()
+  const { resolvedTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const lightThemeColors = useMemo(() => [
+    '#f2ecdb',
+    '#e4dcc3',
+    '#d2c7a6',
+    '#bcae8f',
+    '#a39075',
+    '#6a5d48',
+  ], [])
+
+  const darkThemeColors = useMemo(() => [
+    '#1f1a15',
+    '#2a251c',
+    '#4f4739',
+    '#7f715a',
+    '#b77b5b',
+    '#d2c7a6',
+  ], [])
+
+  const paletteSource = useMemo(() => {
+    if (colors && colors.length) {
+      return colors
+    }
+
+    const themeKey = mounted ? resolvedTheme : undefined
+    if (themeKey === 'light') {
+      return lightThemeColors
+    }
+
+    return darkThemeColors
+  }, [colors, darkThemeColors, lightThemeColors, mounted, resolvedTheme])
 
   /** Normalised colour palette (always #RRGGBB) */
-  const palette = useMemo(() => colors.map(normaliseHex), [colors])
+  const palette = useMemo(() => paletteSource.map(normaliseHex), [paletteSource])
   const fillStyles = useMemo(() => palette.map(hexToRgbString), [palette])
 
   // Track visibility to pause expensive drawing work when section is off-screen.
@@ -120,8 +158,10 @@ export function ASCIIBackground({
     const chars = " .:-=+*#%@"
     const charMaxIndex = Math.max(0, chars.length - 1)
     const colourMaxIndex = Math.max(0, fillStyles.length - 1)
-    const fallbackFill = fillStyles[colourMaxIndex] ?? "#f1dfd2"
-    const backgroundFill = fillStyles[0] ?? "#211616"
+    const fallbackHex = paletteSource[paletteSource.length - 1] ?? '#ece1c9'
+    const backgroundHex = paletteSource[0] ?? '#2a251c'
+    const fallbackFill = fillStyles[colourMaxIndex] ?? hexToRgbString(fallbackHex)
+    const backgroundFill = fillStyles[0] ?? hexToRgbString(backgroundHex)
     const FRAME_INTERVAL = 1000 / 30 // ~30 FPS cap
 
     const matchDensity = (width: number, height: number) => {
@@ -266,7 +306,7 @@ export function ASCIIBackground({
       window.removeEventListener("resize", resize)
       document.removeEventListener("visibilitychange", handleVisibilityChange)
     }
-  }, [fillStyles, fontSize, charWidth, prefersReducedMotion])
+  }, [fillStyles, fontSize, charWidth, prefersReducedMotion, paletteSource])
 
   const shouldRenderCanvas = !prefersReducedMotion
 
