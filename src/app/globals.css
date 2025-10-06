@@ -2,18 +2,18 @@
 
 :root {
   /* NieR:Automata-inspired palette with deeper contrast */
-  --background: #d8d0b3;      /* Sanded parchment */
-  --foreground: #2f261f;      /* Deep umbra */
-  --primary: #f0e7c2;         /* Hack highlight */
-  --stone: #b6a789;           /* Defensive taupe */
-  --warm: #b58a77;            /* Offensive sienna */
-  --accent: #4f4638;          /* System umber */
-  --panel-surface: rgba(243, 235, 212, 0.9);
-  --panel-surface-muted: rgba(235, 225, 200, 0.85);
-  --panel-border: rgba(79, 70, 56, 0.35);
-  --panel-header: rgba(79, 70, 56, 0.18);
-  --panel-line: rgba(47, 38, 31, 0.25);
-  --panel-shadow: 0 28px 48px rgba(20, 16, 11, 0.32);
+  --background: #dcc8bb;      /* Blushed parchment */
+  --foreground: #33231e;      /* Deep umber */
+  --primary: #f4d5c1;         /* Rose highlight */
+  --stone: #c7b0a0;           /* Soft clay */
+  --warm: #c27f6c;            /* Ember sienna */
+  --accent: #5a3f34;          /* Mahogany umber */
+  --panel-surface: rgba(244, 224, 211, 0.9);
+  --panel-surface-muted: rgba(236, 213, 200, 0.86);
+  --panel-border: rgba(90, 63, 52, 0.35);
+  --panel-header: rgba(90, 63, 52, 0.2);
+  --panel-line: rgba(62, 45, 38, 0.26);
+  --panel-shadow: 0 28px 48px rgba(39, 23, 20, 0.35);
 
   /* Common variables */
   --border-radius: 0.5rem;
@@ -22,18 +22,18 @@
 }
 
 .dark {
-  --background: #1f1b14;      /* Terminal dusk */
-  --foreground: #e4dcc4;      /* Pale parchment */
-  --primary: #cfc495;         /* Hack glow */
-  --stone: #8b826d;           /* Weathered alloy */
-  --warm: #8f5f4a;            /* Offensive rust */
-  --accent: #3b3327;          /* System umber */
-  --panel-surface: rgba(36, 30, 24, 0.92);
-  --panel-surface-muted: rgba(31, 26, 21, 0.86);
-  --panel-border: rgba(228, 220, 196, 0.16);
-  --panel-header: rgba(228, 220, 196, 0.1);
-  --panel-line: rgba(228, 220, 196, 0.18);
-  --panel-shadow: 0 32px 56px rgba(0, 0, 0, 0.45);
+  --background: #211616;      /* Garnet dusk */
+  --foreground: #f1dfd2;      /* Pale blush */
+  --primary: #dabb9e;         /* Warm glow */
+  --stone: #a8887a;           /* Ember clay */
+  --warm: #a96452;            /* Rusted rose */
+  --accent: #382421;          /* Deep cordovan */
+  --panel-surface: rgba(45, 28, 27, 0.92);
+  --panel-surface-muted: rgba(38, 23, 22, 0.86);
+  --panel-border: rgba(241, 223, 210, 0.18);
+  --panel-header: rgba(241, 223, 210, 0.12);
+  --panel-line: rgba(241, 223, 210, 0.2);
+  --panel-shadow: 0 32px 56px rgba(0, 0, 0, 0.48);
 }
 
 /* Base transitions */

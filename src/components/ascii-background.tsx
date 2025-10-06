@@ -60,7 +60,7 @@ const hexToRgbString = (hex: string) => {
  *  • Palette, grid metadata, and listeners remain memoised + cleaned up.
  */
 export function ASCIIBackground({
-  colors = ["#1f1b14", "#3b3327", "#504635", "#8b826d", "#cfc495", "#e4dcc4"],
+  colors = ["#211616", "#3a2523", "#724339", "#c27f6c", "#f4d5c1", "#f1dfd2"],
   fontSize = 18,
   charWidth = 12,
 }: ASCIIBackgroundProps) {
@@ -120,8 +120,8 @@ export function ASCIIBackground({
     const chars = " .:-=+*#%@"
     const charMaxIndex = Math.max(0, chars.length - 1)
     const colourMaxIndex = Math.max(0, fillStyles.length - 1)
-    const fallbackFill = fillStyles[colourMaxIndex] ?? "#e4dcc4"
-    const backgroundFill = fillStyles[0] ?? "#1f1b14"
+    const fallbackFill = fillStyles[colourMaxIndex] ?? "#f1dfd2"
+    const backgroundFill = fillStyles[0] ?? "#211616"
     const FRAME_INTERVAL = 1000 / 30 // ~30 FPS cap
 
     const matchDensity = (width: number, height: number) => {

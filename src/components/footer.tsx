@@ -13,7 +13,7 @@ export function Footer() {
       label: "GitHub",
     },
     {
-      href: "https://www.linkedin.com/in/moustafasalem/",
+      href: "https://www.linkedin.com/in/salemmoustafa/",
       icon: Linkedin,
       label: "LinkedIn",
     },
