@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
 import { useState, useEffect } from "react"
 import { Menu, X, Sun, Moon } from "lucide-react"
 import { useTheme } from "next-themes"
@@ -94,19 +93,9 @@ export function Navigation() {
         >
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3">
             <div className="navigation-shell flex items-center justify-between px-3 py-2 sm:px-5">
-              <Link href="#hero" className="flex items-center space-x-3">
-                <Image
-                  src="/images/logo.png"
-                  alt="Salem Logo"
-                  width={40}
-                  height={40}
-                  className="h-10 w-auto"
-                  style={{ imageRendering: "pixelated" }}
-                  unoptimized
-                  priority
-                />
-                <span className="text-xl font-body font-bold text-[var(--foreground)]">
-                  Salem
+              <Link href="#hero" className="flex items-center">
+                <span className="text-xl font-body font-bold tracking-[0.2em] text-[var(--foreground)]">
+                  SALEM
                 </span>
               </Link>
 

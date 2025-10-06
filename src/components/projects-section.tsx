@@ -132,7 +132,7 @@ export function ProjectsSection() {
                       primaryLinkLabel={primaryLinkLabel}
                     />
 
-                    <div className="relative z-10 flex h-full flex-col justify-between gap-6">
+                    <div className="relative z-10 flex h-full flex-col justify-between gap-4">
                       <div>
                         <p className="text-sm font-body leading-relaxed text-[var(--foreground)]">
                           {project.description}
@@ -150,13 +150,13 @@ export function ProjectsSection() {
                         ))}
                       </div>
 
-                      <div className="flex flex-wrap gap-3 pt-4">
+                      <div className="flex flex-wrap gap-3 pt-2">
                         {project.githubUrl && (
                           <motion.a
                             href={project.githubUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 rounded-sm border px-4 py-2 text-xs font-body uppercase tracking-[0.24em]"
+                            className="inline-flex items-center gap-2 rounded-sm border px-3 py-2 text-xs font-body uppercase tracking-[0.24em]"
                             style={{
                               borderColor: "var(--panel-border)",
                               backgroundColor: "color-mix(in srgb, var(--panel-surface) 82%, transparent)",
@@ -176,7 +176,7 @@ export function ProjectsSection() {
                             href={project.demoUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 rounded-sm border px-4 py-2 text-xs font-body uppercase tracking-[0.24em]"
+                            className="inline-flex items-center gap-2 rounded-sm border px-3 py-2 text-xs font-body uppercase tracking-[0.24em]"
                             style={{
                               borderColor: "var(--panel-border)",
                               backgroundColor: "color-mix(in srgb, var(--panel-surface-muted) 85%, transparent)",
