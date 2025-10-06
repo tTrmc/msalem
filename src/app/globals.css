@@ -60,6 +60,18 @@ body {
   color: var(--foreground);
   font-family: 'Lato', system-ui, sans-serif;
   transition: var(--theme-transition);
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0.45) 100%);
+  mix-blend-mode: multiply;
+  opacity: 0.55;
+  z-index: 999;
 }
 
 /* Custom scrollbar - Light mode */
@@ -144,34 +156,6 @@ body {
   backdrop-filter: blur(4px);
 }
 
-.nier-panel::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(to right, var(--panel-header), transparent 35%),
-    linear-gradient(to right, transparent 65%, var(--panel-header));
-  background-repeat: no-repeat;
-  background-size: 100% 54px, 100% 6px;
-  background-position: center top, center calc(100% - 18px);
-  opacity: 0.45;
-  z-index: 2;
-}
-
-.nier-panel::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 22px;
-  pointer-events: none;
-  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.25), transparent 60%);
-  opacity: 0.42;
-  mix-blend-mode: multiply;
-  z-index: 3;
-}
 
 .nier-panel__header {
   position: relative;
@@ -187,15 +171,6 @@ body {
   letter-spacing: 0.16em;
   font-size: 0.75rem;
   color: var(--stone);
-}
-
-.nier-panel__header::after {
-  content: "";
-  position: absolute;
-  inset: auto 1.5rem -0.65rem 1.5rem;
-  height: 4px;
-  background-image: linear-gradient(to right, transparent, var(--panel-line) 35%, transparent 70%);
-  opacity: 0.5;
 }
 
 .nier-panel__title {
